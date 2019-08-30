@@ -42,7 +42,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.3",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "flow-bin": "^0.105.1",
+    "flow-bin": "^0.105.2",
     "jest-expo": "^34.0.0"
   },
   "private": true

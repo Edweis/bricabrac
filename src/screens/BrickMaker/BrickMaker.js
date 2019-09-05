@@ -3,25 +3,26 @@ import { View, StyleSheet, Button, Switch, TextInput } from 'react-native';
 import { Text } from 'react-native-elements';
 import Concepts from './Concepts';
 import Status from './Status';
+import { useBrics, addBrick } from '../../hooks';
+import useSubscribedState from '../../hooks/helpers';
 
 const now = new Date().toLocaleDateString('fr-FR');
 
 export default function BrickMaker() {
-  const [concepts, setConcepts] = useState([]);
-  const [status, setStatus] = useState('none');
-  const [title, setTitle] = useState('');
-  const [description, setDescrition] = useState('');
-  const [isDefinition, setIsDefinition] = useState(false);
+  return null;
+  const bric = useBrics()[0];
+
+  console.debug({ bric });
+  const [concepts, setConcepts] = useSubscribedState([]);
+  const [status, setStatus] = useSubscribedState(bric.status);
+  const [title, setTitle] = useSubscribedState(bric.title);
+  const [description, setDescrition] = useSubscribedState(bric.description);
+  const [isDefinition, setIsDefinition] = useSubscribedState(bric.isDefinition);
 
   const submit = () => {
     const brick = { title, description, isDefinition, concepts, status };
-    fetch(url, {
-      headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      method: 'POST',
-      body: JSON.stringify(brick),
-    })
-      .then((res) => res.json())
-      .then(console.info);
+    console.debug('about to add', { brick });
+    addBrick(brick);
   };
 
   return (
@@ -54,7 +55,7 @@ export default function BrickMaker() {
         <Status status={status} setStatus={setStatus} />
       </View>
       <View style={styles.submit}>
-        <Button title="Sauvegarder" onPress={() => console.info('Form submitted')} />
+        <Button title="Sauvegarder" onPress={submit} />
       </View>
     </View>
   );

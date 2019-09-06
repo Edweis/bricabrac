@@ -7,6 +7,7 @@ type Concept = {
 };
 type Props = {
   concepts: Concept[],
+  hideInput: boolean,
 };
 export default function Concepts(props: Props) {
   const [currentConcepts, setCurrentConcepts] = useState(props.concepts);
@@ -23,22 +24,26 @@ export default function Concepts(props: Props) {
           <Badge key={concept} value={concept} containerStyle={styles.badge} />
         ))}
       </View>
-      <View style={styles.newBadge}>
-        <TextInput
-          placeholder="Nouveau concept"
-          onChangeText={setNewConceptValue}
-          value={newConceptValue}
-        />
-        <Button
-          onPress={addConcept}
-          title="ajouter"
-          type="outline"
-          buttonStyle={styles.addButton}
-        />
-      </View>
+      {!props.hideInput && (
+        <View style={styles.newBadge}>
+          <TextInput
+            placeholder="Nouveau concept"
+            onChangeText={setNewConceptValue}
+            value={newConceptValue}
+          />
+          <Button
+            onPress={addConcept}
+            title="ajouter"
+            type="outline"
+            buttonStyle={styles.addButton}
+          />
+        </View>
+      )}
     </View>
   );
 }
+
+Concepts.defaultProps = { hideInput: false };
 
 const styles = StyleSheet.create({
   badges: { display: 'flex', flexDirection: 'row' },

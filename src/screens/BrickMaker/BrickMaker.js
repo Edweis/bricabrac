@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Button, Switch, TextInput } from 'react-native';
 import { Text } from 'react-native-elements';
-import Concepts from './Concepts';
+import Concepts from '../../components/Concepts';
 import Status from './Status';
-import { useBrics, addBrick } from '../../hooks';
+import { useBricks, addBrick } from '../../hooks';
 import useSubscribedState from '../../hooks/helpers';
 
 const now = new Date().toLocaleDateString('fr-FR');
 
 export default function BrickMaker() {
-  return null;
-  const bric = useBrics()[0];
+  const bric = useBricks()[0];
 
-  console.debug({ bric });
+  // console.debug({ bric });
   const [concepts, setConcepts] = useSubscribedState([]);
   const [status, setStatus] = useSubscribedState(bric.status);
   const [title, setTitle] = useSubscribedState(bric.title);
@@ -21,7 +20,7 @@ export default function BrickMaker() {
 
   const submit = () => {
     const brick = { title, description, isDefinition, concepts, status };
-    console.debug('about to add', { brick });
+    // console.debug('about to add', { brick });
     addBrick(brick);
   };
 

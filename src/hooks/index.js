@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import { firebase } from '../firebase';
 
@@ -10,7 +11,7 @@ const DEFAULT_BRIC = {
   description: '',
   isDefinition: false,
 };
-export const useBrics = () => {
+export const useBricks = () => {
   const [brics, setBrics] = useState([DEFAULT_BRIC]);
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export const useBrics = () => {
           id: bric.id,
           ...bric.data(),
         }));
-        setBrics(newBrics);
+        if (!_.isEqual(newBrics, brics)) setBrics(newBrics);
       });
     return () => unsubscribe();
   }, []);

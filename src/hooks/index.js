@@ -5,6 +5,7 @@ import { firebase } from '../firebase';
 const BRIC_COLLECTION = 'brics';
 
 const DEFAULT_BRIC = {
+  id: -1,
   concepts: 'One concept',
   status: 'none',
   title: '',

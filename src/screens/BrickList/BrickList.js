@@ -1,32 +1,41 @@
 import React from 'react';
 import _ from 'lodash';
-import { View, StyleSheet, Button, Switch, TextInput, ScrollView } from 'react-native';
+import FAB from 'react-native-fab';
+import { View, StyleSheet, Button, Switch, TextInput, ScrollView, Icon } from 'react-native';
 import { Text } from 'react-native-elements';
 import Concepts from '../../components/Concepts';
 import { useBricks, addBrick } from '../../hooks';
 
 function BrickList() {
   const bricks = useBricks();
-
-  console.debug('Brick List', { bricks });
+  const ids = _.map(bricks, 'id');
+  console.debug('Brick List', { ids, dif: _.difference(ids, _.uniq(ids)), lenght: bricks.length });
 
   // Use FlatList id ScrollView becomes too slow
   return (
-    <ScrollView style={styles.main}>
-      {bricks.map((brick) => (
-        <View style={styles.brickContainer} key={brick.id}>
-          <View style={styles.brickHeader}>
-            <Text>Id : {brick.id}</Text>
-            <Text style={styles.brickHeaderTitle}>Title : {brick.title}</Text>
-            <Text style={styles.brickHeaderStatus}>Status : {brick.status}</Text>
+    <>
+      <ScrollView style={styles.main}>
+        {bricks.map((brick) => (
+          <View style={styles.brickContainer} key={brick.id}>
+            <View style={styles.brickHeader}>
+              <Text>Id : {brick.id}</Text>
+              <Text style={styles.brickHeaderTitle}>Title : {brick.title}</Text>
+              <Text style={styles.brickHeaderStatus}>Status : {brick.status}</Text>
+            </View>
+            <View style={styles.brickContent}>
+              <Text style={styles.brickContentDefinition}>Definition : {brick.definition}</Text>
+              <Text style={styles.brickContentConcepts}>Concepts : {brick.concepts}</Text>
+            </View>
           </View>
-          <View style={styles.brickContent}>
-            <Text style={styles.brickContentDefinition}>Definition : {brick.definition}</Text>
-            <Text style={styles.brickContentConcepts}>Concepts : {brick.concepts}</Text>
-          </View>
-        </View>
-      ))}
-    </ScrollView>
+        ))}
+      </ScrollView>
+      <FAB
+        onClickAction={() => {
+          console.log('FAB pressed');
+        }}
+        visible={true}
+      />
+    </>
   );
 }
 

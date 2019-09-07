@@ -1,78 +1,33 @@
 import React from 'react';
 import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
+import { createStackNavigator, NavigationState, NavigationScreenProp } from 'react-navigation';
 
-import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
 import BrickMaker from '../screens/BrickMaker';
 import BrickList from '../screens/BrickList';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
+  initialRouteName: 'BrickList',
   default: {},
 });
 
-const HomeStack = createStackNavigator(
+const NavigationProps = {}; // { navigation: NavigationScreenProp<NavigationState> };
+
+// SettingsStack.navigationOptions = {
+//   tabBarLabel: 'Settings',
+//   tabBarIcon: ({ focused }) => (
+//     <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
+//   ),
+// };
+//
+// SettingsStack.path = '';
+
+const AppNavigator = createStackNavigator(
   {
-    Home: HomeScreen,
+    BrickList,
+    BrickMaker,
   },
   config,
 );
 
-HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={
-        Platform.OS === 'ios'
-          ? `ios-information-circle${focused ? '' : '-outline'}`
-          : 'md-information-circle'
-      }
-    />
-  ),
-};
-
-HomeStack.path = '';
-
-const LinksStack = createStackNavigator(
-  {
-    Links: BrickList,
-  },
-  config,
-);
-
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />
-  ),
-};
-
-LinksStack.path = '';
-
-const SettingsStack = createStackNavigator(
-  {
-    Settings: BrickMaker,
-  },
-  config,
-);
-
-SettingsStack.navigationOptions = {
-  tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
-  ),
-};
-
-SettingsStack.path = '';
-
-const tabNavigator = createBottomTabNavigator({
-  LinksStack,
-  SettingsStack,
-  HomeStack,
-});
-
-tabNavigator.path = '';
-
-export default tabNavigator;
+export default AppNavigator;

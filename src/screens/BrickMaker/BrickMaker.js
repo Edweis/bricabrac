@@ -8,7 +8,7 @@ import useSubscribedState from '../../hooks/helpers';
 
 const now = new Date().toLocaleDateString('fr-FR');
 
-export default function BrickMaker() {
+function BrickMaker() {
   const bric = useBricks()[0];
 
   // console.debug({ bric });
@@ -73,3 +73,5 @@ const styles = StyleSheet.create({
   },
   sectionTitle: { margin: 10, textAlign: 'center' },
 });
+
+export default BrickMaker;

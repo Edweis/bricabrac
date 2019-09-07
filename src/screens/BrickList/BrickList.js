@@ -6,7 +6,7 @@ import { Text } from 'react-native-elements';
 import Concepts from '../../components/Concepts';
 import { useBricks, addBrick } from '../../hooks';
 
-function BrickList() {
+function BrickList({ navigation }) {
   const bricks = useBricks();
   const ids = _.map(bricks, 'id');
   console.debug('Brick List', { ids, dif: _.difference(ids, _.uniq(ids)), lenght: bricks.length });
@@ -29,15 +29,14 @@ function BrickList() {
           </View>
         ))}
       </ScrollView>
-      <FAB
-        onClickAction={() => {
-          console.log('FAB pressed');
-        }}
-        visible={true}
-      />
+      <FAB onClickAction={() => navigation.navigate('BrickMaker')} visible={true} />
     </>
   );
 }
+
+BrickList.navigationOptions = {
+  title: 'List des briques',
+};
 
 // <Concepts concepts={brick.concepts && brick.concepts.split('|')} />
 const styles = StyleSheet.create({

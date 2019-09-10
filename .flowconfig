@@ -1,5 +1,5 @@
 [ignore]
-<PROJECT_ROOT>/node_modules/react-native/Libraries
+
 [include]
 
 [libs]
@@ -7,6 +7,6 @@
 [lints]
 
 [options]
-module.system.node.resolve_dirname=node_modules
+all=true
 
 [strict]

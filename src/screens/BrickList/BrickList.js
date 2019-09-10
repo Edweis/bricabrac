@@ -2,19 +2,11 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import { FAB } from "react-native-paper";
-import {
-  View,
-  StyleSheet,
-  Button,
-  Switch,
-  TextInput,
-  ScrollView,
-  Icon
-} from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { Text, SearchBar } from "react-native-elements";
-import Concepts from "../../components/Concepts";
-import { useBricks, addBrick } from "../../hooks";
+import { useBricks } from "../../hooks";
 import { matchBrickWithSearch } from "./helpers";
+import NewConceptModal from "./NewConceptModal";
 
 const styles = StyleSheet.create({
   main: {
@@ -47,15 +39,18 @@ const styles = StyleSheet.create({
 function BrickList({ navigation }: { navigation: any }) {
   const bricks = useBricks();
   const [search, setSearch] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
   const ids = _.map(bricks, "id");
-  const brickToDisplay = bricks.filter(brick =>
-    matchBrickWithSearch(brick, search)
-  );
   console.debug("Brick List", {
     ids,
     dif: _.difference(ids, _.uniq(ids)),
-    lenght: bricks.length
+    lenght: bricks.length,
+    bricks
   });
+  const brickToDisplay = bricks.filter(brick =>
+    matchBrickWithSearch(brick, search)
+  );
 
   // Use FlatList id ScrollView becomes too slow
   return (
@@ -65,32 +60,36 @@ function BrickList({ navigation }: { navigation: any }) {
         {brickToDisplay.map(brick => (
           <View style={styles.brickContainer} key={brick.id}>
             <View style={styles.brickHeader}>
-              <Text>Id :{brick.id}</Text>
-              <Text style={styles.brickHeaderTitle}>Title : {brick.title}</Text>
+              <Text h4 style={styles.brickHeaderTitle}>
+                {brick.parentConcept}
+              </Text>
+              <Text>Id : {brick.id}</Text>
               <Text style={styles.brickHeaderStatus}>
                 Status : {brick.status}
               </Text>
             </View>
             <View style={styles.brickContent}>
               <Text style={styles.brickContentDefinition}>
-                Definition :{brick.definition}
+                Content : {brick.content}
               </Text>
               <Text style={styles.brickContentConcepts}>
-                Concepts :{brick.concepts}
+                Concepts : {brick.childrenConcepts.join("|")}
               </Text>
             </View>
           </View>
         ))}
       </ScrollView>
-      <FAB
-        style={styles.fab}
-        onPress={() => navigation.navigate("BrickMaker")}
-        icon="add"
+      <FAB style={styles.fab} onPress={() => setShowModal(true)} icon="add" />
+      <NewConceptModal
+        show={showModal}
+        onSubmit={concept => navigation.navigate("BrickMaker", { concept })}
+        onClose={() => setShowModal(false)}
       />
     </View>
   );
 }
 
+/* onPress={() => navigation.navigate("BrickMaker")} */
 BrickList.navigationOptions = {
   title: "List des briques"
 };

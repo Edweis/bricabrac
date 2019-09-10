@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Button, Switch, TextInput } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import { Text, Input } from "react-native-elements";
 import Concepts from "../../components/Concepts";
 import Status from "./Status";
-import { useBricks, addBrick, DEFAULT_BRIC } from "../../hooks";
-import useSubscribedState from "../../hooks/helpers";
+import { addBrick } from "../../hooks";
+import { DEFAULT_BRICK } from "../../constants/defaults";
 
 const styles = StyleSheet.create({
   main: {
@@ -18,56 +18,43 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center"
   },
-  sectionTitle: {},
+  status: {},
+  statusTitle: {},
   inputContainer: { height: 50, fontSize: 40 },
   containerStyle: { height: 50, fontSize: 50 }
 });
 
-function BrickMaker() {
-  const [concepts, setConcepts] = useSubscribedState([]);
-  const [status, setStatus] = useSubscribedState(DEFAULT_BRIC.status);
+function BrickMaker(props: { navigation: any }) {
+  const [newBrick, setNewBrick] = useState({
+    ...DEFAULT_BRICK,
+    parentConcept: props.navigation.getParam("concept")
+  });
 
-  const [title, setTitle] = useSubscribedState(DEFAULT_BRIC.title);
-  const [description, setDescrition] = useSubscribedState(
-    DEFAULT_BRIC.description
-  );
-  const [isDefinition, setIsDefinition] = useSubscribedState(
-    DEFAULT_BRIC.isDefinition
-  );
+  console.debug({ newBrick });
 
   const submit = () => {
-    const brick = {
-      title,
-      description,
-      isDefinition,
-      concepts,
-      status
-    };
-    // console.debug('about to add', { brick });
-    addBrick(brick);
+    addBrick(newBrick);
+    props.navigation.goBack();
   };
 
   return (
     <View style={styles.main}>
       <View style={styles.form}>
-        <Input
-          placeholder="Titre de la brique"
-          value={title}
-          onChangeText={setTitle}
-        />
+        <Text h4>{newBrick.parentConcept}</Text>
         <Input
           placeholder="Description ..."
-          value={description}
-          onChangeText={setDescrition}
+          value={newBrick.content}
+          onChangeText={d => setNewBrick({ ...newBrick, content: d })}
           numberOfLines={4}
           multiline
         />
-        <Concepts concepts={concepts} />
-        <Text style={styles.sectionTitle}>Status</Text>
-        <Status status={status} setStatus={setStatus} />
-        <View style={styles.definition}>
-          <Switch value={isDefinition} onValueChange={setIsDefinition} />
-          <Text>Brique de définition</Text>
+        <Concepts concepts={newBrick.childrenConcepts} />
+        <View style={styles.status}>
+          <Text style={styles.statusTitle}>Status</Text>
+          <Status
+            status={newBrick.status}
+            setStatus={s => setNewBrick({ ...newBrick, status: s })}
+          />
         </View>
         <Input placeholder="source" />
         <View style={styles.submit}>

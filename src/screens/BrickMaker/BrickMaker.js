@@ -3,7 +3,8 @@ import { View, StyleSheet, Button } from "react-native";
 import { Text, Input } from "react-native-elements";
 import Concepts from "../../components/Concepts";
 import Status from "./Status";
-import { addBrick } from "../../hooks";
+import { addBrick, useFocusOnMount } from "../../hooks";
+import { getBrickError } from "./helpers";
 import { DEFAULT_BRICK } from "../../constants/defaults";
 
 const styles = StyleSheet.create({
@@ -29,12 +30,17 @@ function BrickMaker(props: { navigation: any }) {
     ...DEFAULT_BRICK,
     parentConcept: props.navigation.getParam("concept")
   });
+  const [displayedError, setDisplayedError] = useState("");
 
-  console.debug({ newBrick });
+  const focusOnMountRef = useFocusOnMount();
 
   const submit = () => {
-    addBrick(newBrick);
-    props.navigation.goBack();
+    const error = getBrickError(newBrick);
+    setDisplayedError(error);
+    if (error == null) {
+      addBrick(newBrick);
+      props.navigation.goBack();
+    }
   };
 
   return (
@@ -47,6 +53,7 @@ function BrickMaker(props: { navigation: any }) {
           onChangeText={d => setNewBrick({ ...newBrick, content: d })}
           numberOfLines={4}
           multiline
+          ref={focusOnMountRef}
         />
         <Concepts concepts={newBrick.childrenConcepts} />
         <View style={styles.status}>
@@ -57,6 +64,7 @@ function BrickMaker(props: { navigation: any }) {
           />
         </View>
         <Input placeholder="source" />
+        {displayedError && <Text>{displayedError}</Text>}
         <View style={styles.submit}>
           <Button title="Sauvegarder" onPress={submit} />
         </View>

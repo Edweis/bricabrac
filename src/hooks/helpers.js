@@ -1,7 +1,7 @@
 // $Flow
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 
-const useSubscribedState = (defaultState) => {
+export const useSubscribedState = defaultState => {
   const [state, setState] = useState(defaultState);
   useEffect(() => {
     setState(defaultState);
@@ -9,4 +9,12 @@ const useSubscribedState = (defaultState) => {
   return [state, setState];
 };
 
-export default useSubscribedState;
+export const useFocusOnMount = () => {
+  const ref = useRef(null);
+  useLayoutEffect(() => {
+    if (!ref.current)
+      throw Error("useFocusOnMount's ref has not been assigned.");
+    ref.current.focus();
+  }, [ref.current]);
+  return ref;
+};

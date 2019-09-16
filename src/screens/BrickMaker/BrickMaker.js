@@ -64,7 +64,7 @@ function BrickMaker(props: { navigation: any }) {
           />
         </View>
         <Input placeholder="source" />
-        {displayedError && <Text>{displayedError}</Text>}
+        {displayedError !== "" && <Text>{displayedError}</Text>}
         <View style={styles.submit}>
           <Button title="Sauvegarder" onPress={submit} />
         </View>

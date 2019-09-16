@@ -3,10 +3,11 @@ import React, { useState } from "react";
 import _ from "lodash";
 import { FAB } from "react-native-paper";
 import { View, StyleSheet, ScrollView } from "react-native";
-import { Text, SearchBar, Button } from "react-native-elements";
+import { SearchBar } from "react-native-elements";
 import { useBricks } from "../../hooks";
 import { matchBrickWithSearch } from "./helpers";
 import NewConceptModal from "./NewConceptModal";
+import BrickDisplay from "./BrickDisplay";
 
 const styles = StyleSheet.create({
   main: {
@@ -15,27 +16,11 @@ const styles = StyleSheet.create({
     borderStyle: "solid",
     margin: 8
   },
-  brickContainer: {
-    borderWidth: 1,
-    borderColor: "black",
-    borderStyle: "solid",
-    marginBottom: 10
-  },
-  brickHeader: {},
-  brickHeaderTitle: {},
-  sectionTitle: {},
-  brickHeaderStatus: {},
-  brickContent: {},
-  brickContentDefinition: {},
-  brickContentConcepts: {},
   fab: {
     position: "absolute",
     margin: 34,
     right: 0,
     bottom: 50
-  },
-  buttonAdd: {
-    width: 100
   }
 });
 
@@ -44,58 +29,21 @@ function BrickList({ navigation }: { navigation: any }) {
   const [search, setSearch] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  const brickPerParent = _(bricks)
+  const concepts = _(bricks)
     .filter(brick => matchBrickWithSearch(brick, search))
-    .groupBy("parentConcept");
+    .map("parentConcept")
+    .uniq()
+    .sortBy()
+    .value();
 
-  // Use FlatList id ScrollView becomes too slow
+  // Use FlatList if ScrollView becomes too slow
   return (
     <View>
       <SearchBar onChangeText={setSearch} value={search} />
       <ScrollView style={styles.main}>
-        {brickPerParent
-          .map((childrenBricks, parentConcept) => {
-            console.debug({ childrenBricks, parentConcept, brickPerParent });
-            const numberBricks = childrenBricks.length;
-            const brick = childrenBricks[0];
-            return (
-              <View style={styles.brickContainer} key={brick.parentConcept}>
-                <View style={styles.brickHeader}>
-                  <Text h4 style={styles.brickHeaderTitle}>
-                    {parentConcept}
-                  </Text>
-                  <Text>#Bricks : {numberBricks}</Text>
-                  <Text style={styles.brickHeaderStatus}>
-                    Status : {brick.status}
-                  </Text>
-                </View>
-                <View style={{}}>
-                  <View style={styles.brickContent}>
-                    <Text style={styles.brickContentDefinition}>
-                      Content : {brick.content}
-                    </Text>
-                    <Text style={styles.brickContentConcepts}>
-                      Concepts : {brick.childrenConcepts.join("|")}
-                    </Text>
-                  </View>
-                </View>
-                <Button
-                  containerStyle={styles.buttonAdd}
-                  title="Itérer"
-                  icon={{
-                    name: "add",
-                    size: 15
-                  }}
-                  type="outline"
-                  onPress={() =>
-                    navigation.navigate("BrickMaker", {
-                      concept: parentConcept
-                    })}
-                />
-              </View>
-            );
-          })
-          .value()}
+        {concepts.map(parentConcept => (
+          <BrickDisplay concept={parentConcept} />
+        ))}
       </ScrollView>
       <FAB style={styles.fab} onPress={() => setShowModal(true)} icon="add" />
       <NewConceptModal
@@ -107,7 +55,6 @@ function BrickList({ navigation }: { navigation: any }) {
   );
 }
 
-/* onPress={() => navigation.navigate("BrickMaker")} */
 BrickList.navigationOptions = {
   title: "List des briques"
 };

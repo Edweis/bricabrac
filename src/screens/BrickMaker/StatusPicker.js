@@ -1,22 +1,14 @@
 import React from "react";
 import { Picker } from "react-native";
 import type { StatusT } from "../../constants/types";
+import { translateStatus } from "../../constants/translations";
 
 type Props = {
   status: StatusT,
   setStatus: StatusT => void
 };
-const mapStatustoLevel: { [StatusT]: string } = {
-  accepted: "success",
-  refused: "error",
-  none: "warning"
-};
-const translateStatus: { [StatusT]: string } = {
-  accepted: "acceptée",
-  refused: "réfutée",
-  none: "sans avis"
-};
-export default function Status(props: Props) {
+
+export default function StatusPicker(props: Props) {
   return (
     <Picker
       selectedValue={props.status}

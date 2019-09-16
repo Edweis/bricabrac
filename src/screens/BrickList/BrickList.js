@@ -42,7 +42,7 @@ function BrickList({ navigation }: { navigation: any }) {
       <SearchBar onChangeText={setSearch} value={search} />
       <ScrollView style={styles.main}>
         {concepts.map(parentConcept => (
-          <BrickDisplay concept={parentConcept} />
+          <BrickDisplay concept={parentConcept} key={parentConcept} />
         ))}
       </ScrollView>
       <FAB style={styles.fab} onPress={() => setShowModal(true)} icon="add" />

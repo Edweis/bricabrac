@@ -4,6 +4,7 @@ import { NavigationContext } from "react-navigation";
 import { View, StyleSheet } from "react-native";
 import { Text, Button } from "react-native-elements";
 import type { BrickT } from "../../constants/types";
+import Status from "../../components/Status";
 import { useBricks } from "../../hooks";
 
 const styles = StyleSheet.create({
@@ -18,7 +19,16 @@ const styles = StyleSheet.create({
   sectionTitle: {},
   brickHeaderStatus: {},
   brickContent: {},
-  brickContentDefinition: {},
+  brickContentDefinition: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  contentExtra: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center"
+  },
   brickContentConcepts: {},
   buttonAdd: {
     width: 100
@@ -27,11 +37,13 @@ const styles = StyleSheet.create({
 
 function BrickItemDisplay({ brick }: { brick: BrickT }) {
   return (
-    <Text style={styles.brickContentDefinition}>
-      {brick.content}
-      <Text fontStyle="italic"> ({brick.status})</Text>
-      <Text> {brick.childrenConcepts.join("|")}</Text>
-    </Text>
+    <View style={styles.brickContentDefinition}>
+      <Text>{brick.content}</Text>
+      <View style={styles.contentExtra}>
+        <Text> {brick.childrenConcepts.join("|")}</Text>
+        <Status status={brick.status} />
+      </View>
+    </View>
   );
 }
 

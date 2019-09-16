@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Button } from "react-native";
 import { Text, Input } from "react-native-elements";
 import Concepts from "../../components/Concepts";
-import Status from "./Status";
+import StatusPicker from "./StatusPicker";
 import { addBrick, useFocusOnMount } from "../../hooks";
 import { getBrickError } from "./helpers";
 import { DEFAULT_BRICK } from "../../constants/defaults";
@@ -58,7 +58,7 @@ function BrickMaker(props: { navigation: any }) {
         <Concepts concepts={newBrick.childrenConcepts} />
         <View style={styles.status}>
           <Text style={styles.statusTitle}>Status</Text>
-          <Status
+          <StatusPicker
             status={newBrick.status}
             setStatus={s => setNewBrick({ ...newBrick, status: s })}
           />

@@ -36,6 +36,9 @@ export const addBrick = brick => {
     .firestore()
     .collection(BRIC_COLLECTION)
     .add(enrichedBrick)
-    .then(() => console.log("Brick added !"))
+    .then(() => {
+      console.log("Brick added !");
+      console.log({ enrichedBrick });
+    })
     .catch(err => console.error(err));
 };

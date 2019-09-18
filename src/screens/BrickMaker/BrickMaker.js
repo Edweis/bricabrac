@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Button } from "react-native";
 import { Text, Input } from "react-native-elements";
-import Concepts from "../../components/Concepts";
+import ConceptsPicker from "./ConceptsPicker";
 import StatusPicker from "./StatusPicker";
 import { addBrick, useFocusOnMount } from "../../hooks";
 import { getBrickError } from "./helpers";
@@ -50,17 +50,20 @@ function BrickMaker(props: { navigation: any }) {
         <Input
           placeholder="Description ..."
           value={newBrick.content}
-          onChangeText={d => setNewBrick({ ...newBrick, content: d })}
+          onChangeText={content => setNewBrick({ ...newBrick, content })}
           numberOfLines={4}
           multiline
           ref={focusOnMountRef}
         />
-        <Concepts concepts={newBrick.childrenConcepts} />
+        <ConceptsPicker
+          concepts={newBrick.childrenConcepts}
+          onChange={concepts => setNewBrick({ ...newBrick, concepts })}
+        />
         <View style={styles.status}>
           <Text style={styles.statusTitle}>Status</Text>
           <StatusPicker
             status={newBrick.status}
-            setStatus={s => setNewBrick({ ...newBrick, status: s })}
+            setStatus={status => setNewBrick({ ...newBrick, status })}
           />
         </View>
         <Input placeholder="source" />

@@ -14,40 +14,36 @@ type Concept = {
 };
 type Props = {
   concepts: Concept[],
-  hideInput: boolean
+  onChange: (Concept[]) => void
 };
-export default function Concepts(props: Props) {
-  const [currentConcepts, setCurrentConcepts] = useState(props.concepts);
+export default function ConceptsPicker(props: Props) {
+  const { concepts } = props;
   const [newConceptValue, setNewConceptValue] = useState("");
   const addConcept = () => {
-    if (!currentConcepts.includes(newConceptValue))
-      setCurrentConcepts([...currentConcepts, newConceptValue]);
+    if (!concepts.includes(newConceptValue))
+      props.onChange([...concepts, newConceptValue]);
     setNewConceptValue("");
   };
   return (
     <View>
-      {!props.hideInput && (
-        <View style={styles.newBadge}>
-          <TextInput
-            placeholder="Nouveau concept"
-            onChangeText={setNewConceptValue}
-            value={newConceptValue}
-          />
-          <Button
-            onPress={addConcept}
-            title="ajouter"
-            type="outline"
-            buttonStyle={styles.addButton}
-          />
-        </View>
-      )}
+      <View style={styles.newBadge}>
+        <TextInput
+          placeholder="Nouveau concept"
+          onChangeText={setNewConceptValue}
+          value={newConceptValue}
+        />
+        <Button
+          onPress={addConcept}
+          title="ajouter"
+          type="outline"
+          buttonStyle={styles.addButton}
+        />
+      </View>
       <View style={styles.badges}>
-        {currentConcepts.map(concept => (
+        {concepts.map(concept => (
           <Badge key={concept} value={concept} containerStyle={styles.badge} />
         ))}
       </View>
     </View>
   );
 }
-
-Concepts.defaultProps = { hideInput: false };

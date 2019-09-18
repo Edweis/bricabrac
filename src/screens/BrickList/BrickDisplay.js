@@ -12,7 +12,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
     borderStyle: "solid",
-    marginBottom: 10
+    marginBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    paddingRight: 10
   },
   brickHeader: {},
   brickHeaderTitle: {},
@@ -31,7 +35,14 @@ const styles = StyleSheet.create({
   },
   brickContentConcepts: {},
   buttonAdd: {
-    width: 100
+    width: 30,
+    height: 30
+  },
+  actionText: { textDecorationLine: "underline" },
+  footer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
   }
 });
 
@@ -53,7 +64,6 @@ export default function BrickDisplay({ concept }: { concept: string }) {
 
   const allBricks = useBricks();
   const bricks = allBricks.filter(brick => brick.parentConcept === concept);
-  const numberBricks = bricks.length;
 
   if (!bricks.length)
     return <Text style={styles.brickContainer}>No bricks for {concept}</Text>;
@@ -66,10 +76,14 @@ export default function BrickDisplay({ concept }: { concept: string }) {
         {concept}
       </Text>
       <BrickItemDisplay brick={headBrick} />
-      <View>
+      <View style={styles.footer}>
+        {hiddenBricks.length != null && (
+          <Text style={styles.actionText} onPress={() => setShowAll(!showAll)}>
+            {showAll ? "Hide" : "See"} all {hiddenBricks.length} bricks
+          </Text>
+        )}
         <Button
           containerStyle={styles.buttonAdd}
-          title="Itérer"
           icon={{
             name: "add",
             size: 15
@@ -78,13 +92,10 @@ export default function BrickDisplay({ concept }: { concept: string }) {
           onPress={() => navigation.navigate("BrickMaker", { concept })}
         />
       </View>
-      <Text onPress={() => setShowAll(!showAll)}>
-        {showAll ? "Hide" : "See"} all {numberBricks} bricks
-      </Text>
       <View>
         {showAll &&
           hiddenBricks.map(hiddenBrick => (
-            <BrickItemDisplay brick={hiddenBrick} />
+            <BrickItemDisplay brick={hiddenBrick} key={hiddenBrick.id} />
           ))}
       </View>
     </View>

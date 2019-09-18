@@ -26,6 +26,7 @@
         "react",
 	"flowtype",
 	"react-hooks",
+	"import",
 	"prettier"
     ],
     "rules": {
@@ -41,5 +42,18 @@
             }
         ]
 
-    }
+    },
+    "settings": {
+		"import/resolver": {
+			"node": {
+				"paths": ["src"],
+				"alias": {
+				       "_assets":"./src/assets",
+                                       "_components":"./src/components",
+                                       "_constants":"./src/constants",
+                                       "_hooks":"./src/hooks"
+				}
+			}
+		}
+	}
 }

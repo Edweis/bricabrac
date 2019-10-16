@@ -7,6 +7,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 import AppNavigator from "./src/navigation/AppNavigator";
 
+console.ignoredYellowBox  = ['Setting a timer'];
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

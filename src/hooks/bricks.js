@@ -2,10 +2,11 @@ import _ from "lodash";
 import { useState, useEffect } from "react";
 import { firebase } from "../firebase";
 import { DEFAULT_BRICK } from "../constants/defaults";
+import { ConceptT } from "../constants/types";
 
 const BRIC_COLLECTION = "bricks";
 
-export const useBricks = () => {
+export const useBricks = (concept: ConceptT) => {
   const [brics, setBrics] = useState([DEFAULT_BRICK]);
 
   useEffect(() => {
@@ -21,6 +22,8 @@ export const useBricks = () => {
       });
     return () => unsubscribe();
   }, []);
+  if (concept != null)
+    return brics.filter(brick => brick.parentConcept === concept);
   return brics;
 };
 

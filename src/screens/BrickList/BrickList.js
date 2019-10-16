@@ -1,21 +1,16 @@
 // @flow
 import React, { useState } from "react";
 import _ from "lodash";
-import { FAB } from "react-native-paper";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { SearchBar } from "react-native-elements";
+import FAB from "../../components/FAB";
 import { useBricks } from "../../hooks";
 import { matchBrickWithSearch } from "./helpers";
 import NewConceptModal from "./NewConceptModal";
 import BrickDisplay from "./BrickDisplay";
 
 const styles = StyleSheet.create({
-  main: {
-    borderWidth: 1,
-    borderColor: "grey",
-    borderStyle: "solid",
-    margin: 8
-  },
+  content: {},
   fab: {
     position: "absolute",
     margin: 34,
@@ -38,20 +33,20 @@ function BrickList({ navigation }: { navigation: any }) {
 
   // Use FlatList if ScrollView becomes too slow
   return (
-    <View>
+    <>
       <SearchBar onChangeText={setSearch} value={search} />
-      <ScrollView style={styles.main}>
+      <ScrollView style={styles.content}>
         {concepts.map(parentConcept => (
           <BrickDisplay concept={parentConcept} key={parentConcept} />
         ))}
       </ScrollView>
-      <FAB style={styles.fab} onPress={() => setShowModal(true)} icon="add" />
       <NewConceptModal
         show={showModal}
         onSubmit={concept => navigation.navigate("BrickMaker", { concept })}
         onClose={() => setShowModal(false)}
       />
-    </View>
+      <FAB onPress={() => setShowModal(true)} />
+    </>
   );
 }
 

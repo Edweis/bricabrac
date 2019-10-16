@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { NavigationContext } from "react-navigation";
 import { View, StyleSheet, Button } from "react-native";
 import { Text, Input } from "react-native-elements";
 import ConceptsPicker from "./ConceptsPicker";
@@ -25,10 +26,11 @@ const styles = StyleSheet.create({
   containerStyle: { height: 50, fontSize: 50 }
 });
 
-function BrickMaker(props: { navigation: any }) {
+function BrickMaker() {
+  const navigation = useContext(NavigationContext);
   const [newBrick, setNewBrick] = useState({
     ...DEFAULT_BRICK,
-    parentConcept: props.navigation.getParam("concept")
+    parentConcept: navigation.getParam("concept")
   });
   const [displayedError, setDisplayedError] = useState("");
 
@@ -39,7 +41,7 @@ function BrickMaker(props: { navigation: any }) {
     setDisplayedError(error);
     if (error == null) {
       addBrick(newBrick);
-      props.navigation.goBack();
+      navigation.goBack();
     }
   };
 

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
-import { Badge, Button } from 'react-native-elements';
+import { ListItem, Button, Input } from 'react-native-elements';
+import { NavigationContext } from 'react-navigation';
 
 const styles = StyleSheet.create({
   badges: { display: 'flex', flexDirection: 'row' },
@@ -16,33 +17,31 @@ type Props = {
   concepts: Concept[],
   onChange: (Concept[]) => void
 };
-export default function ConceptsPicker(props: Props) {
+export default function ConceptPicker(props: Props) {
+  const navigation = useContext(NavigationContext);
   const { concepts } = props;
-  const [newConceptValue, setNewConceptValue] = useState('');
-  const addConcept = () => {
-    if (!concepts.includes(newConceptValue)) {
-      props.onChange([...concepts, newConceptValue]);
-    }
-    setNewConceptValue('');
+  const addConcept = (concept: Concept) => {
+    if (!concepts.includes(concept)) props.onChange([...concepts, concept]);
   };
+
   return (
     <View>
       <View style={styles.newBadge}>
-        <TextInput
-          placeholder="Nouveau concept"
-          onChangeText={setNewConceptValue}
-          value={newConceptValue}
-        />
         <Button
-          onPress={addConcept}
+          onPress={() =>
+            navigation.push('ConceptList', {
+              hideFAB: true,
+              onSubmit: addConcept
+            })
+          }
           title="ajouter"
           type="outline"
           buttonStyle={styles.addButton}
         />
       </View>
-      <View style={styles.badges}>
+      <View>
         {concepts.map(concept => (
-          <Badge key={concept} value={concept} containerStyle={styles.badge} />
+          <ListItem key={concept} title={concept} subtitle="Just the concept" />
         ))}
       </View>
     </View>

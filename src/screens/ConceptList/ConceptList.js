@@ -1,13 +1,15 @@
 // @flow
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import SearchLayout from 'react-navigation-addon-search-layout';
+import { NavigationContext } from 'react-navigation';
 import FAB from '../../components/FAB';
 import { useBricks } from '../../hooks';
 import { matchBrickWithSearch } from './helpers';
 import NewConceptModal from './NewConceptModal';
 import ConceptItem from './ConceptItem';
+import type { Props as ConceptItemProps } from './ConceptItem';
 
 const styles = StyleSheet.create({
   content: {},
@@ -18,8 +20,24 @@ const styles = StyleSheet.create({
     bottom: 50
   }
 });
+const defaultNavProps = {
+  hideFAB: false,
+  onSubmit: (concept, navigation) =>
+    navigation.navigate('ConceptBrickList', { concept })
+};
 
-function ConceptList({ navigation }: { navigation: any }) {
+function ConceptList() {
+  const navigation = useContext(NavigationContext);
+  const hideFAB = _.get(
+    navigation.state,
+    'params.hideFAB',
+    defaultNavProps.hideFAB
+  );
+  const onSubmit = _.get(
+    navigation.state,
+    'params.onSubmit',
+    defaultNavProps.onSubmit
+  );
   const bricks = useBricks();
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -33,26 +51,34 @@ function ConceptList({ navigation }: { navigation: any }) {
 
   // Use FlatList if ScrollView becomes too slow
   return (
-    <>
-      <SearchBar onChangeText={setSearch} value={search} />
+    <SearchLayout onChangeQuery={setSearch}>
       <ScrollView style={styles.content}>
         {concepts.map(parentConcept => (
-          <ConceptItem concept={parentConcept} key={parentConcept} />
+          <ConceptItem
+            concept={parentConcept}
+            onSelect={concept => {
+              onSubmit(concept, navigation);
+              navigation.goBack();
+            }}
+            key={parentConcept}
+          />
         ))}
       </ScrollView>
-      <NewConceptModal
-        show={showModal}
-        onSubmit={concept => navigation.navigate('BrickMaker', { concept })}
-        onClose={() => setShowModal(false)}
-      />
-      <FAB onPress={() => setShowModal(true)} />
-    </>
+      {hideFAB === false && (
+        <>
+          <NewConceptModal
+            show={showModal}
+            onSubmit={concept => navigation.navigate('BrickMaker', { concept })}
+            onClose={() => setShowModal(false)}
+          />
+          <FAB onPress={() => setShowModal(true)} />
+        </>
+      )}
+    </SearchLayout>
   );
 }
 
-ConceptList.navigationOptions = {
-  title: 'List des briques'
-};
+ConceptList.navigationOptions = { header: null };
 
 // <Concepts concepts={brick.concepts && brick.concepts.split('|')} />
 

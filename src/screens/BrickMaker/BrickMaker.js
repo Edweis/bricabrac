@@ -1,8 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { NavigationContext } from 'react-navigation';
-import { View, StyleSheet, Button } from 'react-native';
+import { View, StyleSheet, Button, ScrollView } from 'react-native';
 import { Text, Input } from 'react-native-elements';
-import ConceptsPicker from './ConceptsPicker';
+import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import { addBrick, useFocusOnMount } from '../../hooks';
 import { getBrickError } from './helpers';
@@ -46,17 +46,17 @@ function BrickMaker() {
   };
 
   return (
-    <View style={styles.main}>
+    <ScrollView contentContainerStyle={styles.main}>
       <View style={styles.form}>
         <Input
-          placeholder="Description ..."
+          label="Description"
           value={newBrick.content}
           onChangeText={content => setNewBrick({ ...newBrick, content })}
           numberOfLines={4}
           multiline
           ref={focusOnMountRef}
         />
-        <ConceptsPicker
+        <ConceptPicker
           concepts={newBrick.childrenConcepts}
           onChange={childrenConcepts =>
             setNewBrick({ ...newBrick, childrenConcepts })
@@ -75,7 +75,7 @@ function BrickMaker() {
           <Button title="Sauvegarder" onPress={submit} />
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

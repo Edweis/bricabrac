@@ -58,7 +58,9 @@ function BrickMaker() {
         />
         <ConceptsPicker
           concepts={newBrick.childrenConcepts}
-          onChange={concepts => setNewBrick({ ...newBrick, concepts })}
+          onChange={childrenConcepts =>
+            setNewBrick({ ...newBrick, childrenConcepts })
+          }
         />
         <View style={styles.status}>
           <Text style={styles.statusTitle}>Status</Text>

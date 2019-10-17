@@ -38,7 +38,7 @@ function BrickDetails() {
       <FAB
         key="fab"
         onPress={() =>
-          navigation.navigate('BrickMaker', { concept: brick.concept })}
+          navigation.navigate('BrickMaker', { concept: brick.parentConcept })}
       />
     </>
   );

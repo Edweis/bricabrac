@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
-import { ListItem, Button, Input } from 'react-native-elements';
+import { View, StyleSheet, Text } from 'react-native';
+import { ListItem, Button } from 'react-native-elements';
 import { NavigationContext } from 'react-navigation';
 
 const styles = StyleSheet.create({
@@ -23,10 +23,14 @@ export default function ConceptPicker(props: Props) {
   const addConcept = (concept: Concept) => {
     if (!concepts.includes(concept)) props.onChange([...concepts, concept]);
   };
+  const removeConcept = (concept: Concept) => {
+    props.onChange(concepts.filter(c => c !== concept));
+  };
 
   return (
     <View>
       <View style={styles.newBadge}>
+        <Text>Linked concepts :</Text>
         <Button
           onPress={() =>
             navigation.push('ConceptList', {
@@ -41,7 +45,16 @@ export default function ConceptPicker(props: Props) {
       </View>
       <View>
         {concepts.map(concept => (
-          <ListItem key={concept} title={concept} subtitle="Just the concept" />
+          <ListItem
+            key={concept}
+            title={concept}
+            rightIcon={{
+              name: 'delete',
+              onPress: () => removeConcept(concept)
+            }}
+            subtitle="Just the concept"
+            bottomDivider
+          />
         ))}
       </View>
     </View>

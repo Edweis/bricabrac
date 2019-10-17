@@ -1,4 +1,4 @@
-// @FLow
+// @flow
 import { Platform } from 'react-native';
 import {
   createStackNavigator,
@@ -10,7 +10,6 @@ import BrickMaker from '../screens/BrickMaker';
 import ConceptList from '../screens/ConceptList';
 import ConceptBrickList from '../screens/ConceptBrickList';
 import BrickDetails from '../screens/BrickDetails';
-import ConceptPickerList from '../screens/BrickMaker/ConceptPicker/ConceptPickerList';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -26,7 +25,6 @@ const AppNavigator = createStackNavigator(
     BrickMaker,
     ConceptBrickList,
     BrickDetails,
-    ConceptPickerList
   },
   config
 );

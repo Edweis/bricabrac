@@ -1,5 +1,5 @@
 // $Flow
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 
 export const useSubscribedState = defaultState => {
   const [state, setState] = useState(defaultState);

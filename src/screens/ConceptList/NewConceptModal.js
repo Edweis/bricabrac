@@ -1,30 +1,30 @@
 // @flow
-import React, { useState } from "react";
-import { View, Button, StyleSheet } from "react-native";
-import { Text, Input } from "react-native-elements";
+import React, { useState } from 'react';
+import { View, Button, StyleSheet } from 'react-native';
+import { Text, Input } from 'react-native-elements';
 
-import Modal from "react-native-modal";
+import Modal from 'react-native-modal';
 
 type Props = { show: boolean, onClose: () => void, onSubmit: string => void };
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     padding: 22,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 4,
-    borderColor: "rgba(0, 0, 0, 0.1)"
+    borderColor: 'rgba(0, 0, 0, 0.1)'
   }
 });
 
 export default function NewConceptModal(props: Props) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
   const onSubmit = () => {
-    if (value !== "") {
+    if (value !== '') {
       props.onSubmit(value);
       props.onClose();
-      setValue("");
+      setValue('');
     }
   };
   return (

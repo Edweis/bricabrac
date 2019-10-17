@@ -1,3 +1,3 @@
-import ConceptBrickList from "./ConceptBrickList";
+import ConceptBrickList from './ConceptBrickList';
 
 export default ConceptBrickList;

@@ -1,24 +1,24 @@
-import React, { useState, useContext } from "react";
-import { NavigationContext } from "react-navigation";
-import { View, StyleSheet, Button } from "react-native";
-import { Text, Input } from "react-native-elements";
-import ConceptsPicker from "./ConceptsPicker";
-import StatusPicker from "./StatusPicker";
-import { addBrick, useFocusOnMount } from "../../hooks";
-import { getBrickError } from "./helpers";
-import { DEFAULT_BRICK } from "../../constants/defaults";
+import React, { useState, useContext } from 'react';
+import { NavigationContext } from 'react-navigation';
+import { View, StyleSheet, Button } from 'react-native';
+import { Text, Input } from 'react-native-elements';
+import ConceptsPicker from './ConceptsPicker';
+import StatusPicker from './StatusPicker';
+import { addBrick, useFocusOnMount } from '../../hooks';
+import { getBrickError } from './helpers';
+import { EMPTY_BRICK } from '../../constants/defaults';
 
 const styles = StyleSheet.create({
   main: {
-    display: "flex",
+    display: 'flex',
     padding: 10,
-    height: "100%",
-    justifyContent: "space-between"
+    height: '100%',
+    justifyContent: 'space-between'
   },
   definition: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center"
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   status: {},
   statusTitle: {},
@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
 function BrickMaker() {
   const navigation = useContext(NavigationContext);
   const [newBrick, setNewBrick] = useState({
-    ...DEFAULT_BRICK,
-    parentConcept: navigation.getParam("concept")
+    ...EMPTY_BRICK,
+    parentConcept: navigation.getParam('concept')
   });
-  const [displayedError, setDisplayedError] = useState("");
+  const [displayedError, setDisplayedError] = useState('');
 
   const focusOnMountRef = useFocusOnMount();
 
@@ -68,7 +68,7 @@ function BrickMaker() {
           />
         </View>
         <Input placeholder="source" />
-        {displayedError !== "" && <Text>{displayedError}</Text>}
+        {displayedError !== '' && <Text>{displayedError}</Text>}
         <View style={styles.submit}>
           <Button title="Sauvegarder" onPress={submit} />
         </View>
@@ -78,12 +78,12 @@ function BrickMaker() {
 }
 
 BrickMaker.navigationOptions = ({ navigation }) => {
-  const concept = navigation.getParam("concept", { concept: "..." });
+  const concept = navigation.getParam('concept', { concept: '...' });
   const title = `${concept} > Ajouter`;
   return {
     title,
     headerStyle: {
-      backgroundColor: "#f4511e"
+      backgroundColor: '#f4511e'
     }
   };
 };

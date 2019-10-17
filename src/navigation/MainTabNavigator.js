@@ -1,20 +1,20 @@
 // @FLow
-import { Platform } from "react-native";
+import { Platform } from 'react-native';
 import {
   createStackNavigator,
   NavigationState,
   NavigationScreenProp
-} from "react-navigation";
+} from 'react-navigation';
 
-import BrickMaker from "../screens/BrickMaker";
-import ConceptList from "../screens/ConceptList";
-import ConceptBrickList from "../screens/ConceptBrickList";
-import BrickDetails from "../screens/BrickDetails";
+import BrickMaker from '../screens/BrickMaker';
+import ConceptList from '../screens/ConceptList';
+import ConceptBrickList from '../screens/ConceptBrickList';
+import BrickDetails from '../screens/BrickDetails';
 
 const config = Platform.select({
-  web: { headerMode: "screen" },
+  web: { headerMode: 'screen' },
 
-  initialRouteName: "ConceptList",
+  initialRouteName: 'ConceptList',
   default: {}
 });
 // export const type NavigationProps = { navigation: NavigationScreenProp<NavigationState> };

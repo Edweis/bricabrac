@@ -1,18 +1,18 @@
 // @flow
-import React, { useState } from "react";
-import _ from "lodash";
-import { StyleSheet, ScrollView } from "react-native";
-import { SearchBar } from "react-native-elements";
-import FAB from "../../components/FAB";
-import { useBricks } from "../../hooks";
-import { matchBrickWithSearch } from "./helpers";
-import NewConceptModal from "./NewConceptModal";
-import ConceptItem from "./ConceptItem";
+import React, { useState } from 'react';
+import _ from 'lodash';
+import { StyleSheet, ScrollView } from 'react-native';
+import { SearchBar } from 'react-native-elements';
+import FAB from '../../components/FAB';
+import { useBricks } from '../../hooks';
+import { matchBrickWithSearch } from './helpers';
+import NewConceptModal from './NewConceptModal';
+import ConceptItem from './ConceptItem';
 
 const styles = StyleSheet.create({
   content: {},
   fab: {
-    position: "absolute",
+    position: 'absolute',
     margin: 34,
     right: 0,
     bottom: 50
@@ -21,12 +21,12 @@ const styles = StyleSheet.create({
 
 function ConceptList({ navigation }: { navigation: any }) {
   const bricks = useBricks();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const concepts = _(bricks)
     .filter(brick => matchBrickWithSearch(brick, search))
-    .map("parentConcept")
+    .map('parentConcept')
     .uniq()
     .sortBy()
     .value();
@@ -42,7 +42,7 @@ function ConceptList({ navigation }: { navigation: any }) {
       </ScrollView>
       <NewConceptModal
         show={showModal}
-        onSubmit={concept => navigation.navigate("BrickMaker", { concept })}
+        onSubmit={concept => navigation.navigate('BrickMaker', { concept })}
         onClose={() => setShowModal(false)}
       />
       <FAB onPress={() => setShowModal(true)} />
@@ -51,7 +51,7 @@ function ConceptList({ navigation }: { navigation: any }) {
 }
 
 ConceptList.navigationOptions = {
-  title: "List des briques"
+  title: 'List des briques'
 };
 
 // <Concepts concepts={brick.concepts && brick.concepts.split('|')} />

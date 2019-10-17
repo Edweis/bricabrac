@@ -1,11 +1,11 @@
-import React, { useState, useCallback } from "react";
-import { View, StyleSheet, Switch, TextInput } from "react-native";
-import { Text, Badge, Icon, Button } from "react-native-elements";
+import React, { useState, useCallback } from 'react';
+import { View, StyleSheet, Switch, TextInput } from 'react-native';
+import { Text, Badge, Icon, Button } from 'react-native-elements';
 
 const styles = StyleSheet.create({
-  badges: { display: "flex", flexDirection: "row" },
+  badges: { display: 'flex', flexDirection: 'row' },
   badge: { marginLeft: 30 },
-  newBadge: { display: "flex", flexDirection: "row" },
+  newBadge: { display: 'flex', flexDirection: 'row' },
   addButton: { marginLeft: 10 }
 });
 
@@ -18,11 +18,11 @@ type Props = {
 };
 export default function ConceptsPicker(props: Props) {
   const { concepts } = props;
-  const [newConceptValue, setNewConceptValue] = useState("");
+  const [newConceptValue, setNewConceptValue] = useState('');
   const addConcept = () => {
     if (!concepts.includes(newConceptValue))
       props.onChange([...concepts, newConceptValue]);
-    setNewConceptValue("");
+    setNewConceptValue('');
   };
   return (
     <View>

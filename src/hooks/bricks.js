@@ -1,10 +1,10 @@
-import _ from "lodash";
-import { useState, useEffect } from "react";
-import { firebase } from "../firebase";
-import { DEFAULT_BRICK } from "../constants/defaults";
-import { ConceptT } from "../constants/types";
+import _ from 'lodash';
+import { useState, useEffect } from 'react';
+import { firebase } from '../firebase';
+import { DEFAULT_BRICK } from '../constants/defaults';
+import { ConceptT } from '../constants/types';
 
-const BRIC_COLLECTION = "bricks";
+const BRIC_COLLECTION = 'bricks';
 
 export const useBricks = (concept: ConceptT) => {
   const [brics, setBrics] = useState([DEFAULT_BRICK]);
@@ -40,7 +40,7 @@ export const addBrick = brick => {
     .collection(BRIC_COLLECTION)
     .add(enrichedBrick)
     .then(() => {
-      console.log("Brick added !");
+      console.log('Brick added !');
       console.log({ enrichedBrick });
     })
     .catch(err => console.error(err));

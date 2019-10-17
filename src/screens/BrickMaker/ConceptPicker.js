@@ -6,8 +6,8 @@ import { NavigationContext } from 'react-navigation';
 const styles = StyleSheet.create({
   badges: { display: 'flex', flexDirection: 'row' },
   badge: { marginLeft: 30 },
-  newBadge: { display: 'flex', flexDirection: 'row' },
-  addButton: { marginLeft: 10 }
+  newBadge: {},
+  addConcept: { width: '50%', marginLeft: 'auto', marginRight: 'auto' }
 });
 
 type Concept = {
@@ -29,18 +29,19 @@ export default function ConceptPicker(props: Props) {
 
   return (
     <View>
-      <View style={styles.newBadge}>
+      <View>
         <Text>Linked concepts :</Text>
         <Button
           onPress={() =>
             navigation.push('ConceptList', {
               hideFAB: true,
-              onSubmit: addConcept
+              onSubmit: addConcept,
+              title: 'Lier un concept'
             })
           }
-          title="ajouter"
+          title="Lier un concept"
           type="outline"
-          buttonStyle={styles.addButton}
+          buttonStyle={styles.addConcept}
         />
       </View>
       <View>

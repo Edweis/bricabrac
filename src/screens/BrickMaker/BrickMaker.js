@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { NavigationContext } from 'react-navigation';
-import { View, StyleSheet, Button, ScrollView } from 'react-native';
-import { Text, Input } from 'react-native-elements';
+import { TextInput, View, StyleSheet, Button, ScrollView } from 'react-native';
+import { Text, Input, Divider } from 'react-native-elements';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import { addBrick, useFocusOnMount } from '../../hooks';
@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
   status: {},
   statusTitle: {},
   inputContainer: { height: 50, fontSize: 40 },
-  containerStyle: { height: 50, fontSize: 50 }
+  containerStyle: { height: 50, fontSize: 50 },
+  divider: { marginTop: 10, marginBottom: 10 }
 });
 
 function BrickMaker() {
@@ -50,18 +51,22 @@ function BrickMaker() {
       <View style={styles.form}>
         <Input
           label="Description"
+          placeholder="description de la brique..."
           value={newBrick.content}
           onChangeText={content => setNewBrick({ ...newBrick, content })}
           numberOfLines={4}
+          inputContainerStyle={{ borderBottomWidth: 0 }}
           multiline
           ref={focusOnMountRef}
         />
+        <Divider />
         <ConceptPicker
           concepts={newBrick.childrenConcepts}
           onChange={childrenConcepts =>
             setNewBrick({ ...newBrick, childrenConcepts })
           }
         />
+        <Divider style={styles.divider} />
         <View style={styles.status}>
           <Text style={styles.statusTitle}>Status</Text>
           <StatusPicker
@@ -69,7 +74,8 @@ function BrickMaker() {
             setStatus={status => setNewBrick({ ...newBrick, status })}
           />
         </View>
-        <Input placeholder="source" />
+        <Divider style={styles.divider} />
+        <Input label="source" />
         {displayedError !== '' && <Text>{displayedError}</Text>}
         <View style={styles.submit}>
           <Button title="Sauvegarder" onPress={submit} />

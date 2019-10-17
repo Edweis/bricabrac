@@ -2,8 +2,8 @@
 import React, { useState, useContext } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
-import SearchLayout from 'react-navigation-addon-search-layout';
 import { NavigationContext } from 'react-navigation';
+import { SearchBar } from 'react-native-elements';
 import FAB from '../../components/FAB';
 import { useBricks } from '../../hooks';
 import { matchBrickWithSearch } from './helpers';
@@ -50,7 +50,12 @@ function ConceptList() {
 
   // Use FlatList if ScrollView becomes too slow
   return (
-    <SearchLayout onChangeQuery={setSearch}>
+    <>
+      <SearchBar
+        placeholder="Search..."
+        onChangeText={setSearch}
+        value={search}
+      />
       <ScrollView style={styles.content}>
         {concepts.map(parentConcept => (
           <ConceptItem
@@ -73,11 +78,13 @@ function ConceptList() {
           <FAB onPress={() => setShowModal(true)} />
         </>
       )}
-    </SearchLayout>
+    </>
   );
 }
 
-ConceptList.navigationOptions = { header: null };
+ConceptList.navigationOptions = ({ navigation }) => ({
+  title: navigation.getParam('title', 'Concepts')
+});
 
 // <Concepts concepts={brick.concepts && brick.concepts.split('|')} />
 

@@ -1,2 +1,3 @@
-import BrickDetails from './BrickDetails';
-export default {BrickDetails};
+import BrickDetails from "./BrickDetails";
+
+export default BrickDetails;

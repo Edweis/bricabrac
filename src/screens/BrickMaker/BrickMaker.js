@@ -48,7 +48,6 @@ function BrickMaker() {
   return (
     <View style={styles.main}>
       <View style={styles.form}>
-        <Text h4>{newBrick.parentConcept}</Text>
         <Input
           placeholder="Description ..."
           value={newBrick.content}
@@ -78,8 +77,15 @@ function BrickMaker() {
   );
 }
 
-BrickMaker.navigationOptions = {
-  title: "Nouvelle brique"
+BrickMaker.navigationOptions = ({ navigation }) => {
+  const concept = navigation.getParam("concept", { concept: "..." });
+  const title = `${concept} > Ajouter`;
+  return {
+    title,
+    headerStyle: {
+      backgroundColor: "#f4511e"
+    }
+  };
 };
 
 export default BrickMaker;

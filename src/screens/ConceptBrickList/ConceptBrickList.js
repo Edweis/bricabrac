@@ -24,9 +24,9 @@ function ConceptBrickList() {
           key={brick.id}
           title={brick.content}
           subtitle={brick.childrenConcepts.join(", ") || null}
-          // onPress={() => navigation.navigate("ConceptBrickList", { concept })}
+          onPress={() => navigation.navigate("BrickDetails", { brick })}
           rightIcon={<Status status={brick.status} />}
-          rightSubtitle={moment(brick.datetime.toDate()).fromNow()}
+          rightSubtitle={moment(brick.submitTime.toDate()).fromNow()}
           bottomDivider
           chevron
         />

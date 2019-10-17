@@ -4,7 +4,7 @@ import { NavigationContext } from "react-navigation";
 import { ListItem } from "react-native-elements";
 import { useBricks } from "../../hooks";
 
-export default function BrickDisplay({ concept }: { concept: string }) {
+export default function ConceptItem({ concept }: { concept: string }) {
   const navigation = useContext(NavigationContext);
 
   const bricks = useBricks(concept);
@@ -18,7 +18,7 @@ export default function BrickDisplay({ concept }: { concept: string }) {
       title={concept}
       rightSubtitle={bricks.length.toString()}
       subtitle={headBrick.content}
-      onPress={() => navigation.navigate("BrickDisplay", { concept })}
+      onPress={() => navigation.navigate("ConceptBrickList", { concept })}
       bottomDivider
       chevron
     />

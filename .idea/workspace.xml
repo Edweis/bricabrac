@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1af5d6d5-ccec-4277-a050-f3a5108a1476" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/BrickList/BrickDisplay.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/BrickList/BrickDisplay.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ConceptList/BrickDisplay.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ConceptList/BrickDisplay.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

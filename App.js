@@ -1,3 +1,4 @@
+import moment from "moment";
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
 import * as Font from "expo-font";
@@ -7,7 +8,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 import AppNavigator from "./src/navigation/AppNavigator";
 
-console.ignoredYellowBox  = ['Setting a timer'];
+console.ignoredYellowBox = ["Setting a timer"];
+moment.locale("fr");
 
 const styles = StyleSheet.create({
   container: {

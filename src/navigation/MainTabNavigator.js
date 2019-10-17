@@ -7,22 +7,22 @@ import {
 } from "react-navigation";
 
 import BrickMaker from "../screens/BrickMaker";
-import BrickList from "../screens/BrickList";
-import BrickDisplay from "../screens/BrickDisplay";
+import ConceptList from "../screens/ConceptList";
+import ConceptBrickList from "../screens/ConceptBrickList";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
 
-  initialRouteName: "BrickList",
+  initialRouteName: "ConceptList",
   default: {}
 });
 // export const type NavigationProps = { navigation: NavigationScreenProp<NavigationState> };
 
 const AppNavigator = createStackNavigator(
   {
-    BrickList,
+    ConceptList,
     BrickMaker,
-    BrickDisplay
+    ConceptBrickList
   },
   config
 );

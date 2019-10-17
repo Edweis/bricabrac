@@ -9,7 +9,6 @@ import { useBricks } from '../../hooks';
 import { matchBrickWithSearch } from './helpers';
 import NewConceptModal from './NewConceptModal';
 import ConceptItem from './ConceptItem';
-import type { Props as ConceptItemProps } from './ConceptItem';
 
 const styles = StyleSheet.create({
   content: {},

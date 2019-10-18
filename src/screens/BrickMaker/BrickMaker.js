@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
   statusTitle: {},
   inputContainer: { height: 50, fontSize: 40 },
   containerStyle: { height: 50, fontSize: 50 },
-  divider: { marginTop: 10, marginBottom: 10 }
+  divider: { marginTop: 10, marginBottom: 10 },
+  submit: { marginTop: 10 }
 });
 
 function BrickMaker() {
@@ -60,6 +61,8 @@ function BrickMaker() {
           ref={focusOnMountRef}
         />
         <Divider style={styles.divider} />
+        <Input label="source" />
+        <Divider style={styles.divider} />
         <ConceptPicker
           concepts={newBrick.childrenConcepts}
           onChange={childrenConcepts =>
@@ -71,8 +74,6 @@ function BrickMaker() {
           status={newBrick.status}
           setStatus={status => setNewBrick({ ...newBrick, status })}
         />
-        <Divider style={styles.divider} />
-        <Input label="source" />
         {displayedError !== '' && <Text>{displayedError}</Text>}
         <View style={styles.submit}>
           <Button title="Sauvegarder" onPress={submit} />

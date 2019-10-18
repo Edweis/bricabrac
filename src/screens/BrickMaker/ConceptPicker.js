@@ -39,7 +39,6 @@ export default function ConceptPicker(props: Props) {
               onPress: () => removeConcept(concept)
             }}
             subtitle="Just the concept"
-            bottomDivider
           />
         ))}
       </View>

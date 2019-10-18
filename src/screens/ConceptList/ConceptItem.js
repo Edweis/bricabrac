@@ -1,8 +1,11 @@
 // @flow
 import React from 'react';
 import { ListItem } from 'react-native-elements';
+import { View, Text } from 'react-native';
 import { useBricks } from '../../hooks';
 import { ConceptT } from '../../constants/types';
+import { getFeaturedBrick } from './helpers';
+import Status from '../../components/Status';
 
 export type Props = {
   concept: string,
@@ -11,15 +14,28 @@ export type Props = {
 };
 export default function ConceptItem({ concept, onSelect, onCreate }: Props) {
   const bricks = useBricks(concept);
-
+  const featured = getFeaturedBrick(bricks);
   const data = bricks.length
     ? {
+        title: (
+          <View
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center'
+            }}
+          >
+            <Status status={featured.status} marginRight />
+            <Text>{concept}</Text>
+          </View>
+        ),
         rightSubtitle: bricks.length.toString(),
-        subtitle: bricks[0].content,
+        subtitle: featured.content,
         onPress: () => onSelect(concept),
         rightIcon: { name: 'chevron-right' }
       }
     : {
+        title: concept,
         rightSubtitle: '',
         subtitle: 'Pas encore de brique !',
         onPress: () => onCreate(concept),
@@ -28,7 +44,7 @@ export default function ConceptItem({ concept, onSelect, onCreate }: Props) {
 
   return (
     <ListItem
-      title={concept}
+      title={data.title}
       rightSubtitle={data.rightSubtitle}
       subtitle={data.subtitle}
       onPress={data.onPress}

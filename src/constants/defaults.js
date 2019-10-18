@@ -7,6 +7,7 @@ export const DEFAULT_BRICK: BrickT = {
   childrenConcepts: [],
   content: 'loading content ...',
   datetime: firebase.firestore.Timestamp.now(),
+  submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: 'loading concept ...',
   source: 'loading source ...',
   status: 'none'
@@ -16,6 +17,7 @@ export const EMPTY_BRICK: BrickT = {
   childrenConcepts: [],
   content: '',
   datetime: firebase.firestore.Timestamp.now(),
+  submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: '',
   source: '',
   status: 'none'

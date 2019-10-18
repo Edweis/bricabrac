@@ -11,9 +11,15 @@ const styles = StyleSheet.create({
   },
   accepted: { backgroundColor: colors.status.accepted },
   refused: { backgroundColor: colors.status.refused },
-  none: { backgroundColor: colors.status.none }
+  none: { backgroundColor: colors.status.none },
+  marginRight: { marginRight: 10 }
 });
 
-export default function Status({ status }: { status: StatusT }) {
-  return <View style={[styles.dot, styles[status]]} />;
+type Props = { status: StatusT, marginRight?: boolean };
+function Status({ status, marginRight }: Props) {
+  const myStyles = [styles.dot, styles[status]];
+  if (marginRight) myStyles.push(styles.marginRight);
+  return <View style={myStyles} />;
 }
+Status.defaultProps = { marginRight: false };
+export default Status;

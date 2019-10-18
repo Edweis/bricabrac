@@ -6,23 +6,34 @@ import { ConceptT } from '../../constants/types';
 
 export type Props = {
   concept: string,
-  onSelect: (concept: ConceptT, navigation: any) => void
+  onSelect: (concept: ConceptT) => void,
+  onCreate: (concept: ConceptT) => void
 };
-export default function ConceptItem({ concept, onSelect }: Props) {
+export default function ConceptItem({ concept, onSelect, onCreate }: Props) {
   const bricks = useBricks(concept);
 
-  if (!bricks.length)
-    return <ListItem title={concept} subtitle="No bricks !" bottomDivider />;
-  const featuredBrick = bricks[0];
+  const data = bricks.length
+    ? {
+        rightSubtitle: bricks.length.toString(),
+        subtitle: bricks[0].content,
+        onPress: () => onSelect(concept),
+        rightIcon: { name: 'chevron-right' }
+      }
+    : {
+        rightSubtitle: '',
+        subtitle: 'Pas encore de brique !',
+        onPress: () => onCreate(concept),
+        rightIcon: { name: 'add' }
+      };
 
   return (
     <ListItem
       title={concept}
-      rightSubtitle={bricks.length.toString()}
-      subtitle={featuredBrick.content}
-      onPress={() => onSelect(concept)}
+      rightSubtitle={data.rightSubtitle}
+      subtitle={data.subtitle}
+      onPress={data.onPress}
+      rightIcon={data.rightIcon}
       bottomDivider
-      chevron
     />
   );
 }

@@ -22,21 +22,17 @@ const styles = StyleSheet.create({
 const defaultNavProps = {
   hideFAB: false,
   onSubmit: (concept, navigation) =>
-    navigation.navigate('ConceptBrickList', { concept })
+    navigation.navigate('ConceptBrickList', { concept }),
+  onCreate: (concept, navigation) =>
+    navigation.navigate('BrickMaker', { concept })
 };
 
 function ConceptList() {
   const navigation = useContext(NavigationContext);
-  const hideFAB = _.get(
-    navigation.state,
-    'params.hideFAB',
-    defaultNavProps.hideFAB
-  );
-  const onSubmit = _.get(
-    navigation.state,
-    'params.onSubmit',
-    defaultNavProps.onSubmit
-  );
+  const hideFAB = navigation.getParam('hideFAB', defaultNavProps.hideFAB);
+  const onSubmit = navigation.getParam('onSubmit', defaultNavProps.onSubmit);
+  const onCreate = navigation.getParam('onCreate', defaultNavProps.onCreate);
+
   const bricks = useBricks();
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -47,6 +43,8 @@ function ConceptList() {
     .uniq()
     .sortBy()
     .value();
+
+  if (search.trim() !== '') concepts.unshift(search);
 
   // Use FlatList if ScrollView becomes too slow
   return (
@@ -64,6 +62,10 @@ function ConceptList() {
               onSubmit(concept, navigation);
               navigation.goBack();
             }}
+            onCreate={concept => {
+              onCreate(concept, navigation);
+              navigation.goBack();
+            }}
             key={parentConcept}
           />
         ))}
@@ -72,7 +74,7 @@ function ConceptList() {
         <>
           <NewConceptModal
             show={showModal}
-            onSubmit={concept => navigation.navigate('BrickMaker', { concept })}
+            onSubmit={concept => onCreate(concept, navigation)}
             onClose={() => setShowModal(false)}
           />
           <FAB onPress={() => setShowModal(true)} />

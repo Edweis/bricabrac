@@ -59,7 +59,7 @@ function BrickMaker() {
           multiline
           ref={focusOnMountRef}
         />
-        <Divider />
+        <Divider style={styles.divider} />
         <ConceptPicker
           concepts={newBrick.childrenConcepts}
           onChange={childrenConcepts =>

@@ -30,21 +30,6 @@ export default function ConceptPicker(props: Props) {
   return (
     <View>
       <View>
-        <Text>Linked concepts :</Text>
-        <Button
-          onPress={() =>
-            navigation.push('ConceptList', {
-              hideFAB: true,
-              onSubmit: addConcept,
-              title: 'Lier un concept'
-            })
-          }
-          title="Lier un concept"
-          type="outline"
-          buttonStyle={styles.addConcept}
-        />
-      </View>
-      <View>
         {concepts.map(concept => (
           <ListItem
             key={concept}
@@ -58,6 +43,19 @@ export default function ConceptPicker(props: Props) {
           />
         ))}
       </View>
+      <Button
+        onPress={() =>
+          navigation.push('ConceptList', {
+            title: 'Lier un concept',
+            hideFAB: true,
+            onSubmit: addConcept,
+            onCreate: addConcept
+          })
+        }
+        title="Lier un concept"
+        type="outline"
+        buttonStyle={styles.addConcept}
+      />
     </View>
   );
 }

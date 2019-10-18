@@ -31,7 +31,7 @@ function ConceptBrickList() {
         />
       ))
     ) : (
-      <ListItem title={'No bricks for {concept}'} key="none" />
+      <ListItem title={`No bricks for ${concept}`} key="none" />
     ),
     <FAB
       key="fab"

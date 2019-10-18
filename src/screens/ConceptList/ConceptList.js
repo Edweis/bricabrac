@@ -44,7 +44,7 @@ function ConceptList() {
     .sortBy()
     .value();
 
-  if (search.trim() !== '') concepts.unshift(search);
+  if (search.trim() !== '') concepts.unshift(search.trim());
 
   // Use FlatList if ScrollView becomes too slow
   return (
@@ -87,7 +87,5 @@ function ConceptList() {
 ConceptList.navigationOptions = ({ navigation }) => ({
   title: navigation.getParam('title', 'Concepts')
 });
-
-// <Concepts concepts={brick.concepts && brick.concepts.split('|')} />
 
 export default ConceptList;

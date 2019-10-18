@@ -8,8 +8,9 @@ import {
 
 import BrickMaker from '../screens/BrickMaker';
 import ConceptList from '../screens/ConceptList';
-import ConceptBrickList from '../screens/ConceptBrickList';
+import ConceptBrickList from '../screens/BrickMaker/ConceptBrickList';
 import BrickDetails from '../screens/BrickDetails';
+import SourceList from '../screens/BrickMaker/SourceList';
 
 const config = Platform.select({
   web: { headerMode: 'screen' },
@@ -25,6 +26,7 @@ const AppNavigator = createStackNavigator(
     BrickMaker,
     ConceptBrickList,
     BrickDetails,
+    SourceList
   },
   config
 );

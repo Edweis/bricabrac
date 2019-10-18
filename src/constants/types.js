@@ -1,5 +1,6 @@
 // @flow
 export type ConceptT = string;
+export type SourceT = string;
 export type StatusT = 'accepted' | 'refused' | 'none';
 export type BrickT = {
   id: string,

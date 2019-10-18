@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { NavigationContext } from 'react-navigation';
-import { TextInput, View, StyleSheet, Button, ScrollView } from 'react-native';
+import { View, StyleSheet, Button, ScrollView } from 'react-native';
 import { Text, Input, Divider } from 'react-native-elements';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
+import SourcePicker from './SourcePicker';
 import { addBrick, useFocusOnMount } from '../../hooks';
 import { getBrickError } from './helpers';
 import { EMPTY_BRICK } from '../../constants/defaults';
@@ -61,7 +62,10 @@ function BrickMaker() {
           ref={focusOnMountRef}
         />
         <Divider style={styles.divider} />
-        <Input label="source" />
+        <SourcePicker
+          source={newBrick.source}
+          onChange={source => setNewBrick({ ...newBrick, source })}
+        />
         <Divider style={styles.divider} />
         <ConceptPicker
           concepts={newBrick.childrenConcepts}

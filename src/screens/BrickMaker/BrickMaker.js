@@ -67,13 +67,10 @@ function BrickMaker() {
           }
         />
         <Divider style={styles.divider} />
-        <View style={styles.status}>
-          <Text style={styles.statusTitle}>Status</Text>
-          <StatusPicker
-            status={newBrick.status}
-            setStatus={status => setNewBrick({ ...newBrick, status })}
-          />
-        </View>
+        <StatusPicker
+          status={newBrick.status}
+          setStatus={status => setNewBrick({ ...newBrick, status })}
+        />
         <Divider style={styles.divider} />
         <Input label="source" />
         {displayedError !== '' && <Text>{displayedError}</Text>}

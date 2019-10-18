@@ -1,7 +1,18 @@
 import React from 'react';
-import { Picker } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Button } from 'react-native-elements';
+import colors from '../../constants/colors';
 import type { StatusT } from '../../constants/types';
 import { translateStatus } from '../../constants/translations';
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  item: { flexGrow: 1, marginLeft: 5, marginRight: 10 }
+});
 
 type Props = {
   status: StatusT,
@@ -10,13 +21,22 @@ type Props = {
 
 export default function StatusPicker(props: Props) {
   return (
-    <Picker
-      selectedValue={props.status}
-      onValueChange={value => props.setStatus(value)}
-    >
-      {['accepted', 'refused', 'none'].map(value => (
-        <Picker.Item label={translateStatus[value]} value={value} key={value} />
+    <View style={styles.container}>
+      {['accepted', 'none', 'refused'].map(value => (
+        <Button
+          key={value}
+          onPress={() => props.setStatus(value)}
+          title={translateStatus[value]}
+          type={props.status === value ? 'solid' : 'outline'}
+          buttonStyle={{
+            backgroundColor:
+              props.status === value
+                ? colors.status[value]
+                : colors.status.neutral
+          }}
+          containerStyle={styles.item}
+        />
       ))}
-    </Picker>
+    </View>
   );
 }

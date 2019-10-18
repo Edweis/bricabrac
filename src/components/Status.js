@@ -9,16 +9,10 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5
   },
-  accepted: { backgroundColor: colors.statusAccepted },
-  refused: { backgroundColor: colors.statusRefused },
-  none: { backgroundColor: colors.statusNone }
+  accepted: { backgroundColor: colors.status.accepted },
+  refused: { backgroundColor: colors.status.refused },
+  none: { backgroundColor: colors.status.none }
 });
-
-export const mapStatusToColor: { [StatusT]: string } = {
-  accepted: colors.statusAccepted,
-  refused: colors.statusRefused,
-  none: colors.statusNone
-};
 
 export default function Status({ status }: { status: StatusT }) {
   return <View style={[styles.dot, styles[status]]} />;

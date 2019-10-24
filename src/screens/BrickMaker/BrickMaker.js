@@ -27,7 +27,8 @@ const styles = StyleSheet.create({
   inputContainer: { height: 50, fontSize: 40 },
   containerStyle: { height: 50, fontSize: 50 },
   divider: { marginTop: 10, marginBottom: 10 },
-  submit: { marginTop: 10 }
+  submit: { marginTop: 10 },
+  author: { alignSelf: 'flex-end' }
 });
 
 function BrickMaker() {
@@ -100,6 +101,11 @@ function BrickMaker() {
           </View>
         )}
       </View>
+      {isReadOnly && (
+        <View style={styles.author}>
+          <Text style={styles.authorText}>Brique de {newBrick.author}</Text>
+        </View>
+      )}
     </ScrollView>
   );
 }

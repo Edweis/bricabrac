@@ -10,7 +10,8 @@ export const DEFAULT_BRICK: BrickT = {
   submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: 'loading concept ...',
   source: 'loading source ...',
-  status: 'none'
+  status: 'none',
+  author: null
 };
 
 export const EMPTY_BRICK: BrickT = {
@@ -20,7 +21,8 @@ export const EMPTY_BRICK: BrickT = {
   submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: '',
   source: '',
-  status: 'none'
+  status: 'none',
+  author: null
 };
 
 export const DEFAULT_CONCEPT = {

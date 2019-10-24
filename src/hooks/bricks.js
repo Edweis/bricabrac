@@ -28,9 +28,12 @@ export const useBricks = (concept: ConceptT) => {
 };
 
 export const addBrick = brick => {
+  const user = firebase.auth().currentUser;
+
   const enrichedBrick = {
     ...brick,
-    submitTime: new Date()
+    submitTime: new Date(),
+    author: user.uid
   };
 
   delete enrichedBrick.id;
@@ -42,6 +45,7 @@ export const addBrick = brick => {
     .then(() => {
       console.log('Brick added !');
       console.log({ enrichedBrick });
+      console.log(user);
     })
     .catch(err => console.error(err));
 };

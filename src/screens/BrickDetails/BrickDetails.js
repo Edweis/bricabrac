@@ -20,25 +20,31 @@ function BrickDetails() {
     <>
       <View style={styles.main}>
         <View style={styles.content}>
-          <Text h4>{brick.content}</Text>
+          <Text>Content</Text>
+          <Text>{brick.content}</Text>
         </View>
         <View style={styles.status}>
+          <Text>Status</Text>
           <Text>{brick.status}</Text>
         </View>
         <View style={styles.source}>
+          <Text>Source</Text>
           <Text>{brick.source}</Text>
         </View>
         <View style={styles.submitTime}>
+          <Text>Time</Text>
           <Text>{moment(brick.submitTime.toDate()).format()}</Text>
         </View>
         <View style={styles.childrenConcepts}>
+          <Text>Concepts</Text>
           <Text>{brick.childrenConcepts.join(', ')}</Text>
         </View>
       </View>
       <FAB
         key="fab"
         onPress={() =>
-          navigation.navigate('BrickMaker', { concept: brick.parentConcept })}
+          navigation.navigate('BrickMaker', { concept: brick.parentConcept })
+        }
       />
     </>
   );

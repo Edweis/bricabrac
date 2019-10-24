@@ -9,6 +9,7 @@ import { useBricks } from '../../hooks';
 import { matchBrickWithSearch } from './helpers';
 import NewConceptModal from './NewConceptModal';
 import ConceptItem from './ConceptItem';
+import LogoutButton from '../../components/LogoutButton';
 
 const styles = StyleSheet.create({
   content: {},
@@ -24,7 +25,7 @@ const defaultNavProps = {
   onSubmit: (concept, navigation) =>
     navigation.navigate('ConceptBrickList', { concept }),
   onCreate: (concept, navigation) =>
-    navigation.navigate('BrickMaker', { concept })
+    navigation.navigate('BrickMaker', { brick: { parentConcept: concept } })
 };
 
 function ConceptList() {
@@ -85,7 +86,8 @@ function ConceptList() {
 }
 
 ConceptList.navigationOptions = ({ navigation }) => ({
-  title: navigation.getParam('title', 'Concepts')
+  title: navigation.getParam('title', 'Concepts'),
+  headerRight: <LogoutButton />
 });
 
 export default ConceptList;

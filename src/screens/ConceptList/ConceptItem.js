@@ -32,14 +32,14 @@ export default function ConceptItem({ concept, onSelect, onCreate }: Props) {
         rightSubtitle: bricks.length.toString(),
         subtitle: featured.content,
         onPress: () => onSelect(concept),
-        rightIcon: { name: 'chevron-right' }
+        rightIcon: { name: 'chevron-right', type: 'evilicon' }
       }
     : {
         title: concept,
         rightSubtitle: '',
         subtitle: 'Pas encore de brique !',
         onPress: () => onCreate(concept),
-        rightIcon: { name: 'add' }
+        rightIcon: { name: 'plus', type: 'evilicon' }
       };
 
   return (

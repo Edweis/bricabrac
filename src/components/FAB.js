@@ -15,5 +15,5 @@ const styles = StyleSheet.create({
 
 export default (props: any) => {
   /* eslint-disable-next-line react/jsx-props-no-spreading */
-  return <FAB style={[styles.fab, props.styles]} icon="add" {...props} />;
+  return <FAB style={[styles.fab, props.styles]} icon="plus" {...props} />;
 };

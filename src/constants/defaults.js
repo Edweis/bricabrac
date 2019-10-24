@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase from '../firebase';
 import type { BrickT } from './types';
 
 export const DEFAULT_BRICK: BrickT = {

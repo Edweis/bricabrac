@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
 
 function ConceptBrickList() {
   const navigation = useContext(NavigationContext);
-  const concept = navigation.getParam('concept');
-  const bricks = useBricks(concept);
+  const parentConcept = navigation.getParam('concept');
+  const bricks = useBricks(parentConcept);
 
   return [
     bricks.length ? (
@@ -23,7 +23,9 @@ function ConceptBrickList() {
           key={brick.id}
           title={brick.content}
           subtitle={brick.childrenConcepts.join(', ') || null}
-          onPress={() => navigation.navigate('BrickDetails', { brick })}
+          onPress={() =>
+            navigation.navigate('BrickMaker', { brick, readOnly: true })
+          }
           rightIcon={<Status status={brick.status} />}
           rightSubtitle={moment(brick.submitTime.toDate()).fromNow()}
           bottomDivider
@@ -31,11 +33,13 @@ function ConceptBrickList() {
         />
       ))
     ) : (
-      <ListItem title={`No bricks for ${concept}`} key="none" />
+      <ListItem title={`No bricks for ${parentConcept}`} key="none" />
     ),
     <FAB
       key="fab"
-      onPress={() => navigation.navigate('BrickMaker', { concept })}
+      onPress={() =>
+        navigation.navigate('BrickMaker', { brick: { parentConcept } })
+      }
     />
   ];
 }

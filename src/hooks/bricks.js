@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { useState, useEffect } from 'react';
-import { firebase } from '../firebase';
+import firebase from '../firebase';
 import { DEFAULT_BRICK } from '../constants/defaults';
 import { ConceptT } from '../constants/types';
 

@@ -13,11 +13,12 @@ const styles = StyleSheet.create({
 
 type Props = {
   concepts: ConceptT[],
-  onChange: (ConceptT[]) => void
+  onChange: (ConceptT[]) => void,
+  readOnly?: boolean
 };
-export default function ConceptPicker(props: Props) {
+function ConceptPicker(props: Props) {
   const navigation = useContext(NavigationContext);
-  const { concepts } = props;
+  const { concepts, readOnly } = props;
   const addConcept = (concept: ConceptT) => {
     if (!concepts.includes(concept)) props.onChange([...concepts, concept]);
   };
@@ -40,19 +41,25 @@ export default function ConceptPicker(props: Props) {
           />
         ))}
       </View>
-      <Button
-        onPress={() =>
-          navigation.push('ConceptList', {
-            title: 'Lier un concept',
-            hideFAB: true,
-            onSubmit: addConcept,
-            onCreate: addConcept
-          })
-        }
-        title="Lier un concept"
-        type="outline"
-        buttonStyle={styles.addConcept}
-      />
+      {!readOnly && (
+        <Button
+          onPress={() =>
+            navigation.push('ConceptList', {
+              title: 'Lier un concept',
+              hideFAB: true,
+              onSubmit: addConcept,
+              onCreate: addConcept
+            })
+          }
+          title="Lier un concept"
+          type="outline"
+          buttonStyle={styles.addConcept}
+        />
+      )}
     </View>
   );
 }
+
+ConceptPicker.defaultProps = { readOnly: false };
+
+export default ConceptPicker;

@@ -55,5 +55,4 @@ export async function facebookLogin() {
 export const onAuthChange = action =>
   firebase.auth().onAuthStateChanged(user => action(user));
 
-// export { signInWithFacebook };
 export default firebase;

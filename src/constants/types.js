@@ -12,3 +12,4 @@ export type BrickT = {
   source: string,
   status: StatusT
 };
+export type UserT = { uid: string, email: string };

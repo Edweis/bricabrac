@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import firebase from '../firebase';
 import { DEFAULT_BRICK } from '../constants/defaults';
 import { ConceptT } from '../constants/types';
+import { setUser } from './users';
 
 export const BRICK_COLLECTION = 'bricks';
 
@@ -38,6 +39,8 @@ export const addBrick = brick => {
 
   delete enrichedBrick.id;
 
+  setUser(user);
+
   firebase
     .firestore()
     .collection(BRICK_COLLECTION)
@@ -45,7 +48,6 @@ export const addBrick = brick => {
     .then(() => {
       console.log('Brick added !');
       console.log({ enrichedBrick });
-      console.log(user);
     })
     .catch(err => console.error(err));
 };

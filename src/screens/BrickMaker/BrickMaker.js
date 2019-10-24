@@ -5,7 +5,7 @@ import { Text, Input, Divider } from 'react-native-elements';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import SourcePicker from './SourcePicker';
-import { addBrick, useFocusOnMount } from '../../hooks';
+import { addBrick, useFocusOnMount, useUser } from '../../hooks';
 import { checkBrickError } from './helpers';
 import { EMPTY_BRICK } from '../../constants/defaults';
 import { BrickT } from '../../constants/types';
@@ -63,6 +63,8 @@ function BrickMaker() {
     else checkBrickError(updatedBrick, () => setNewBrick(updatedBrick));
   };
 
+  const author = useUser(newBrick.author);
+
   return (
     <ScrollView contentContainerStyle={styles.main}>
       <View style={styles.form}>
@@ -103,7 +105,7 @@ function BrickMaker() {
       </View>
       {isReadOnly && (
         <View style={styles.author}>
-          <Text style={styles.authorText}>Brique de {newBrick.author}</Text>
+          <Text style={styles.authorText}>Brique de {author.email}</Text>
         </View>
       )}
     </ScrollView>

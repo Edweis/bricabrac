@@ -25,6 +25,20 @@ function ConceptPicker(props: Props) {
   const removeConcept = (concept: ConceptT) => {
     props.onChange(concepts.filter(c => c !== concept));
   };
+  const listItemProps = concept => {
+    if (readOnly)
+      return {
+        onPress: navigation.navigate('BrickMaker', {
+          brick: { parentConcept: concept }
+        })
+      };
+    return {
+      rightIcon: {
+        name: 'delete',
+        onPress: () => removeConcept(concept)
+      }
+    };
+  };
 
   return (
     <View>
@@ -33,11 +47,8 @@ function ConceptPicker(props: Props) {
           <ListItem
             key={concept}
             title={concept}
-            rightIcon={{
-              name: 'delete',
-              onPress: () => removeConcept(concept)
-            }}
             subtitle="Just the concept"
+            {...listItemProps}
           />
         ))}
       </View>

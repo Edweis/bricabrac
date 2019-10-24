@@ -6,8 +6,8 @@ import { NavigationContext } from 'react-navigation';
 import { SearchBar, ListItem } from 'react-native-elements';
 import { useBricks, useFocusOnMount } from '../../hooks';
 import { matchSourceWithSearch } from './helpers';
+import { EMPTY_SOURCE } from '../../constants/defaults';
 
-const EMPTY_SOURCE = '(sans source)';
 const styles = StyleSheet.create({
   content: {},
   fab: {

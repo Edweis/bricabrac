@@ -26,3 +26,5 @@ export const EMPTY_BRICK: BrickT = {
 export const DEFAULT_CONCEPT = {
   title: 'loading concept ...'
 };
+
+export const EMPTY_SOURCE = '(sans source)';

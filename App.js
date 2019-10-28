@@ -9,8 +9,10 @@ import SignUp from './src/components/SignUp';
 import AppNavigator from './src/navigation/AppNavigator';
 import { onAuthChange } from './src/firebase';
 
-console.ignoredYellowBox = ['Setting a timer'];
-moment.locale('fr');
+const bootstrap = () => {
+  console.ignoredYellowBox = ['Setting a timer'];
+  moment.locale('fr');
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -49,6 +51,7 @@ export default function App() {
   const endAppLoading = useCallback(() => setAppLoading(false), []);
 
   useEffect(() => {
+    bootstrap();
     const subscriber = onAuthChange(newUser => {
       // setUser(newUser);
       setAuthLoading(newUser == null);

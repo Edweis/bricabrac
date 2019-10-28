@@ -8,7 +8,7 @@ import FAB from '../../components/FAB';
 import { useBricks } from '../../hooks';
 import { matchBrickWithSearch } from './helpers';
 import NewConceptModal from './NewConceptModal';
-import ConceptItem from './ConceptItem';
+import BrickItem from '../../components/BrickItem';
 import LogoutButton from '../../components/LogoutButton';
 
 const styles = StyleSheet.create({
@@ -57,7 +57,8 @@ function ConceptList() {
       />
       <ScrollView style={styles.content}>
         {concepts.map(parentConcept => (
-          <ConceptItem
+          <BrickItem
+            key={parentConcept}
             concept={parentConcept}
             onSelect={concept => {
               onSubmit(concept, navigation);
@@ -67,7 +68,6 @@ function ConceptList() {
               onCreate(concept, navigation);
               navigation.goBack();
             }}
-            key={parentConcept}
           />
         ))}
       </ScrollView>

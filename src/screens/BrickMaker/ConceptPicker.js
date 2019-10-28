@@ -48,6 +48,7 @@ function ConceptPicker(props: Props) {
             key={concept}
             title={concept}
             subtitle="Just the concept"
+            /* eslint-disable-next-line react/jsx-props-no-spreading */
             {...listItemProps}
           />
         ))}

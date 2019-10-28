@@ -59,8 +59,7 @@ function BrickMaker() {
 
   const updateBrick = (data: $Shape<BrickT>): BrickT => {
     const updatedBrick = { ...newBrick, ...data };
-    if (isReadOnly) setNewBrick(updatedBrick);
-    else checkBrickError(updatedBrick, () => setNewBrick(updatedBrick));
+    setNewBrick(updatedBrick);
   };
 
   const author = useUser(newBrick.author);

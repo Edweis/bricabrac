@@ -15,4 +15,5 @@ export const getFeaturedBrick = (bricks: BrickT[]): BrickT | null => {
   return null;
 };
 
-export const a = 1;
+export const formatConceptTitle = (title: string): string =>
+  `${title} (concept)`;

@@ -20,19 +20,12 @@ const styles = StyleSheet.create({
     bottom: 50
   }
 });
-const defaultNavProps = {
-  hideFAB: false,
-  onSubmit: (concept, navigation) =>
-    navigation.navigate('ConceptBrickList', { concept }),
-  onCreate: (concept, navigation) =>
-    navigation.navigate('BrickMaker', { brick: { parentConcept: concept } })
-};
 
 function ConceptList() {
   const navigation = useContext(NavigationContext);
-  const hideFAB = navigation.getParam('hideFAB', defaultNavProps.hideFAB);
-  const onSubmit = navigation.getParam('onSubmit', defaultNavProps.onSubmit);
-  const onCreate = navigation.getParam('onCreate', defaultNavProps.onCreate);
+  const hideFAB = navigation.getParam('hideFAB', false);
+  const onSelect = navigation.getParam('onSelect');
+  const onCreate = navigation.getParam('onCreate');
 
   const bricks = useBricks();
   const [search, setSearch] = useState('');
@@ -60,14 +53,8 @@ function ConceptList() {
           <BrickItem
             key={parentConcept}
             concept={parentConcept}
-            onSelect={concept => {
-              onSubmit(concept, navigation);
-              navigation.goBack();
-            }}
-            onCreate={concept => {
-              onCreate(concept, navigation);
-              navigation.goBack();
-            }}
+            onSelect={onSelect}
+            onCreate={onCreate}
           />
         ))}
       </ScrollView>

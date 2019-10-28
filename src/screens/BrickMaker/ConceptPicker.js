@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { ListItem, Button } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { NavigationContext } from 'react-navigation';
 import type { ConceptT } from '../../constants/types';
+import BrickItem from '../../components/BrickItem';
 
 const styles = StyleSheet.create({
   badges: { display: 'flex', flexDirection: 'row' },
@@ -19,37 +20,23 @@ type Props = {
 function ConceptPicker(props: Props) {
   const navigation = useContext(NavigationContext);
   const { concepts, readOnly } = props;
-  const addConcept = (concept: ConceptT) => {
+  const addConcept = (concept: ConceptT, nav: any) => {
     if (!concepts.includes(concept)) props.onChange([...concepts, concept]);
+    nav.pop();
   };
   const removeConcept = (concept: ConceptT) => {
     props.onChange(concepts.filter(c => c !== concept));
-  };
-  const listItemProps = concept => {
-    if (readOnly)
-      return {
-        onPress: navigation.navigate('BrickMaker', {
-          brick: { parentConcept: concept }
-        })
-      };
-    return {
-      rightIcon: {
-        name: 'delete',
-        onPress: () => removeConcept(concept)
-      }
-    };
   };
 
   return (
     <View>
       <View>
         {concepts.map(concept => (
-          <ListItem
+          <BrickItem
             key={concept}
-            title={concept}
-            subtitle="Just the concept"
-            /* eslint-disable-next-line react/jsx-props-no-spreading */
-            {...listItemProps}
+            concept={concept}
+            onRemove={!readOnly ? () => removeConcept(concept) : null}
+            asConcept
           />
         ))}
       </View>
@@ -59,7 +46,7 @@ function ConceptPicker(props: Props) {
             navigation.push('ConceptList', {
               title: 'Lier un concept',
               hideFAB: true,
-              onSubmit: addConcept,
+              onSelect: addConcept,
               onCreate: addConcept
             })
           }

@@ -14,6 +14,7 @@ export type Props = {
   onCreate?: (concept: ConceptT) => void,
   asConcept?: boolean
 };
+
 function BrickItem(props: Props) {
   const { concept, asConcept } = props;
   const bricks = useBricks(concept);
@@ -21,25 +22,25 @@ function BrickItem(props: Props) {
   const featured = getFeaturedBrick(bricks);
   const isEmpty = bricks.length === 0;
 
-  const emptyConceptItemProps = () => ({
+  const getEmptyConceptItemProps = () => ({
     title: asConcept ? formatConceptTitle(concept) : concept,
-    rightSubtitle: '',
-    subtitle: asConcept ? '' : 'Pas encore de brique !',
+    subtitle: asConcept ? null : 'Pas encore de brique !',
     onPress: () => props.onCreate(concept, navigation),
+    rightSubtitle: '',
     rightIcon: { name: 'plus', type: 'evilicon' }
   });
 
-  const withFeaturedConceptItempProps = () => ({
+  const getWithFeaturedConceptItempProps = () => ({
     title: <BrickTitle brick={featured} asConcept={asConcept} />,
-    rightSubtitle: asConcept ? '' : bricks.length.toString(),
-    subtitle: featured.content,
+    subtitle: asConcept ? null : featured.content,
     onPress: () => props.onSelect(concept, navigation),
+    rightSubtitle: asConcept ? '' : bricks.length.toString(),
     rightIcon: { name: 'chevron-right', type: 'evilicon' }
   });
 
   const data = isEmpty
-    ? emptyConceptItemProps()
-    : withFeaturedConceptItempProps();
+    ? getEmptyConceptItemProps()
+    : getWithFeaturedConceptItempProps();
 
   if (props.onRemove != null)
     data.rightIcon = {
@@ -61,11 +62,9 @@ function BrickItem(props: Props) {
 
 BrickItem.defaultProps = {
   onSelect: (concept, navigation) =>
-    console.debug('DEFAULT onSelect') ||
     navigation.push('ConceptBrickList', { concept }),
   onCreate: (concept, navigation) =>
-    console.debug('DEFAULT onCreate') ||
-    navigation.navigate('BrickMaker', { brick: { parentConcept: concept } }),
+    navigation.push('BrickMaker', { brick: { parentConcept: concept } }),
   asConcept: false
 };
 export default BrickItem;

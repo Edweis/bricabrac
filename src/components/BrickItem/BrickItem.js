@@ -4,7 +4,7 @@ import { ListItem } from 'react-native-elements';
 import { NavigationContext } from 'react-navigation';
 import { useBricks } from '../../hooks';
 import { ConceptT } from '../../constants/types';
-import { getFeaturedBrick, formatConceptTitle } from './helpers';
+import { getFeaturedBrick, formatConceptTitle, formatContent } from './helpers';
 import BrickTitle from './BrickTitle';
 
 export type Props = {
@@ -32,7 +32,7 @@ function BrickItem(props: Props) {
 
   const getWithFeaturedConceptItempProps = () => ({
     title: <BrickTitle brick={featured} asConcept={asConcept} />,
-    subtitle: asConcept ? null : featured.content,
+    subtitle: asConcept ? null : formatContent(featured.content),
     onPress: () => props.onSelect(concept, navigation),
     rightSubtitle: asConcept ? '' : bricks.length.toString(),
     rightIcon: { name: 'chevron-right', type: 'evilicon' }

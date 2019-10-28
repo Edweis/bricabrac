@@ -5,6 +5,7 @@ import { Text, Input, Divider } from 'react-native-elements';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import SourcePicker from './SourcePicker';
+import Comments from './Comments';
 import { addBrick, useFocusOnMount, useUser } from '../../hooks';
 import { checkBrickError } from './helpers';
 import { EMPTY_BRICK } from '../../constants/defaults';
@@ -101,6 +102,7 @@ function BrickMaker() {
             <Button title="Sauvegarder" onPress={submit} />
           </View>
         )}
+        {isReadOnly && <Comments brickId={newBrick.id} />}
       </View>
       {isReadOnly && (
         <View style={styles.author}>

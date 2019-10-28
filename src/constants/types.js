@@ -13,3 +13,9 @@ export type BrickT = {
   status: StatusT
 };
 export type UserT = { uid: string, email: string };
+export type CommentT = {
+  id: string,
+  author: string,
+  text: string,
+  datetime: Date
+};

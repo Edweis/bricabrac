@@ -62,7 +62,7 @@ function ConceptList() {
         <>
           <NewConceptModal
             show={showModal}
-            onSubmit={concept => onCreate(concept, navigation)}
+            onSubmit={onCreate}
             onClose={() => setShowModal(false)}
           />
           <FAB onPress={() => setShowModal(true)} />

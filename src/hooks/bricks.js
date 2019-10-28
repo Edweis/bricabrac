@@ -6,6 +6,7 @@ import { ConceptT } from '../constants/types';
 import { setUser } from './users';
 
 export const BRICK_COLLECTION = 'bricks';
+export const COMMENT_COLLECTION = 'comments';
 
 export const useBricks = (concept: ConceptT) => {
   const [bricks, setBricks] = useState([DEFAULT_BRICK]);
@@ -15,9 +16,9 @@ export const useBricks = (concept: ConceptT) => {
       .firestore()
       .collection(BRICK_COLLECTION)
       .onSnapshot(snapshot => {
-        const newBrics = snapshot.docs.map(bric => ({
-          id: bric.id,
-          ...bric.data()
+        const newBrics = snapshot.docs.map(brick => ({
+          id: brick.id,
+          ...brick.data()
         }));
         if (!_.isEqual(newBrics, bricks)) setBricks(newBrics);
       });
@@ -50,4 +51,26 @@ export const addBrick = brick => {
       console.log({ enrichedBrick });
     })
     .catch(err => console.error(err));
+};
+
+export const useBrickComments = (brickId: string) => {
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = firebase
+      .firestore()
+      .collection(BRICK_COLLECTION)
+      .doc(brickId)
+      .collection(COMMENT_COLLECTION)
+      .onSnapshot(snapshot => {
+        const newComments = snapshot.docs.map(comment => ({
+          id: comment.id,
+          ...comment.data()
+        }));
+        if (!_.isEqual(newComments, comments)) setComments(newComments);
+      });
+    return () => unsubscribe();
+  }, []);
+
+  return comments;
 };

@@ -10,4 +10,5 @@ npm-debug.*
 web-build/
 web-report/
 .firebaserc
-
+migrations/credentials.py
+migrations/serviceAccount.json

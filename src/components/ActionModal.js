@@ -6,7 +6,13 @@ import { NavigationContext } from 'react-navigation';
 
 import Modal from 'react-native-modal';
 
-type Props = { show: boolean, onClose: () => void, onSubmit?: string => void };
+type Props = {
+  title: string,
+  submitText: string,
+  show: boolean,
+  onClose: () => void,
+  onSubmit: string => void
+};
 
 const styles = StyleSheet.create({
   content: {
@@ -19,7 +25,7 @@ const styles = StyleSheet.create({
   }
 });
 
-function NewConceptModal(props: Props) {
+function ActionModal(props: Props) {
   const navigation = useContext(NavigationContext);
   const [value, setValue] = useState('');
   const onSubmit = () => {
@@ -32,16 +38,12 @@ function NewConceptModal(props: Props) {
   return (
     <Modal isVisible={props.show} onBackdropPress={props.onClose}>
       <View style={styles.content}>
-        <Text h4>Nouveau concept</Text>
+        <Text h4>{props.title}</Text>
         <Input value={value} onChangeText={setValue} />
-        <Button title="Créér" onPress={onSubmit} />
+        <Button title={props.submitText} onPress={onSubmit} />
       </View>
     </Modal>
   );
 }
 
-NewConceptModal.defaultProps = {
-  onSubmit: (concept, navigation) =>
-    navigation.push('BrickMaker', { brick: { parentConcept: concept } })
-};
-export default NewConceptModal;
+export default ActionModal;

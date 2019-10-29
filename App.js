@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import moment from 'moment';
+import 'moment/locale/fr';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';

@@ -5,7 +5,7 @@ import { StyleSheet, ScrollView } from 'react-native';
 import { NavigationContext } from 'react-navigation';
 import { SearchBar, ListItem } from 'react-native-elements';
 import { useBricks, useFocusOnMount } from '../../hooks';
-import { matchSourceWithSearch } from './helpers';
+import { matchSearch } from '../../helpers';
 import { EMPTY_SOURCE } from '../../constants/defaults';
 
 const styles = StyleSheet.create({
@@ -27,9 +27,9 @@ function SourceList() {
   const [search, setSearch] = useState('');
 
   const sourceData = _(sources)
-    .filter(source => matchSourceWithSearch(source, search))
+    .filter(source => matchSearch(source, search))
     // Remove sourceless brick
-    .filter(source => source !== '')
+    .filter(source => !!source)
     .groupBy()
     .mapValues((v, k) => ({ count: v.length, name: k }))
     .values()

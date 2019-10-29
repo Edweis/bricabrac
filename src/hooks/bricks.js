@@ -61,8 +61,8 @@ export const useBrickComments = (brickId: string) => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    const collection = firebase.firestore().collection(BRICK_COLLECTION);
     if (brickId == null) return;
+    const collection = firebase.firestore().collection(BRICK_COLLECTION);
     const unsubscribe = collection
       .doc(brickId)
       .collection(COMMENT_COLLECTION)
@@ -77,4 +77,23 @@ export const useBrickComments = (brickId: string) => {
   }, [brickId]);
 
   return comments;
+};
+
+export const updateBrickComment = (brickId: string, comment: string) => {
+  const user = firebase.auth().currentUser;
+  const enrichedComment = {
+    author: user.uid,
+    datetime: new Date(),
+    text: comment
+  };
+  firebase
+    .firestore()
+    .collection(BRICK_COLLECTION)
+    .doc(brickId)
+    .collection(COMMENT_COLLECTION)
+    .add(enrichedComment)
+    .then(() => {
+      console.log('Comment added !');
+      console.log({ enrichedComment });
+    });
 };

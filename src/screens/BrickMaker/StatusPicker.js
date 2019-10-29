@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  item: { flexGrow: 1, marginLeft: 5, marginRight: 10 }
+  item: { flexGrow: 1, marginLeft: 10, marginRight: 10 }
 });
 
 type Props = {

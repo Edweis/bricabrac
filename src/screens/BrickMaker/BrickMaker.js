@@ -5,8 +5,14 @@ import { Text, Input, Divider, Button } from 'react-native-elements';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import SourcePicker from './SourcePicker';
+import CommentButton from './CommentButton';
 import Comments from './Comments';
-import { setBrick, useFocusOnMount, useUser } from '../../hooks';
+import {
+  setBrick,
+  useFocusOnMount,
+  useUser,
+  updateBrickComment
+} from '../../hooks';
 import { checkBrickError } from './helpers';
 import { EMPTY_BRICK } from '../../constants/defaults';
 import { BrickT } from '../../constants/types';
@@ -28,7 +34,13 @@ const styles = StyleSheet.create({
   inputContainer: { height: 50, fontSize: 40 },
   containerStyle: { height: 50, fontSize: 50 },
   divider: { marginTop: 10, marginBottom: 10 },
-  submit: { marginTop: 10 },
+  submit: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10
+  },
+  submitItem: { flexGrow: 1, marginLeft: 10, marginRight: 10 },
   author: { alignSelf: 'flex-end' }
 });
 
@@ -106,11 +118,18 @@ function BrickMaker() {
           {isEditEnabled ? (
             <Button title="Sauvegarder" onPress={submit} />
           ) : (
-            <Button
-              title="Editer"
-              onPress={() => setIsEditEnable(true)}
-              type="outline"
-            />
+            <>
+              <Button
+                title="Editer"
+                onPress={() => setIsEditEnable(true)}
+                type="outline"
+                containerStyle={styles.submitItem}
+              />
+              <CommentButton
+                onSubmit={comment => updateBrickComment(newBrick.id, comment)}
+                style={styles.submitItem}
+              />
+            </>
           )}
         </View>
         {!isEditEnabled && <Comments brickId={newBrick.id} />}

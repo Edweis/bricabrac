@@ -1,15 +1,9 @@
-import type { BrickT, SourceT } from '../../constants/types';
-import { normalize } from '../../helpers';
+import type { BrickT } from '../../constants/types';
 
 const getBrickError = (brick: BrickT): string | null => {
   if (!brick.content) return 'Invalid content';
   return null;
 };
-
-export const matchSourceWithSearch = (
-  sources: SourceT[],
-  search: string
-) => source => normalize(source).includes(normalize(search));
 
 export const checkBrickError = (brick, onSuccess, onError = () => {}) => {
   const error = getBrickError(brick);

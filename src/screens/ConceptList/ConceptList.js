@@ -6,8 +6,8 @@ import { NavigationContext } from 'react-navigation';
 import { SearchBar } from 'react-native-elements';
 import FAB from '../../components/FAB';
 import { useBricks } from '../../hooks';
-import { matchBrickWithSearch } from './helpers';
-import NewConceptModal from './NewConceptModal';
+import { matchSearch, normalize } from '../../helpers';
+import ActionModal from '../../components/ActionModal';
 import BrickItem from '../../components/BrickItem';
 import LogoutButton from '../../components/LogoutButton';
 
@@ -21,21 +21,29 @@ const styles = StyleSheet.create({
   }
 });
 
+const defaultCreation = (concept, navigation) =>
+  navigation.push('BrickMaker', { brick: { parentConcept: concept } });
+
 function ConceptList() {
   const navigation = useContext(NavigationContext);
   const hideFAB = navigation.getParam('hideFAB', false);
   const onSelect = navigation.getParam('onSelect');
-  const onCreate = navigation.getParam('onCreate');
+  const onCreate = navigation.getParam('onCreate', defaultCreation);
 
   const bricks = useBricks();
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const concepts = _(bricks)
-    .filter(brick => matchBrickWithSearch(brick, search))
-    .map('parentConcept')
+  const parentConcepts = _(bricks).map('parentConcept');
+  const orphanConcepts = _(bricks)
+    .map('childrenConcepts')
+    .flatten()
+    .value();
+  const concepts = parentConcepts
+    .union(orphanConcepts)
+    .filter(concept => matchSearch(concept, search))
     .uniq()
-    .sortBy()
+    .sortBy(normalize)
     .value();
 
   if (search.trim() !== '') concepts.unshift(search.trim());
@@ -60,10 +68,12 @@ function ConceptList() {
       </ScrollView>
       {hideFAB === false && (
         <>
-          <NewConceptModal
+          <ActionModal
             show={showModal}
             onSubmit={onCreate}
             onClose={() => setShowModal(false)}
+            title="Nouveau concept"
+            submitText="Créér"
           />
           <FAB onPress={() => setShowModal(true)} />
         </>

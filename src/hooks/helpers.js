@@ -12,9 +12,7 @@ export const useSubscribedState = defaultState => {
 export const useFocusOnMount = () => {
   const ref = useRef(null);
   useLayoutEffect(() => {
-    if (!ref.current)
-      throw Error("useFocusOnMount's ref has not been assigned.");
-    ref.current.focus();
+    if (ref.current) ref.current.focus();
   }, [ref.current]);
   return ref;
 };

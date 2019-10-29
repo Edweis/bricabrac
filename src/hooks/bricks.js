@@ -44,10 +44,12 @@ export const setBrick = (brick: BrickT) => {
   setUser(user);
 
   const collection = firebase.firestore().collection(BRICK_COLLECTION);
-  // if there is an Id, we edit the brick.
-  const doc = id != null ? collection.doc(id) : collection.doc();
-  doc
-    .set(enrichedBrick)
+  // if there is an Id, we edit the brick, otherwise we add it. Dirty.
+  const setter =
+    id != null
+      ? collection.doc(id).set(enrichedBrick)
+      : collection.add(enrichedBrick);
+  setter
     .then(() => {
       console.log(id != null ? 'Brick Edited' : 'Brick added !');
       console.log({ enrichedBrick });
@@ -59,9 +61,9 @@ export const useBrickComments = (brickId: string) => {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = firebase
-      .firestore()
-      .collection(BRICK_COLLECTION)
+    const collection = firebase.firestore().collection(BRICK_COLLECTION);
+    if (brickId == null) return;
+    const unsubscribe = collection
       .doc(brickId)
       .collection(COMMENT_COLLECTION)
       .onSnapshot(snapshot => {
@@ -72,7 +74,7 @@ export const useBrickComments = (brickId: string) => {
         if (!_.isEqual(newComments, comments)) setComments(newComments);
       });
     return () => unsubscribe();
-  }, []);
+  }, [brickId]);
 
   return comments;
 };

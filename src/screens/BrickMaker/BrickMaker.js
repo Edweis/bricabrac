@@ -1,7 +1,7 @@
 import React, { useState, useContext, useMemo } from 'react';
 import { NavigationContext } from 'react-navigation';
-import { View, StyleSheet, Button, ScrollView } from 'react-native';
-import { Text, Input, Divider } from 'react-native-elements';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { Text, Input, Divider, Button } from 'react-native-elements';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import SourcePicker from './SourcePicker';
@@ -66,14 +66,13 @@ function BrickMaker() {
     setNewBrick(updatedBrick);
     // only for status, we save and push on readOnly
     if (!isEditEnabled) setBrick(updatedBrick);
-    console.debug({ isEditEnabled, updatedBrick });
   };
 
   const author = useUser(newBrick.author);
 
   return (
     <ScrollView contentContainerStyle={styles.main}>
-      <View style={styles.form}>
+      <ScrollView contentContainerStyle={styles.form}>
         <Input
           label="Description"
           placeholder="description de la brique..."
@@ -107,11 +106,15 @@ function BrickMaker() {
           {isEditEnabled ? (
             <Button title="Sauvegarder" onPress={submit} />
           ) : (
-            <Button title="Editer" onPress={submit} type="outline" />
+            <Button
+              title="Editer"
+              onPress={() => setIsEditEnable(true)}
+              type="outline"
+            />
           )}
         </View>
         {!isEditEnabled && <Comments brickId={newBrick.id} />}
-      </View>
+      </ScrollView>
       {!isEditEnabled && (
         <View style={styles.author}>
           <Text style={styles.authorText}>Brique de {author.email}</Text>

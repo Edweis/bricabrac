@@ -21,7 +21,7 @@ export default function SignUp() {
       <Input label="password" value={password} onChangeText={setPassword} />
       <Button
         containerStyle={styles.button}
-        title="Se connexter"
+        title="Se connecter"
         onPress={() => emailLogin(email, password)}
       />
       <Button

@@ -6,7 +6,7 @@ import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import SourcePicker from './SourcePicker';
 import Comments from './Comments';
-import { addBrick, useFocusOnMount, useUser } from '../../hooks';
+import { setBrick, useFocusOnMount, useUser } from '../../hooks';
 import { checkBrickError } from './helpers';
 import { EMPTY_BRICK } from '../../constants/defaults';
 import { BrickT } from '../../constants/types';
@@ -45,22 +45,28 @@ function BrickMaker() {
   );
   const [newBrick, setNewBrick] = useState(displayedBrick);
   const [displayedError, setDisplayedError] = useState('');
+  const [isEditEnabled, setIsEditEnable] = useState(!isReadOnly);
 
   const focusOnMountRef = useFocusOnMount();
 
-  const submit = () =>
+  const submit = () => {
     checkBrickError(
       newBrick,
       () => {
-        addBrick(newBrick);
+        setBrick(newBrick);
         navigation.goBack();
       },
       setDisplayedError
     );
+    setIsEditEnable(false);
+  };
 
   const updateBrick = (data: $Shape<BrickT>): BrickT => {
     const updatedBrick = { ...newBrick, ...data };
     setNewBrick(updatedBrick);
+    // only for status, we save and push on readOnly
+    if (!isEditEnabled) setBrick(updatedBrick);
+    console.debug({ isEditEnabled, updatedBrick });
   };
 
   const author = useUser(newBrick.author);
@@ -76,20 +82,20 @@ function BrickMaker() {
           numberOfLines={4}
           inputContainerStyle={{ borderBottomWidth: 0 }}
           ref={focusOnMountRef}
-          disabled={isReadOnly}
+          disabled={!isEditEnabled}
           multiline
         />
         <Divider style={styles.divider} />
         <SourcePicker
           source={newBrick.source}
           onChange={source => updateBrick({ source })}
-          readOnly={isReadOnly}
+          readOnly={!isEditEnabled}
         />
         <Divider style={styles.divider} />
         <ConceptPicker
           concepts={newBrick.childrenConcepts}
           onChange={childrenConcepts => updateBrick({ childrenConcepts })}
-          readOnly={isReadOnly}
+          readOnly={!isEditEnabled}
         />
         <Divider style={styles.divider} />
         <StatusPicker
@@ -97,14 +103,16 @@ function BrickMaker() {
           setStatus={status => updateBrick({ status })}
         />
         {displayedError !== '' && <Text>{displayedError}</Text>}
-        {!isReadOnly && (
-          <View style={styles.submit}>
+        <View style={styles.submit}>
+          {isEditEnabled ? (
             <Button title="Sauvegarder" onPress={submit} />
-          </View>
-        )}
-        {isReadOnly && <Comments brickId={newBrick.id} />}
+          ) : (
+            <Button title="Editer" onPress={submit} type="outline" />
+          )}
+        </View>
+        {!isEditEnabled && <Comments brickId={newBrick.id} />}
       </View>
-      {isReadOnly && (
+      {!isEditEnabled && (
         <View style={styles.author}>
           <Text style={styles.authorText}>Brique de {author.email}</Text>
         </View>

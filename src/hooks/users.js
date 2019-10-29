@@ -41,7 +41,7 @@ export const setUser = (user: UserT) => {
     .set(lightUser)
     .then(() => {
       console.log('user added !');
-      console.log({ lightUser });
+      console.log({ lightUser, uid });
     })
     .catch(err => console.error(err));
 };

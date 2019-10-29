@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import firebase from '../firebase';
 import { DEFAULT_BRICK } from '../constants/defaults';
-import { ConceptT } from '../constants/types';
+import { ConceptT, BrickT } from '../constants/types';
 import { setUser } from './users';
 
 export const BRICK_COLLECTION = 'bricks';
@@ -29,7 +29,7 @@ export const useBricks = (concept: ConceptT) => {
   return bricks;
 };
 
-export const addBrick = brick => {
+export const setBrick = (brick: BrickT) => {
   const user = firebase.auth().currentUser;
 
   const enrichedBrick = {
@@ -38,16 +38,18 @@ export const addBrick = brick => {
     author: user.uid
   };
 
+  const id = enrichedBrick.id || null;
   delete enrichedBrick.id;
 
   setUser(user);
 
-  firebase
-    .firestore()
-    .collection(BRICK_COLLECTION)
-    .add(enrichedBrick)
+  const collection = firebase.firestore().collection(BRICK_COLLECTION);
+  // if there is an Id, we edit the brick.
+  const doc = id != null ? collection.doc(id) : collection.doc();
+  doc
+    .set(enrichedBrick)
     .then(() => {
-      console.log('Brick added !');
+      console.log(id != null ? 'Brick Edited' : 'Brick added !');
       console.log({ enrichedBrick });
     })
     .catch(err => console.error(err));

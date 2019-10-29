@@ -52,6 +52,10 @@ export async function facebookLogin() {
   return Promise.resolve({ type: 'success' });
 }
 
+export const isUserConnected = () => {
+  return firebase.auth().currentUser != null;
+};
+
 export const onAuthChange = action =>
   firebase.auth().onAuthStateChanged(user => action(user));
 

@@ -1,11 +1,16 @@
 // @flow
 import React, { useContext } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationContext } from 'react-navigation';
 import { useBricks } from '../../hooks';
 import { ConceptT } from '../../constants/types';
 import { getFeaturedBrick, formatConceptTitle, formatContent } from './helpers';
 import BrickTitle from './BrickTitle';
+
+const styles = StyleSheet.create({
+  empty: { display: 'flex', alignItems: 'center', justifyContent: 'center' }
+});
 
 export type Props = {
   concept: string,
@@ -67,4 +72,10 @@ BrickItem.defaultProps = {
     navigation.push('BrickMaker', { brick: { parentConcept: concept } }),
   asConcept: false
 };
+
+BrickItem.Empty = () => (
+  <View style={styles.empty}>
+    <Text>Cette brique n&apos;est liée à aucun concept.</Text>
+  </View>
+);
 export default BrickItem;

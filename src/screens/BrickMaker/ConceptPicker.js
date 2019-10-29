@@ -31,14 +31,18 @@ function ConceptPicker(props: Props) {
   return (
     <View>
       <View>
-        {concepts.map(concept => (
-          <BrickItem
-            key={concept}
-            concept={concept}
-            onRemove={!readOnly ? () => removeConcept(concept) : null}
-            asConcept
-          />
-        ))}
+        {concepts.length > 0 ? (
+          concepts.map(concept => (
+            <BrickItem
+              key={concept}
+              concept={concept}
+              onRemove={!readOnly ? () => removeConcept(concept) : null}
+              asConcept
+            />
+          ))
+        ) : (
+          <BrickItem.Empty />
+        )}
       </View>
       {!readOnly && (
         <Button

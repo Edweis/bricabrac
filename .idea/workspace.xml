@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3aa50b33-9ada-4027-ae19-dbd78669a5c6" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/BrickMaker/BrickMaker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/BrickMaker/BrickMaker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/BrickMaker/SourceList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/BrickMaker/SourceList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/BrickMaker/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/BrickMaker/helpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/ConceptList/ConceptList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ConceptList/ConceptList.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/ConceptList/helpers.js" beforeDir="false" />
-    </list>
+    <list default="true" id="3aa50b33-9ada-4027-ae19-dbd78669a5c6" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,18 +15,19 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="25" />
-    <option name="width" value="1920" />
-    <option name="height" value="1055" />
+    <option name="x" value="-107" />
+    <option name="y" value="117" />
+    <option name="width" value="1717" />
+    <option name="height" value="943" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">

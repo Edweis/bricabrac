@@ -9,13 +9,20 @@ export type BrickT = {
   content: string,
   datetime: Date,
   parentConcept: ConceptT,
-  source: string,
-  status: StatusT
+  source: string
+  // status: StatusT
 };
-export type UserT = { uid: string, email: string };
+export type UserT = { id: string, email: string };
 export type CommentT = {
   id: string,
   author: string,
   text: string,
+  datetime: Date
+};
+export type AcceptationT = {
+  id: string,
+  brickId: string,
+  userId: string,
+  status: StatusT,
   datetime: Date
 };

@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import type { BrickT } from '../../constants/types';
+import { DEFAULT_BRICK } from '../../constants/defaults';
 
 export const getFeaturedBrick = (bricks: BrickT[]): BrickT | null => {
   if (!bricks.length) return null;
@@ -12,7 +13,8 @@ export const getFeaturedBrick = (bricks: BrickT[]): BrickT | null => {
   if (!_.isEmpty(grouped.accepted)) return grouped.accepted[0];
   if (!_.isEmpty(grouped.none)) return grouped.none[0];
   if (!_.isEmpty(grouped.refused)) return grouped.refused[0];
-  return null;
+  // throw Error('Error brick has no status');
+  return DEFAULT_BRICK;
 };
 
 export const formatConceptTitle = (title: string): string =>

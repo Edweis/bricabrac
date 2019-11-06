@@ -9,6 +9,7 @@ verify_ssl = true
 requests = "*"
 pprint = "*"
 firebase-admin = "*"
+ipython = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,4 +1,4 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import _ from 'lodash';
 
 import firebase from '../firebase';
@@ -9,9 +9,8 @@ export const ACCEPTATION_COLLECTION = 'acceptations';
 export const genAcceptationId = (brickId: string, userId: string) =>
   `${userId}-${brickId}`;
 
-export const useAcceptations = (userId?: string) => {
+export const useAcceptations = () => {
   const [acceptations, setAcceptations] = useState([]);
-
   useEffect(() => {
     const unsubscribe = firebase
       .firestore()
@@ -21,25 +20,31 @@ export const useAcceptations = (userId?: string) => {
           id: accceptation.id,
           ...accceptation.data()
         }));
-        if (!_.isEqual(newAcceptation, acceptations))
+        if (!_.isEqual(newAcceptation, acceptations)) {
           setAcceptations(newAcceptation);
+        }
       });
     return () => unsubscribe();
   }, []);
-  if (userId != null)
-    return acceptations.filter(acceptation => acceptation.userId === userId);
+
+  // const filteredAcceptation = useMemo(() => {
+  //   return acceptations.filter(acceptation => acceptation.userId === userId);
+  // }, [acceptations, userId]);
   return acceptations;
 };
 
 export const useUserAcceptation = (userId: string): (string => StatusT) => {
-  const acceptations = useAcceptations(userId);
+  const acceptations = useAcceptations();
+
   return useCallback(
-    brickId =>
-      _.find(
-        acceptations,
-        a => a.userId === genAcceptationId(brickId, userId)
-      ) || 'none',
-    [userId]
+    brickId => {
+      if (!userId) return 'none';
+      const foundAcceptations = acceptations.filter(
+        a => a.id === genAcceptationId(brickId, userId)
+      );
+      return foundAcceptations.length ? foundAcceptations[0].status : 'none';
+    },
+    [acceptations]
   );
 };
 

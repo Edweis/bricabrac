@@ -1,11 +1,11 @@
 // @flow
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { NavigationContext } from 'react-navigation';
 import { SearchBar } from 'react-native-elements';
 import FAB from '../../components/FAB';
-import { useBricks } from '../../hooks';
+import { useBrickContext } from '../../hooks';
 import { matchSearch, normalize } from '../../helpers';
 import ActionModal from '../../components/ActionModal';
 import BrickItem from '../../components/BrickItem';
@@ -30,7 +30,10 @@ function ConceptList() {
   const onSelect = navigation.getParam('onSelect');
   const onCreate = navigation.getParam('onCreate', defaultCreation);
 
-  const bricks = useBricks();
+  const bricks = useBrickContext();
+  useEffect(() => {
+    console.debug('construct ConceptList', { bricks });
+  }, []);
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
 

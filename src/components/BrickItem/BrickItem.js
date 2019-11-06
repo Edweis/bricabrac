@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { NavigationContext } from 'react-navigation';
-import { useBricks } from '../../hooks';
+import { useBrickContext } from '../../hooks';
 import { ConceptT } from '../../constants/types';
 import { getFeaturedBrick, formatConceptTitle, formatContent } from './helpers';
 import BrickTitle from './BrickTitle';
@@ -22,7 +22,7 @@ export type Props = {
 
 function BrickItem(props: Props) {
   const { concept, asConcept } = props;
-  const bricks = useBricks(concept);
+  const bricks = useBrickContext(concept);
   const navigation = useContext(NavigationContext);
   const featured = getFeaturedBrick(bricks);
   const isEmpty = bricks.length === 0;

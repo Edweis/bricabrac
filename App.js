@@ -9,6 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import SignUp from './src/components/SignUp';
 import AppNavigator from './src/navigation/AppNavigator';
 import { onAuthChange, isUserConnected } from './src/firebase';
+import { useBricks, BrickContext } from './src/hooks';
 
 const bootstrap = () => {
   console.ignoredYellowBox = ['Setting a timer'];
@@ -48,6 +49,7 @@ export default function App() {
   const [isAppLoading, setAppLoading] = useState(true);
   const [authLoading, setAuthLoading] = useState(isUserConnected());
 
+  const bricks = useBricks();
   const endAppLoading = useCallback(() => setAppLoading(false), []);
 
   useEffect(() => {
@@ -70,9 +72,11 @@ export default function App() {
   if (authLoading) return <SignUp />;
 
   return (
-    <View style={styles.container}>
-      {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-      <AppNavigator />
-    </View>
+    <BrickContext.Provider value={bricks}>
+      <View style={styles.container}>
+        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+        <AppNavigator />
+      </View>
+    </BrickContext.Provider>
   );
 }

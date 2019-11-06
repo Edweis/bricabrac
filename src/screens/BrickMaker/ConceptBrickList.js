@@ -4,7 +4,7 @@ import { NavigationContext } from 'react-navigation';
 import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import Status from '../../components/Status';
-import { useBricks } from '../../hooks';
+import { useBrickContext } from '../../hooks';
 import FAB from '../../components/FAB';
 
 const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 function ConceptBrickList() {
   const navigation = useContext(NavigationContext);
   const parentConcept = navigation.getParam('concept');
-  const bricks = useBricks(parentConcept);
+  const bricks = useBrickContext(parentConcept);
 
   return [
     bricks.length ? (

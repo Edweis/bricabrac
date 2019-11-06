@@ -1,15 +1,26 @@
 import _ from 'lodash';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import firebase, { getCurrentUserId, getCurrentUser } from '../firebase';
 import { DEFAULT_BRICK } from '../constants/defaults';
 import { ConceptT, BrickT } from '../constants/types';
 import { setUser } from './users';
 import { useUserAcceptation, setAcceptation } from './acceptations';
+import { usePrevious } from './helpers';
 
 export const BRICK_COLLECTION = 'bricks';
 export const COMMENT_COLLECTION = 'comments';
 
-export const useBricks = (concept: ConceptT) => {
+export const BrickContext = React.createContext([]);
+
+export const useBrickContext = (concept: ConceptT = null) => {
+  const bricks = useContext(BrickContext);
+
+  if (concept != null)
+    return bricks.filter(brick => brick.parentConcept === concept);
+  return bricks;
+};
+
+export const useBricks = () => {
   const userId = getCurrentUserId();
   const [bricks, setBricks] = useState([DEFAULT_BRICK]);
   const getUserAcceptation = useUserAcceptation(userId);
@@ -21,15 +32,24 @@ export const useBricks = (concept: ConceptT) => {
       .onSnapshot(snapshot => {
         const newBrics = snapshot.docs.map(brick => ({
           ...brick.data(),
-          id: brick.id,
-          status: getUserAcceptation(brick.id)
+          id: brick.id
         }));
-        if (!_.isEqual(newBrics, bricks)) setBricks(newBrics);
+        if (!_.isEqual(newBrics, _.omit(bricks, 'status'))) setBricks(newBrics);
       });
     return () => unsubscribe();
   }, []);
-  if (concept != null)
-    return bricks.filter(brick => brick.parentConcept === concept);
+
+  const prevBricks = usePrevious(bricks);
+  useEffect(() => {
+    if (!_.isEqual(prevBricks, bricks)) {
+      const updatedBricks = bricks.map(brick => ({
+        ...brick,
+        status: getUserAcceptation(brick.id)
+      }));
+      setBricks(updatedBricks);
+    }
+  }, [bricks, getUserAcceptation]);
+
   return bricks;
 };
 
@@ -59,15 +79,17 @@ export const setBrick = (brick: BrickT) => {
       ? collection.doc(id).set(enrichedBrick)
       : collection.add(enrichedBrick);
   setter
+    .then(postedBrick => {
+      const acceptation = {
+        userId,
+        brickId: postedBrick ? postedBrick.id : id,
+        status
+      };
+      setAcceptation(acceptation);
+    })
     .then(() => {
       console.log(id != null ? 'Brick Edited' : 'Brick added !');
       console.log({ enrichedBrick });
-    })
-    .then(postedBrick => {
-      console.debug({ postedBrick });
-      l();
-      const acceptation = { userId, brickId: postedBrick.id, status };
-      setAcceptation(acceptation);
     })
     .catch(err => console.error(err));
 };

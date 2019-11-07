@@ -1,10 +1,9 @@
 // @flow
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { Text, Input } from 'react-native-elements';
-import { NavigationContext } from 'react-navigation';
-
 import Modal from 'react-native-modal';
+import { useNavigation } from '../hooks/navigation';
 
 type Props = {
   title: string,
@@ -26,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 function ActionModal(props: Props) {
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   const [value, setValue] = useState('');
   const onSubmit = () => {
     if (value !== '') {

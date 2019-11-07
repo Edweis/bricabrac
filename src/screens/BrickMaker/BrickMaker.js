@@ -1,7 +1,7 @@
-import React, { useState, useContext, useMemo } from 'react';
-import { NavigationContext } from 'react-navigation';
+import React, { useState, useMemo } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Input, Divider, Button } from 'react-native-elements';
+import { useNavigation } from '../../hooks/navigation';
 import { getCurrentUserId } from '../../firebase';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
@@ -56,7 +56,7 @@ const useFilledBricked = (brick: BrickT): BrickT =>
   );
 
 function BrickMaker() {
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   const isReadOnly = navigation.getParam('readOnly');
   const originalBrick = navigation.getParam('brick');
 

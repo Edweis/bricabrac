@@ -1,7 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Input } from 'react-native-elements';
-import { NavigationContext } from 'react-navigation';
+import { useNavigation } from '../../hooks/navigation';
 import type { SourceT } from '../../constants/types';
 import { EMPTY_SOURCE } from '../../constants/defaults';
 import { useProject } from '../../hooks/project';
@@ -12,7 +12,7 @@ type Props = {
   readOnly?: boolean
 };
 function SourcePicker(props: Props) {
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   const [projectSource] = useProject();
   const { source, readOnly } = props;
   const onSelect = (newSource: SourceT) => {

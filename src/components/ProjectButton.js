@@ -1,8 +1,8 @@
 // @flow
-import React, { useContext } from 'react';
-import { NavigationContext } from 'react-navigation';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { useNavigation } from '../hooks/navigation';
 import { useProject } from '../hooks/project';
 import type { SourceT } from '../constants/types';
 import colors from '../constants/colors';
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({ container: { marginRight: 16 } });
 export default function ProjectButton() {
   const [project, setProject] = useProject();
   const isProjectOn = project != null;
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   const onSelect = (newSource: SourceT) => {
     setProject(newSource);
     navigation.pop();

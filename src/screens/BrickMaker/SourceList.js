@@ -1,11 +1,10 @@
 // @flow
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
-import { NavigationContext } from 'react-navigation';
 import { SearchBar, ListItem } from 'react-native-elements';
+import { useNavigation } from '../../hooks/navigation';
 import { useBrickContext, useFocusOnMount } from '../../hooks';
-import { matchSearch } from '../../helpers';
 import { EMPTY_SOURCE } from '../../constants/defaults';
 
 const styles = StyleSheet.create({
@@ -48,7 +47,7 @@ const useDisplayedSources = (search: string) => {
 };
 
 function SourceList() {
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   const onSelect = navigation.getParam('onSelect');
 
   const focusOnMountRef = useFocusOnMount();

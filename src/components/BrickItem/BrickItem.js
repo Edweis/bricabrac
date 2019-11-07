@@ -1,8 +1,8 @@
 // @flow
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { NavigationContext } from 'react-navigation';
+import { useNavigation } from '../../hooks/navigation';
 import { useBrickContext } from '../../hooks';
 import { ConceptT } from '../../constants/types';
 import { getFeaturedBrick, formatConceptTitle, formatContent } from './helpers';
@@ -23,7 +23,7 @@ export type Props = {
 function BrickItem(props: Props) {
   const { concept, asConcept } = props;
   const bricks = useBrickContext(concept);
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   const featured = getFeaturedBrick(bricks);
   const isEmpty = bricks.length === 0;
 

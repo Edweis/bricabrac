@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
-import { NavigationContext } from 'react-navigation';
+import { useNavigation } from '../../hooks/navigation';
 import type { ConceptT } from '../../constants/types';
 import BrickItem from '../../components/BrickItem';
 
@@ -18,7 +18,7 @@ type Props = {
   readOnly?: boolean
 };
 function ConceptPicker(props: Props) {
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   const { concepts, readOnly } = props;
   const addConcept = (concept: ConceptT, nav: any) => {
     if (!concepts.includes(concept)) props.onChange([...concepts, concept]);

@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import moment from 'moment';
-import { NavigationContext } from 'react-navigation';
 import { StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
+import { useNavigation } from '../../hooks/navigation';
 import Status from '../../components/Status';
 import { useBrickContext } from '../../hooks';
 import FAB from '../../components/FAB';
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
 });
 
 function ConceptBrickList() {
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   const parentConcept = navigation.getParam('concept');
   const bricks = useBrickContext(parentConcept);
 

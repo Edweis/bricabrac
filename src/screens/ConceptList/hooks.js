@@ -1,6 +1,6 @@
-import { useMemo, useEffect, useContext } from 'react';
+import { useMemo, useEffect } from 'react';
 import _ from 'lodash';
-import { NavigationContext } from 'react-navigation';
+import { useNavigation } from '../../hooks/navigation';
 import { useBrickContext } from '../../hooks';
 import { matchBrickSearch } from '../../helpers';
 
@@ -51,7 +51,7 @@ export const useDisplayedConcepts = (search: string) => {
 };
 
 export const useNavigationEvent = (event: string, cb: any => void) => {
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
   useEffect(() => {
     const subscription = navigation.addListener('willFocus', cb);
     return () => subscription.remove();

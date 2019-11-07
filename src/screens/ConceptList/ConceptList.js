@@ -1,9 +1,9 @@
 // @flow
-import React, { useState, useContext, useCallback, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import _ from 'lodash';
-import { StyleSheet, ScrollView, View } from 'react-native';
-import { NavigationContext } from 'react-navigation';
+import { StyleSheet, ScrollView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
+import { useNavigation } from '../../hooks/navigation';
 import FAB from '../../components/FAB';
 import { useDisplayedConcepts, useNavigationEvent } from './hooks';
 import ActionModal from '../../components/ActionModal';
@@ -27,7 +27,7 @@ function ConceptList() {
   useNavigationEvent('willFocus', () => setSearch(''));
 
   const concepts = useDisplayedConcepts(search);
-  const navigation = useContext(NavigationContext);
+  const navigation = useNavigation();
 
   const hideFAB = navigation.getParam('hideFAB', false);
   const onSelect = navigation.getParam('onSelect');

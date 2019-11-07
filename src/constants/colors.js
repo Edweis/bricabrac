@@ -11,5 +11,7 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
-  status: { accepted: '#28a745', refused: '#dc3545', none: '#ffc107' }
+  status: { accepted: '#28a745', refused: '#dc3545', none: '#ffc107' },
+  orange: '#f4511e',
+  black: '#000'
 };

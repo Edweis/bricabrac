@@ -1,7 +1,7 @@
 // @flow
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import _ from 'lodash';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, View } from 'react-native';
 import { NavigationContext } from 'react-navigation';
 import { SearchBar } from 'react-native-elements';
 import FAB from '../../components/FAB';
@@ -9,6 +9,7 @@ import { useDisplayedConcepts, useNavigationEvent } from './hooks';
 import ActionModal from '../../components/ActionModal';
 import BrickItem from '../../components/BrickItem';
 import LogoutButton from '../../components/LogoutButton';
+import ProjectButton from '../../components/ProjectButton';
 
 const styles = StyleSheet.create({
   content: {},
@@ -78,10 +79,18 @@ function ConceptList() {
 ConceptList.navigationOptions = ({ navigation }) => {
   const rawTitle = navigation.getParam('title', 'Concepts');
   const brickCount = navigation.getParam('count', '...');
-  return {
-    title: `${rawTitle} (${brickCount})`,
-    headerRight: <LogoutButton />
-  };
+  const title = `${rawTitle} (${brickCount})`;
+
+  const headerRight =
+    rawTitle === 'Concepts' ? (
+      <>
+        <ProjectButton />
+        <LogoutButton />
+      </>
+    ) : (
+      <LogoutButton />
+    );
+  return { title, headerRight };
 };
 
 export default ConceptList;

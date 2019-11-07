@@ -20,7 +20,7 @@ export const useBrickContext = (concept: ConceptT = null) => {
   return bricks;
 };
 
-export const useBricks = () => {
+export const useBricks = (projectSource?: string) => {
   const userId = getCurrentUserId();
   const [bricks, setBricks] = useState([DEFAULT_BRICK]);
   const getUserAcceptation = useUserAcceptation(userId);
@@ -34,12 +34,30 @@ export const useBricks = () => {
           ...brick.data(),
           id: brick.id
         }));
+
         if (!_.isEqual(newBrics, _.omit(bricks, 'status'))) setBricks(newBrics);
       });
     return () => unsubscribe();
   }, []);
 
+  // filter bricks by project
   const prevBricks = usePrevious(bricks);
+  const prevProjectSource = usePrevious(projectSource);
+  useEffect(() => {
+    const didChange =
+      (!_.isEqual(prevBricks, bricks),
+      !_.isEqual(prevProjectSource, projectSource));
+
+    if (didChange) {
+      const filteredBricks = bricks.filter(
+        brick => !projectSource || brick.source === projectSource
+      );
+      setBricks(filteredBricks);
+    }
+  }, [bricks, projectSource]);
+
+  // Update when acceptations changes
+  // TODO look if we can use relationship in firestore database
   useEffect(() => {
     if (!_.isEqual(prevBricks, bricks)) {
       const updatedBricks = bricks.map(brick => ({

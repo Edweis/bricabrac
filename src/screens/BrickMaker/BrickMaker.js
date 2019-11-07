@@ -17,6 +17,7 @@ import {
 import { checkBrickError } from './helpers';
 import { EMPTY_BRICK } from '../../constants/defaults';
 import { BrickT } from '../../constants/types';
+import colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
   main: {
@@ -158,7 +159,7 @@ BrickMaker.navigationOptions = ({ navigation }) => {
   });
   const readOnly = navigation.getParam('readOnly', false);
   const title = readOnly ? parentConcept : `${parentConcept} > Ajouter`;
-  const headerStyle = readOnly ? {} : { backgroundColor: '#f4511e' };
+  const headerStyle = readOnly ? {} : { backgroundColor: colors.orange };
   return { title, headerStyle };
 };
 

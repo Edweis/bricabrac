@@ -2,6 +2,7 @@ import React, { useState, useContext, useMemo } from 'react';
 import { NavigationContext } from 'react-navigation';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Input, Divider, Button } from 'react-native-elements';
+import { getCurrentUserId } from '../../firebase';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import SourcePicker from './SourcePicker';
@@ -44,17 +45,23 @@ const styles = StyleSheet.create({
   author: { alignSelf: 'flex-end' }
 });
 
+const useFilledBricked = (brick: BrickT): BrickT =>
+  useMemo(
+    () => ({
+      ...EMPTY_BRICK,
+      ...brick
+    }),
+    [brick]
+  );
+
 function BrickMaker() {
   const navigation = useContext(NavigationContext);
   const isReadOnly = navigation.getParam('readOnly');
   const originalBrick = navigation.getParam('brick');
-  const displayedBrick = useMemo(
-    () => ({
-      ...EMPTY_BRICK,
-      ...originalBrick
-    }),
-    [originalBrick]
-  );
+
+  const displayedBrick = useFilledBricked(originalBrick);
+  const isAuthor = getCurrentUserId() === displayedBrick.author;
+
   const [newBrick, setNewBrick] = useState(displayedBrick);
   const [displayedError, setDisplayedError] = useState('');
   const [isEditEnabled, setIsEditEnable] = useState(!isReadOnly);
@@ -119,12 +126,14 @@ function BrickMaker() {
             <Button title="Sauvegarder" onPress={submit} />
           ) : (
             <>
-              <Button
-                title="Editer"
-                onPress={() => setIsEditEnable(true)}
-                type="outline"
-                containerStyle={styles.submitItem}
-              />
+              {isAuthor && (
+                <Button
+                  title="Editer"
+                  onPress={() => setIsEditEnable(true)}
+                  type="outline"
+                  containerStyle={styles.submitItem}
+                />
+              )}
               <CommentButton
                 onSubmit={comment => updateBrickComment(newBrick.id, comment)}
                 style={styles.submitItem}

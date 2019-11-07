@@ -6,4 +6,4 @@ export const ProjectSetterContext = React.createContext([
     throw Error('setProject is not yet defined');
   }
 ]);
-export const useSetProject = () => useContext(ProjectSetterContext);
+export const useProject = () => useContext(ProjectSetterContext);

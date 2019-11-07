@@ -10,7 +10,7 @@ import SignUp from './src/components/SignUp';
 import AppNavigator from './src/navigation/AppNavigator';
 import { onAuthChange, isUserConnected } from './src/firebase';
 import { useBricks, BrickContext } from './src/hooks/bricks';
-import { ProjectSetterContext } from './src/hooks/projectSetter';
+import { ProjectSetterContext } from './src/hooks/project';
 
 const bootstrap = () => {
   console.ignoredYellowBox = ['Setting a timer'];

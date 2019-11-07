@@ -42,13 +42,25 @@ const useDisplayedConcepts = (search: string) => {
       )
       .flatten()
       .value();
-    return parentConceptBlocks
+
+    const sortedConceptsRaw = parentConceptBlocks
       .union(orphanConceptBlocks)
       .sortBy(['timestamp'])
       .uniqBy('concept')
       .map('concept')
       .reverse() // latest first
       .value();
+
+    // Set #TODO concept on top if it exists
+    const TODO_CONCEPT = '#TODO';
+    if (sortedConceptsRaw.includes(TODO_CONCEPT)) {
+      const conceptsWithTodoOnTop = sortedConceptsRaw.filter(
+        c => c !== TODO_CONCEPT
+      );
+      conceptsWithTodoOnTop.splice(0, 0, TODO_CONCEPT);
+      return conceptsWithTodoOnTop;
+    }
+    return sortedConceptsRaw;
   }, [bricks]);
 
   return useMemo(() => {

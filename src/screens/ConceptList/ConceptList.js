@@ -1,13 +1,11 @@
 // @flow
-import React, { useState, useContext, useCallback, useMemo } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { NavigationContext } from 'react-navigation';
 import { SearchBar } from 'react-native-elements';
-import type { ConceptT } from '../../constants/types';
 import FAB from '../../components/FAB';
-import { useBrickContext } from '../../hooks';
-import { matchSearch, normalize } from '../../helpers';
+import { useDisplayedConcepts, useNavigationEvent } from './hooks';
 import ActionModal from '../../components/ActionModal';
 import BrickItem from '../../components/BrickItem';
 import LogoutButton from '../../components/LogoutButton';
@@ -22,66 +20,21 @@ const styles = StyleSheet.create({
   }
 });
 
-const defaultCreation = (concept, navigation) =>
-  navigation.push('BrickMaker', { brick: { parentConcept: concept } });
-
-const useDisplayedConcepts = (search: string) => {
-  const bricks = useBrickContext();
-
-  const sortedConcepts = useMemo(() => {
-    const parentConceptBlocks = _(bricks).map(brick => ({
-      timestamp: brick.submitTime.toMillis(),
-      concept: brick.parentConcept
-    }));
-    const orphanConceptBlocks = _(bricks)
-      .map(brick =>
-        brick.childrenConcepts.map(childConcept => ({
-          timestamp: brick.submitTime.toMillis(),
-          concept: childConcept
-        }))
-      )
-      .flatten()
-      .value();
-
-    const sortedConceptsRaw = parentConceptBlocks
-      .union(orphanConceptBlocks)
-      .sortBy(['timestamp'])
-      .uniqBy('concept')
-      .map('concept')
-      .reverse() // latest first
-      .value();
-
-    // Set #TODO concept on top if it exists
-    const TODO_CONCEPT = '#TODO';
-    if (sortedConceptsRaw.includes(TODO_CONCEPT)) {
-      const conceptsWithTodoOnTop = sortedConceptsRaw.filter(
-        c => c !== TODO_CONCEPT
-      );
-      conceptsWithTodoOnTop.splice(0, 0, TODO_CONCEPT);
-      return conceptsWithTodoOnTop;
-    }
-    return sortedConceptsRaw;
-  }, [bricks]);
-
-  return useMemo(() => {
-    return sortedConcepts.filter(concept => matchSearch(concept, search));
-  }, [sortedConcepts, search]);
-};
-
 function ConceptList() {
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const concepts = useDisplayedConcepts(search);
+  useNavigationEvent('willFocus', () => setSearch(''));
 
+  const concepts = useDisplayedConcepts(search);
   const navigation = useContext(NavigationContext);
+
   const hideFAB = navigation.getParam('hideFAB', false);
   const onSelect = navigation.getParam('onSelect');
-  const onCreate = navigation.getParam('onCreate', defaultCreation);
+  const onCreate = navigation.getParam(
+    'onCreate',
+    BrickItem.defaultProps.onCreate
+  );
 
-  const resetSearchThen = useCallback((cb: Function) => (...args) => {
-    setSearch('');
-    cb(...args);
-  });
   const throttledSearch = useCallback(_.throttle(setSearch, 100), []);
 
   if (search.trim() !== '') concepts.unshift(search.trim());
@@ -99,8 +52,8 @@ function ConceptList() {
           <BrickItem
             key={parentConcept}
             concept={parentConcept}
-            onSelect={resetSearchThen(onSelect)}
-            onCreate={resetSearchThen(onCreate)}
+            onSelect={onSelect}
+            onCreate={onCreate}
           />
         ))}
       </ScrollView>
@@ -108,7 +61,7 @@ function ConceptList() {
         <>
           <ActionModal
             show={showModal}
-            onSubmit={resetSearchThen(onCreate)}
+            onSubmit={onCreate}
             onClose={() => setShowModal(false)}
             title="Nouveau concept"
             submitText="Créér"

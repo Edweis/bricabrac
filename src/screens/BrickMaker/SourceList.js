@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useMemo } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { NavigationContext } from 'react-navigation';
@@ -18,27 +18,42 @@ const styles = StyleSheet.create({
   }
 });
 
+const useDisplayedSources = (search: string) => {
+  const bricks = useBrickContext();
+
+  const orderedSourceBlocks = useMemo(
+    () =>
+      _(bricks)
+        .filter(brick => !!brick.source) // remove empty sources
+        .map(brick => ({
+          submitTime: brick.submitTime.toMillis(),
+          source: brick.source
+        }))
+        .sortBy(['submitTime'])
+        .reverse()
+        .groupBy('source')
+        .mapValues((v, k) => ({ source: k, count: v.length }))
+        .values()
+        .value(),
+    [bricks]
+  );
+
+  return useMemo(() => {
+    const blocks = [...orderedSourceBlocks];
+    blocks.unshift({ source: '', count: 0 });
+    if (search.trim() !== '')
+      blocks.unshift({ source: search.trim(), count: 0 });
+    return blocks;
+  }, [orderedSourceBlocks, search]);
+};
+
 function SourceList() {
   const navigation = useContext(NavigationContext);
   const onSelect = navigation.getParam('onSelect');
 
-  const sources = useBrickContext().map(b => b.source);
   const focusOnMountRef = useFocusOnMount();
   const [search, setSearch] = useState('');
-
-  const sourceData = _(sources)
-    .filter(source => matchSearch(source, search))
-    // Remove sourceless brick
-    .filter(source => !!source)
-    .groupBy()
-    .mapValues((v, k) => ({ count: v.length, name: k }))
-    .values()
-    .sortBy('count')
-    .value();
-
-  sourceData.unshift({ name: '', count: 0 });
-  if (search.trim() !== '')
-    sourceData.unshift({ name: search.trim(), count: 0 });
+  const sourceData = useDisplayedSources(search);
 
   // Use FlatList if ScrollView becomes too slow
   return (
@@ -52,11 +67,11 @@ function SourceList() {
       <ScrollView style={styles.content}>
         {sourceData.map(sourceDatum => (
           <ListItem
-            key={sourceDatum.name}
-            title={sourceDatum.name ? sourceDatum.name : EMPTY_SOURCE}
+            key={sourceDatum.source}
+            title={sourceDatum.source ? sourceDatum.source : EMPTY_SOURCE}
             rightSubtitle={sourceDatum.count.toString()}
             rightIcon={{ name: 'chevron-right' }}
-            onPress={() => onSelect(sourceDatum.name)}
+            onPress={() => onSelect(sourceDatum.source)}
             bottomDivider
           />
         ))}

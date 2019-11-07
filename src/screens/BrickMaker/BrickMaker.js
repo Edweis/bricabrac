@@ -7,6 +7,7 @@ import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import SourcePicker from './SourcePicker';
 import CommentButton from './CommentButton';
+import RelationshipPicker from './RelationshipPicker';
 import Comments from './Comments';
 import {
   setBrick,
@@ -114,6 +115,12 @@ function BrickMaker() {
         <ConceptPicker
           concepts={newBrick.childrenConcepts}
           onChange={childrenConcepts => updateBrick({ childrenConcepts })}
+          readOnly={!isEditEnabled}
+        />
+        <Divider style={styles.divider} />
+        <RelationshipPicker
+          relationship={newBrick.relationship}
+          setReltionship={relationship => updateBrick({ relationship })}
           readOnly={!isEditEnabled}
         />
         <Divider style={styles.divider} />

@@ -3,15 +3,13 @@ import type { BrickT } from './types';
 
 export const DEFAULT_BRICK: BrickT = {
   id: 'idBrick1',
-  authorId: 'idAuthor1',
   childrenConcepts: [],
   content: 'loading content ...',
   datetime: firebase.firestore.Timestamp.now(),
   submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: 'loading concept ...',
   source: 'loading source ...',
-  status: 'none',
-  author: null
+  relationship: 'undefined'
 };
 
 export const EMPTY_BRICK: BrickT = {
@@ -20,7 +18,6 @@ export const EMPTY_BRICK: BrickT = {
   datetime: firebase.firestore.Timestamp.now(),
   submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: '',
-  source: '',
   status: 'none',
   author: null
 };

@@ -2,15 +2,20 @@
 export type ConceptT = string;
 export type SourceT = string;
 export type StatusT = 'accepted' | 'refused' | 'none';
+export type RelationshipT =
+  | 'deduction'
+  | 'implication'
+  | 'partition'
+  | 'definition'
+  | 'undefined';
 export type BrickT = {
   id: string,
-  authorId: string,
   childrenConcepts: ConceptT[],
   content: string,
   submitTime: Date,
   parentConcept: ConceptT,
-  source: string
-  // status: StatusT
+  source: string,
+  relationship: RelationshipT
 };
 export type UserT = { id: string, email: string };
 export type CommentT = {

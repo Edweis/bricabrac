@@ -12,3 +12,4 @@ web-report/
 .firebaserc
 migrations/credentials.py
 migrations/serviceAccount.json
+.idea/*

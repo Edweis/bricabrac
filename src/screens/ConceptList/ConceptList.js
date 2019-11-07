@@ -1,9 +1,10 @@
 // @flow
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { NavigationContext } from 'react-navigation';
 import { SearchBar } from 'react-native-elements';
+import type { ConceptT } from '../../constants/types';
 import FAB from '../../components/FAB';
 import { useBrickContext } from '../../hooks';
 import { matchSearch, normalize } from '../../helpers';
@@ -25,17 +26,18 @@ const defaultCreation = (concept, navigation) =>
   navigation.push('BrickMaker', { brick: { parentConcept: concept } });
 
 function ConceptList() {
+  const [search, setSearch] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const navigation = useContext(NavigationContext);
   const hideFAB = navigation.getParam('hideFAB', false);
   const onSelect = navigation.getParam('onSelect');
   const onCreate = navigation.getParam('onCreate', defaultCreation);
+  const resetSearchThen = useCallback((cb: Function) => (...args) => {
+    setSearch('');
+    cb(...args);
+  });
 
   const bricks = useBrickContext();
-  useEffect(() => {
-    console.debug('construct ConceptList', { bricks });
-  }, []);
-  const [search, setSearch] = useState('');
-  const [showModal, setShowModal] = useState(false);
 
   const parentConcepts = _(bricks).map('parentConcept');
   const orphanConcepts = _(bricks)
@@ -64,8 +66,8 @@ function ConceptList() {
           <BrickItem
             key={parentConcept}
             concept={parentConcept}
-            onSelect={onSelect}
-            onCreate={onCreate}
+            onSelect={resetSearchThen(onSelect)}
+            onCreate={resetSearchThen(onCreate)}
           />
         ))}
       </ScrollView>
@@ -73,7 +75,7 @@ function ConceptList() {
         <>
           <ActionModal
             show={showModal}
-            onSubmit={onCreate}
+            onSubmit={resetSearchThen(onCreate)}
             onClose={() => setShowModal(false)}
             title="Nouveau concept"
             submitText="Créér"

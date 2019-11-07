@@ -7,7 +7,7 @@ export type BrickT = {
   authorId: string,
   childrenConcepts: ConceptT[],
   content: string,
-  datetime: Date,
+  submitTime: Date,
   parentConcept: ConceptT,
   source: string
   // status: StatusT

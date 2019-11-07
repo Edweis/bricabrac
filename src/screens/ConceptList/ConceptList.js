@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext, useCallback, useMemo } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { NavigationContext } from 'react-navigation';
@@ -25,31 +25,52 @@ const styles = StyleSheet.create({
 const defaultCreation = (concept, navigation) =>
   navigation.push('BrickMaker', { brick: { parentConcept: concept } });
 
+const useDisplayedConcepts = (search: string) => {
+  const bricks = useBrickContext();
+
+  const sortedConcepts = useMemo(() => {
+    const parentConceptBlocks = _(bricks).map(brick => ({
+      timestamp: brick.submitTime.toMillis(),
+      concept: brick.parentConcept
+    }));
+    const orphanConceptBlocks = _(bricks)
+      .map(brick =>
+        brick.childrenConcepts.map(childConcept => ({
+          timestamp: brick.submitTime.toMillis(),
+          concept: childConcept
+        }))
+      )
+      .flatten()
+      .value();
+    return parentConceptBlocks
+      .union(orphanConceptBlocks)
+      .sortBy(['timestamp'])
+      .uniqBy('concept')
+      .map('concept')
+      .reverse() // latest first
+      .value();
+  }, [bricks]);
+
+  return useMemo(() => {
+    return sortedConcepts.filter(concept => matchSearch(concept, search));
+  }, [sortedConcepts, search]);
+};
+
 function ConceptList() {
   const [search, setSearch] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const concepts = useDisplayedConcepts(search);
+
   const navigation = useContext(NavigationContext);
   const hideFAB = navigation.getParam('hideFAB', false);
   const onSelect = navigation.getParam('onSelect');
   const onCreate = navigation.getParam('onCreate', defaultCreation);
+
   const resetSearchThen = useCallback((cb: Function) => (...args) => {
     setSearch('');
     cb(...args);
   });
-
-  const bricks = useBrickContext();
-
-  const parentConcepts = _(bricks).map('parentConcept');
-  const orphanConcepts = _(bricks)
-    .map('childrenConcepts')
-    .flatten()
-    .value();
-  const concepts = parentConcepts
-    .union(orphanConcepts)
-    .filter(concept => matchSearch(concept, search))
-    .uniq()
-    .sortBy(normalize)
-    .value();
+  const throttledSearch = useCallback(_.throttle(setSearch, 100), []);
 
   if (search.trim() !== '') concepts.unshift(search.trim());
 
@@ -58,7 +79,7 @@ function ConceptList() {
     <>
       <SearchBar
         placeholder="Search..."
-        onChangeText={setSearch}
+        onChangeText={throttledSearch}
         value={search}
       />
       <ScrollView style={styles.content}>

@@ -2,21 +2,23 @@ import { useMemo, useEffect, useContext } from 'react';
 import _ from 'lodash';
 import { NavigationContext } from 'react-navigation';
 import { useBrickContext } from '../../hooks';
-import { matchSearch } from '../../helpers';
+import { matchBrickSearch } from '../../helpers';
 
 const TODO_CONCEPT = '#TODO';
 
 export const useDisplayedConcepts = (search: string) => {
   const bricks = useBrickContext();
 
-  const sortedConcepts = useMemo(() => {
-    const parentConceptBlocks = _(bricks).map(brick => ({
+  return useMemo(() => {
+    const parentConceptBricks = _(bricks).map(brick => ({
+      ...brick,
       submitTime: brick.submitTime.toMillis(),
       concept: brick.parentConcept
     }));
-    const orphanConceptBlocks = _(bricks)
+    const orphanConceptBricks = _(bricks)
       .map(brick =>
         brick.childrenConcepts.map(childConcept => ({
+          ...brick,
           submitTime: brick.submitTime.toMillis(),
           concept: childConcept
         }))
@@ -24,8 +26,9 @@ export const useDisplayedConcepts = (search: string) => {
       .flatten()
       .value();
 
-    const sortedConceptsRaw = parentConceptBlocks
-      .union(orphanConceptBlocks)
+    const sortedConcepts = parentConceptBricks
+      .union(orphanConceptBricks)
+      .filter(brick => matchBrickSearch(brick, search))
       .sortBy(['submitTime'])
       .reverse() // latest first
       .uniqBy('concept') // take the latest concept edited
@@ -33,23 +36,18 @@ export const useDisplayedConcepts = (search: string) => {
       .value();
 
     // Set #TODO concept on top if it exists
-    if (sortedConceptsRaw.includes(TODO_CONCEPT)) {
-      const conceptsWithTodoOnTop = sortedConceptsRaw.filter(
+    if (sortedConcepts.includes(TODO_CONCEPT)) {
+      const conceptsWithTodoOnTop = sortedConcepts.filter(
         c => c !== TODO_CONCEPT
       );
       conceptsWithTodoOnTop.splice(0, 0, TODO_CONCEPT);
       return conceptsWithTodoOnTop;
     }
-    return sortedConceptsRaw;
-  }, [bricks]);
 
-  return useMemo(() => {
-    const concepts = sortedConcepts.filter(concept =>
-      matchSearch(concept, search)
-    );
-    if (search.trim() !== '') concepts.unshift(search.trim());
-    return concepts;
-  }, [sortedConcepts, search]);
+    // Add the search as a concept we can add
+    if (search.trim() !== '') sortedConcepts.unshift(search.trim());
+    return sortedConcepts;
+  }, [bricks, search]);
 };
 
 export const useNavigationEvent = (event: string, cb: any => void) => {

@@ -44,7 +44,11 @@ export const useDisplayedConcepts = (search: string) => {
   }, [bricks]);
 
   return useMemo(() => {
-    return sortedConcepts.filter(concept => matchSearch(concept, search));
+    const concepts = sortedConcepts.filter(concept =>
+      matchSearch(concept, search)
+    );
+    if (search.trim() !== '') concepts.unshift(search.trim());
+    return concepts;
   }, [sortedConcepts, search]);
 };
 

@@ -1,5 +1,5 @@
 // @flow
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { NavigationContext } from 'react-navigation';
@@ -36,8 +36,10 @@ function ConceptList() {
   );
 
   const throttledSearch = useCallback(_.throttle(setSearch, 100), []);
-
-  if (search.trim() !== '') concepts.unshift(search.trim());
+  // update title on search change
+  useEffect(() => {
+    navigation.setParams({ count: concepts.length });
+  }, [concepts.length]);
 
   // Use FlatList if ScrollView becomes too slow
   return (
@@ -73,9 +75,13 @@ function ConceptList() {
   );
 }
 
-ConceptList.navigationOptions = ({ navigation }) => ({
-  title: navigation.getParam('title', 'Concepts'),
-  headerRight: <LogoutButton />
-});
+ConceptList.navigationOptions = ({ navigation }) => {
+  const rawTitle = navigation.getParam('title', 'Concepts');
+  const brickCount = navigation.getParam('count', '...');
+  return {
+    title: `${rawTitle} (${brickCount})`,
+    headerRight: <LogoutButton />
+  };
+};
 
 export default ConceptList;

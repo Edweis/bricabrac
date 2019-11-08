@@ -56,8 +56,12 @@ export const useBricks = (projectSource?: string) => {
     }
   }, [bricks, projectSource]);
 
+  const prevGetUserAcceptation = usePrevious(getUserAcceptation);
   useEffect(() => {
-    if (!_.isEqual(prevBricks, bricks)) {
+    if (
+      !_.isEqual(prevBricks, bricks) ||
+      prevGetUserAcceptation !== getUserAcceptation
+    ) {
       const updatedBricks = bricks.map(brick => ({
         ...brick,
         status: getUserAcceptation(brick.id)

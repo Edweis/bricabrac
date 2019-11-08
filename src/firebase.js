@@ -4,16 +4,9 @@ import 'firebase/firestore';
 import 'firebase/database';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
+import firestoreCredentials from './.firestoreCredentials';
 
-firebase.initializeApp({
-  apiKey: 'AIzaSyCeDXVDAoDNokR_CzhLIq6N-kQSpkHKHms',
-  authDomain: 'bric-a-brac-fb.firebaseapp.com',
-  databaseURL: 'https://bric-a-brac-fb.firebaseio.com',
-  projectId: 'bric-a-brac-fb',
-  storageBucket: 'bric-a-brac-fb.appspot.com',
-  messagingSenderId: '53205959987',
-  appId: '1:53205959987:web:08b8024d3bbfacda'
-});
+firebase.initializeApp(firestoreCredentials);
 
 export async function googleLogin() {
   const config = {

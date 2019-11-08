@@ -8,7 +8,7 @@ export const translateStatus: { [StatusT]: string } = {
 
 export const translateRelationship: { [RelationshipT]: string } = {
   deduction: 'déduction ->X',
-  implication: 'suffisant X->',
+  implication: 'implication X->',
   partition: 'partition X=A+B',
   definition: 'définition X=A',
   undefined: 'non définie'

@@ -45,8 +45,8 @@ export const useBricks = (projectSource?: string) => {
   const prevProjectSource = usePrevious(projectSource);
   useEffect(() => {
     const didChange =
-      (!_.isEqual(prevBricks, bricks),
-      !_.isEqual(prevProjectSource, projectSource));
+      !_.isEqual(prevBricks, bricks) ||
+      !_.isEqual(prevProjectSource, projectSource);
 
     if (didChange) {
       const filteredBricks = bricks.filter(

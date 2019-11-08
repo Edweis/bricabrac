@@ -11,7 +11,8 @@ type Props = {
   show: boolean,
   onClose: () => void,
   onSubmit: string => void,
-  multiline?: boolean
+  multiline?: boolean,
+  noInput?: boolean
 };
 
 const styles = StyleSheet.create({
@@ -29,9 +30,9 @@ function ActionModal(props: Props) {
   const navigation = useNavigation();
   const [value, setValue] = useState('');
   const onSubmit = () => {
-    if (value !== '') {
-      props.onSubmit(value, navigation);
+    if (props.noInput || value !== '') {
       props.onClose();
+      props.onSubmit(value, navigation);
       setValue('');
     }
   };
@@ -39,17 +40,19 @@ function ActionModal(props: Props) {
     <Modal isVisible={props.show} onBackdropPress={props.onClose}>
       <View style={styles.content}>
         <Text h4>{props.title}</Text>
-        <Input
-          value={value}
-          onChangeText={setValue}
-          multiline={props.multiline}
-        />
+        {!props.noInput && (
+          <Input
+            value={value}
+            onChangeText={setValue}
+            multiline={props.multiline}
+          />
+        )}
         <Button title={props.submitText} onPress={onSubmit} />
       </View>
     </Modal>
   );
 }
 
-ActionModal.defaultProps = { multiline: false };
+ActionModal.defaultProps = { multiline: false, noInput: false };
 
 export default ActionModal;

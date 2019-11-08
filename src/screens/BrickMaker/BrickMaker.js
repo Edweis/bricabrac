@@ -11,6 +11,7 @@ import RelationshipPicker from './RelationshipPicker';
 import Comments from './Comments';
 import {
   setBrick,
+  deleteBrick,
   useFocusOnMount,
   useUser,
   updateBrickComment
@@ -19,6 +20,7 @@ import { checkBrickError } from './helpers';
 import { EMPTY_BRICK } from '../../constants/defaults';
 import { BrickT } from '../../constants/types';
 import colors from '../../constants/colors';
+import ConfirmButton from '../../components/ConfirmButton';
 
 const styles = StyleSheet.create({
   main: {
@@ -158,9 +160,13 @@ function BrickMaker() {
         </View>
         {isEditEnabled && <Button title="Sauvegarder" onPress={submit} />}
         {!isEditEnabled && isAuthor && (
-          <Button
+          <ConfirmButton
             title="Supprimer"
-            onPress={() => setIsEditEnable(true)}
+            modalTitle="Êtes vous sur de vouloir supprimer cette brique ?"
+            onSubmit={() => {
+              deleteBrick(newBrick.id);
+              navigation.pop();
+            }}
             type="solid"
             buttonStyle={styles.deleteButton}
             containerStyle={styles.deleteContainer}

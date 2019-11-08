@@ -36,6 +36,10 @@ export const useAcceptations = () => {
 export const useUserAcceptation = (userId: string): (string => StatusT) => {
   const acceptations = useAcceptations();
 
+  useEffect(() => {
+    console.debug('refreshing user acceptation');
+  }, [acceptations]);
+
   return useCallback(
     brickId => {
       if (!userId) return 'none';

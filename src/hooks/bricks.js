@@ -34,7 +34,6 @@ export const useBricks = (projectSource?: string) => {
           ...brick.data(),
           id: brick.id
         }));
-
         if (!_.isEqual(newBrics, _.omit(bricks, 'status'))) setBricks(newBrics);
       });
     return () => unsubscribe();
@@ -52,12 +51,11 @@ export const useBricks = (projectSource?: string) => {
       const filteredBricks = bricks.filter(
         brick => !projectSource || brick.source === projectSource
       );
+
       setBricks(filteredBricks);
     }
   }, [bricks, projectSource]);
 
-  // Update when acceptations changes
-  // TODO look if we can use relationship in firestore database
   useEffect(() => {
     if (!_.isEqual(prevBricks, bricks)) {
       const updatedBricks = bricks.map(brick => ({
@@ -110,6 +108,17 @@ export const setBrick = (brick: BrickT) => {
       console.log({ enrichedBrick });
     })
     .catch(err => console.error(err));
+};
+
+export const deleteBrick = (brickId: string) => {
+  firebase
+    .firestore()
+    .collection(BRICK_COLLECTION)
+    .doc(brickId)
+    .delete()
+    .then(() => {
+      console.log('Brick deleted !');
+    });
 };
 
 export const useBrickComments = (brickId: string) => {

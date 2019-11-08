@@ -13,3 +13,4 @@ web-report/
 migrations/credentials.py
 migrations/serviceAccount.json
 .idea/*
+google-services.json

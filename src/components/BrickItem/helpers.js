@@ -21,7 +21,5 @@ export const formatConceptTitle = (title: string): string =>
   `${title} (concept)`;
 
 export const formatContent = (content: string) => {
-  const cropped = content.substring(0, 45);
-  const firstLine = cropped.split('\n')[0];
-  return firstLine;
+  return content.split('\n')[0].substring(0, 57);
 };

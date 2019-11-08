@@ -44,7 +44,9 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   submitItem: { flexGrow: 1, marginLeft: 10, marginRight: 10 },
-  author: { alignSelf: 'flex-end' }
+  footer: { alignSelf: 'flex-end', alignSelf: 'stretch' },
+  deleteButton: { backgroundColor: colors.errorBackground },
+  deleteContainer: { marginTop: 10 }
 });
 
 const useFilledBricked = (brick: BrickT): BrickT =>
@@ -135,33 +137,39 @@ function BrickMaker() {
           setStatus={status => updateBrick({ status })}
         />
         {displayedError !== '' && <Text>{displayedError}</Text>}
-        <View style={styles.submit}>
-          {isEditEnabled ? (
-            <Button title="Sauvegarder" onPress={submit} />
-          ) : (
-            <>
-              {isAuthor && (
-                <Button
-                  title="Editer"
-                  onPress={() => setIsEditEnable(true)}
-                  type="outline"
-                  containerStyle={styles.submitItem}
-                />
-              )}
-              <CommentButton
-                onSubmit={comment => updateBrickComment(newBrick.id, comment)}
-                style={styles.submitItem}
-              />
-            </>
-          )}
-        </View>
         {!isEditEnabled && <Comments brickId={newBrick.id} />}
       </ScrollView>
-      {!isEditEnabled && (
-        <View style={styles.author}>
-          <Text style={styles.authorText}>Brique de {author.email}</Text>
+      <View style={styles.footer}>
+        <View style={styles.submit}>
+          {!isEditEnabled && (
+            <CommentButton
+              onSubmit={comment => updateBrickComment(newBrick.id, comment)}
+              style={styles.submitItem}
+            />
+          )}
+          {!isEditEnabled && isAuthor && (
+            <Button
+              title="Editer"
+              onPress={() => setIsEditEnable(true)}
+              type="outline"
+              containerStyle={styles.submitItem}
+            />
+          )}
         </View>
-      )}
+        {isEditEnabled && <Button title="Sauvegarder" onPress={submit} />}
+        {!isEditEnabled && isAuthor && (
+          <Button
+            title="Supprimer"
+            onPress={() => setIsEditEnable(true)}
+            type="solid"
+            buttonStyle={styles.deleteButton}
+            containerStyle={styles.deleteContainer}
+          />
+        )}
+        {!isEditEnabled && (
+          <Text style={styles.authorText}>Brique de {author.email}</Text>
+        )}
+      </View>
     </ScrollView>
   );
 }

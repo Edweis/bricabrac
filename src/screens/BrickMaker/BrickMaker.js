@@ -92,8 +92,14 @@ function BrickMaker() {
   const author = useUser(newBrick.author);
 
   return (
-    <ScrollView contentContainerStyle={styles.main}>
-      <ScrollView contentContainerStyle={styles.form}>
+    <ScrollView
+      contentContainerStyle={styles.main}
+      keyboardShouldPersistTaps="handled"
+    >
+      <ScrollView
+        contentContainerStyle={styles.form}
+        keyboardShouldPersistTaps="handled"
+      >
         <Input
           label="Description"
           placeholder="description de la brique..."

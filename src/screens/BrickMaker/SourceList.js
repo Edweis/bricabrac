@@ -63,7 +63,7 @@ function SourceList() {
         value={search}
         ref={focusOnMountRef}
       />
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
         {sourceData.map(sourceDatum => (
           <ListItem
             key={sourceDatum.source}

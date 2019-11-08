@@ -50,7 +50,7 @@ function ConceptList() {
         onChangeText={throttledSearch}
         value={search}
       />
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
         {concepts.map(parentConcept => (
           <BrickItem
             key={parentConcept}

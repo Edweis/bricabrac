@@ -20,6 +20,7 @@ function CommentButton(props: { onSubmit: CommentT => void, style?: {} }) {
         onClose={() => setDisplayInput(false)}
         title="Ajouter un commentaire"
         submitText="Commenter"
+        multiline
       />
     </>
   );

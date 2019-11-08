@@ -10,7 +10,8 @@ type Props = {
   submitText: string,
   show: boolean,
   onClose: () => void,
-  onSubmit: string => void
+  onSubmit: string => void,
+  multiline?: boolean
 };
 
 const styles = StyleSheet.create({
@@ -38,11 +39,17 @@ function ActionModal(props: Props) {
     <Modal isVisible={props.show} onBackdropPress={props.onClose}>
       <View style={styles.content}>
         <Text h4>{props.title}</Text>
-        <Input value={value} onChangeText={setValue} />
+        <Input
+          value={value}
+          onChangeText={setValue}
+          multiline={props.multiline}
+        />
         <Button title={props.submitText} onPress={onSubmit} />
       </View>
     </Modal>
   );
 }
+
+ActionModal.defaultProps = { multiline: false };
 
 export default ActionModal;

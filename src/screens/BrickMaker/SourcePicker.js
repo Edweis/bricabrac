@@ -22,10 +22,10 @@ function SourcePicker(props: Props) {
 
   // When we have a project source, the projectSource is the default source
   useEffect(() => {
-    if (projectSource == null && !readOnly) props.onChange(projectSource);
+    if (projectSource != null && !readOnly) props.onChange(projectSource);
   }, [projectSource]);
 
-  const displayedSource = source === '' ? EMPTY_SOURCE : source;
+  const displayedSource = !source || source === '' ? EMPTY_SOURCE : source;
 
   return (
     <View>

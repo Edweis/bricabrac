@@ -10,6 +10,7 @@ import ActionModal from '../../components/ActionModal';
 import BrickItem from '../../components/BrickItem';
 import LogoutButton from '../../components/LogoutButton';
 import ProjectButton from '../../components/ProjectButton';
+import GitHubButton from '../../components/GitHubButton';
 
 const styles = StyleSheet.create({
   content: {},
@@ -85,6 +86,7 @@ ConceptList.navigationOptions = ({ navigation }) => {
     rawTitle === 'Concepts' ? (
       <>
         <ProjectButton />
+        <GitHubButton />
         <LogoutButton />
       </>
     ) : (

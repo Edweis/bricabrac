@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
 import Status from '../../components/Status';
@@ -16,32 +16,36 @@ function ConceptBrickList() {
   const parentConcept = navigation.getParam('concept');
   const bricks = useBrickContext(parentConcept);
 
-  return [
-    bricks.length ? (
-      bricks.map(brick => (
-        <ListItem
-          key={brick.id}
-          title={brick.content}
-          subtitle={brick.childrenConcepts.join(', ') || null}
-          onPress={() =>
-            navigation.push('BrickMaker', { brick, readOnly: true })
-          }
-          rightIcon={<Status status={brick.status} />}
-          rightSubtitle={moment(brick.submitTime.toDate()).fromNow()}
-          bottomDivider
-          chevron
-        />
-      ))
-    ) : (
-      <ListItem title={`No bricks for ${parentConcept}`} key="none" />
-    ),
-    <FAB
-      key="fab"
-      onPress={() =>
-        navigation.push('BrickMaker', { brick: { parentConcept } })
-      }
-    />
-  ];
+  return (
+    <>
+      <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
+        {bricks.length ? (
+          bricks.map(brick => (
+            <ListItem
+              key={brick.id}
+              title={brick.content}
+              subtitle={brick.childrenConcepts.join(', ') || null}
+              onPress={() =>
+                navigation.push('BrickMaker', { brick, readOnly: true })
+              }
+              rightIcon={<Status status={brick.status} />}
+              rightSubtitle={moment(brick.submitTime.toDate()).fromNow()}
+              bottomDivider
+              chevron
+            />
+          ))
+        ) : (
+          <ListItem title={`No bricks for ${parentConcept}`} key="none" />
+        )}
+      </ScrollView>
+      <FAB
+        key="fab"
+        onPress={() =>
+          navigation.push('BrickMaker', { brick: { parentConcept } })
+        }
+      />
+    </>
+  );
 }
 
 ConceptBrickList.navigationOptions = ({ navigation }) => ({

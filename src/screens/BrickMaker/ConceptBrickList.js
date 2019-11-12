@@ -24,7 +24,7 @@ function ConceptBrickList() {
           title={brick.content}
           subtitle={brick.childrenConcepts.join(', ') || null}
           onPress={() =>
-            navigation.navigate('BrickMaker', { brick, readOnly: true })
+            navigation.push('BrickMaker', { brick, readOnly: true })
           }
           rightIcon={<Status status={brick.status} />}
           rightSubtitle={moment(brick.submitTime.toDate()).fromNow()}
@@ -38,7 +38,7 @@ function ConceptBrickList() {
     <FAB
       key="fab"
       onPress={() =>
-        navigation.navigate('BrickMaker', { brick: { parentConcept } })
+        navigation.push('BrickMaker', { brick: { parentConcept } })
       }
     />
   ];

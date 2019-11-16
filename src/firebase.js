@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import 'firebase/database';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
-import firestoreCredentials from './.firestoreCredentials';
+import firestoreCredentials from './firestoreCredentials';
 
 firebase.initializeApp(firestoreCredentials);
 

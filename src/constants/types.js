@@ -31,3 +31,6 @@ export type AcceptationT = {
   status: StatusT,
   datetime: Date
 };
+
+export type ProjectSourceT = SourceT;
+export type ProjectSetterT = [ProjectSourceT, (ProjectSourceT) => void];

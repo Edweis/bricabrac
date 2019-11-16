@@ -13,4 +13,4 @@ web-report/
 migrations/credentials.py
 migrations/serviceAccount.json
 .idea/*
-src/.firestoreCredentials.js
+src/firestoreCredentials.js

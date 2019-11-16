@@ -1,6 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import _ from 'lodash';
-
+import { useEffect, useCallback } from 'react';
+import { useFirestore } from './helpers';
 import firebase from '../firebase';
 import { AcceptationT, StatusT } from '../constants/types';
 
@@ -9,29 +8,7 @@ export const ACCEPTATION_COLLECTION = 'acceptations';
 export const genAcceptationId = (brickId: string, userId: string) =>
   `${userId}-${brickId}`;
 
-export const useAcceptations = () => {
-  const [acceptations, setAcceptations] = useState([]);
-  useEffect(() => {
-    const unsubscribe = firebase
-      .firestore()
-      .collection(ACCEPTATION_COLLECTION)
-      .onSnapshot(snapshot => {
-        const newAcceptation = snapshot.docs.map(accceptation => ({
-          id: accceptation.id,
-          ...accceptation.data()
-        }));
-        if (!_.isEqual(newAcceptation, acceptations)) {
-          setAcceptations(newAcceptation);
-        }
-      });
-    return () => unsubscribe();
-  }, []);
-
-  // const filteredAcceptation = useMemo(() => {
-  //   return acceptations.filter(acceptation => acceptation.userId === userId);
-  // }, [acceptations, userId]);
-  return acceptations;
-};
+export const useAcceptations = () => useFirestore(ACCEPTATION_COLLECTION);
 
 export const useUserAcceptation = (userId: string): (string => StatusT) => {
   const acceptations = useAcceptations();

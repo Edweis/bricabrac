@@ -1,6 +1,9 @@
 // @flow
 export type ConceptT = string;
-export type SourceT = string;
+export type SourceT = {
+  name: string,
+  tags: string[]
+};
 export type StatusT = 'accepted' | 'refused' | 'none';
 export type RelationshipT =
   | 'deduction'
@@ -31,6 +34,5 @@ export type AcceptationT = {
   status: StatusT,
   datetime: Date
 };
-
 export type ProjectSourceT = SourceT;
 export type ProjectSetterT = [ProjectSourceT, (ProjectSourceT) => void];

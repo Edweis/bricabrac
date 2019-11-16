@@ -1,31 +1,15 @@
-import _ from 'lodash';
-import { useState, useEffect } from 'react';
 import firebase, { getCurrentUserId, getCurrentUser } from '../../firebase';
-import { DEFAULT_BRICK } from '../../constants/defaults';
 import { BrickT } from '../../constants/types';
 import { setUser } from '../users';
 import { useUserAcceptation, setAcceptation } from '../acceptations';
 import { useFilteredBricks, useBrickWithAcceptation } from './helpers';
+import { useFirestore } from '../helpers';
 import { BRICK_COLLECTION } from './constants';
 
 export const useBricks = (projectSource?: string) => {
   const userId = getCurrentUserId();
-  const [bricks, setBricks] = useState([DEFAULT_BRICK]);
   const getUserAcceptation = useUserAcceptation(userId);
-
-  useEffect(() => {
-    const unsubscribe = firebase
-      .firestore()
-      .collection(BRICK_COLLECTION)
-      .onSnapshot(snapshot => {
-        const newBrics = snapshot.docs.map(brick => ({
-          ...brick.data(),
-          id: brick.id
-        }));
-        if (!_.isEqual(newBrics, _.omit(bricks, 'status'))) setBricks(newBrics);
-      });
-    return () => unsubscribe();
-  }, []);
+  const bricks = useFirestore(BRICK_COLLECTION, 'status');
 
   const filteredBricks = useFilteredBricks(bricks, projectSource);
   const bricksWithAcceptation = useBrickWithAcceptation(

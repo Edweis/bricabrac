@@ -3,7 +3,7 @@ import { BrickT } from '../../constants/types';
 import { setUser } from '../users';
 import { useUserAcceptation, setAcceptation } from '../acceptations';
 import { useFilteredBricks, useBrickWithAcceptation } from './helpers';
-import { useFirestore } from '../helpers';
+import { useFirestore, setFirestore } from '../helpers';
 import { BRICK_COLLECTION } from './constants';
 
 export const useBricks = (projectSource?: string) => {
@@ -32,32 +32,19 @@ export const setBrick = (brick: BrickT) => {
   const { status } = enrichedBrick;
   delete enrichedBrick.status;
 
-  // Get the id of the brick and remove it
-  const id = enrichedBrick.id || null;
-  delete enrichedBrick.id;
+  const setAcceptationFromBrick = brickWithId => {
+    const acceptation = {
+      userId,
+      brickId: brickWithId.id,
+      status
+    };
+    setAcceptation(acceptation);
+  };
 
-  setUser(getCurrentUser());
-
-  const collection = firebase.firestore().collection(BRICK_COLLECTION);
-  // if there is an Id, we edit the brick, otherwise we add it. Dirty.
-  const setter =
-    id != null
-      ? collection.doc(id).set(enrichedBrick)
-      : collection.add(enrichedBrick);
-  setter
-    .then(postedBrick => {
-      const acceptation = {
-        userId,
-        brickId: postedBrick ? postedBrick.id : id,
-        status
-      };
-      setAcceptation(acceptation);
-    })
-    .then(() => {
-      console.log(id != null ? 'Brick Edited' : 'Brick added !');
-      console.log({ enrichedBrick });
-    })
-    .catch(err => console.error(err));
+  Promise.all([
+    setFirestore(BRICK_COLLECTION, enrichedBrick, setAcceptationFromBrick),
+    setUser(getCurrentUser())
+  ]);
 };
 
 export const deleteBrick = (brickId: string) => {

@@ -1,6 +1,5 @@
-import { useFirestore } from './helpers';
+import { useFirestore, setFirestore } from './helpers';
 import { UserT } from '../constants/types';
-import firebase from '../firebase';
 
 const USER_COLLECTION = 'users';
 const EMPTY_USER = { email: "(pas d'autheur)" };
@@ -16,14 +15,6 @@ export function useUser(id: string): UserT {
 export const setUser = (user: UserT) => {
   const { uid, email } = user;
   const lightUser = { email };
-  firebase
-    .firestore()
-    .collection(USER_COLLECTION)
-    .doc(uid)
-    .set(lightUser)
-    .then(() => {
-      console.log('user added !');
-      console.log({ lightUser, uid });
-    })
-    .catch(err => console.error(err));
+
+  setFirestore(USER_COLLECTION, lightUser);
 };

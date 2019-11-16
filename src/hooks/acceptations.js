@@ -1,6 +1,5 @@
-import { useEffect, useCallback } from 'react';
-import { useFirestore } from './helpers';
-import firebase from '../firebase';
+import { useCallback } from 'react';
+import { useFirestore, setFirestore } from './helpers';
 import { AcceptationT, StatusT } from '../constants/types';
 
 export const ACCEPTATION_COLLECTION = 'acceptations';
@@ -12,10 +11,6 @@ export const useAcceptations = () => useFirestore(ACCEPTATION_COLLECTION);
 
 export const useUserAcceptation = (userId: string): (string => StatusT) => {
   const acceptations = useAcceptations();
-
-  useEffect(() => {
-    console.debug('refreshing user acceptation');
-  }, [acceptations]);
 
   return useCallback(
     brickId => {
@@ -32,18 +27,9 @@ export const useUserAcceptation = (userId: string): (string => StatusT) => {
 export const setAcceptation = (acceptation: AcceptationT) => {
   const enrichedAcceptation = {
     ...acceptation,
-    datetime: new Date()
+    datetime: new Date(),
+    id: genAcceptationId(acceptation.brickId, acceptation.userId)
   };
 
-  const id = genAcceptationId(acceptation.brickId, acceptation.userId);
-  firebase
-    .firestore()
-    .collection(ACCEPTATION_COLLECTION)
-    .doc(id)
-    .set(enrichedAcceptation)
-    .then(() => {
-      console.log('Acceptation Edited or added !');
-      console.log({ enrichedAcceptation });
-    })
-    .catch(err => console.error(err));
+  setFirestore(ACCEPTATION_COLLECTION, enrichedAcceptation);
 };

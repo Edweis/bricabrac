@@ -3,10 +3,12 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
-import { useBrickContext } from '../../hooks';
+import { useBrickContext } from '../../hooks/bricks';
+import { useConceptDeps } from '../../hooks/concepts';
 import { ConceptT } from '../../constants/types';
-import { getFeaturedBrick, formatConceptTitle, formatContent } from './helpers';
+import { getFeaturedBrick } from './helpers';
 import BrickTitle from './BrickTitle';
+import BrickContent from './BrickContent';
 
 const styles = StyleSheet.create({
   empty: { display: 'flex', alignItems: 'center', justifyContent: 'center' }
@@ -25,19 +27,32 @@ function BrickItem(props: Props) {
   const bricks = useBrickContext(concept);
   const navigation = useNavigation();
   const featured = getFeaturedBrick(bricks);
+  const tags = useConceptDeps(concept);
   const isEmpty = bricks.length === 0;
 
   const getEmptyConceptItemProps = () => ({
-    title: asConcept ? formatConceptTitle(concept) : concept,
-    subtitle: asConcept ? null : 'Pas encore de brique !',
+    title: <BrickTitle concept={concept} asConcept={asConcept} />,
+    subtitle: <BrickContent tags={tags} asConcept={asConcept} />,
     onPress: () => props.onCreate(concept, navigation),
     rightSubtitle: '',
     rightIcon: { name: 'plus', type: 'evilicon' }
   });
 
   const getWithFeaturedConceptItempProps = () => ({
-    title: <BrickTitle brick={featured} asConcept={asConcept} />,
-    subtitle: asConcept ? null : formatContent(featured.content),
+    title: (
+      <BrickTitle
+        concept={concept}
+        status={featured.status}
+        asConcept={asConcept}
+      />
+    ),
+    subtitle: (
+      <BrickContent
+        content={featured.content}
+        tags={tags}
+        asConcept={asConcept}
+      />
+    ),
     onPress: () => props.onSelect(concept, navigation),
     rightSubtitle: asConcept ? '' : bricks.length.toString(),
     rightIcon: { name: 'chevron-right', type: 'evilicon' }

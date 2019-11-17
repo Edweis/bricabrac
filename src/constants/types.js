@@ -1,9 +1,7 @@
 // @flow
 export type ConceptT = string;
-export type SourceT = {
-  name: string,
-  tags: string[]
-};
+export type ConceptDepsT = string;
+export type SourceT = string;
 export type StatusT = 'accepted' | 'refused' | 'none';
 export type RelationshipT =
   | 'deduction'

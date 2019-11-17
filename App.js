@@ -10,6 +10,7 @@ import SignUp from './src/components/SignUp';
 import AppNavigator from './src/navigation/AppNavigator';
 import { onAuthChange, isUserConnected } from './src/firebase';
 import { useBricks, BrickContext } from './src/hooks/bricks';
+import { useConcepts, ConceptContext } from './src/hooks/concepts';
 import { ProjectSetterContext } from './src/hooks/project';
 
 const bootstrap = () => {
@@ -52,6 +53,7 @@ export default function App() {
   const [projectSource, setProjectSource] = useState(null);
 
   const bricks = useBricks(projectSource);
+  const conceptDeps = useConcepts();
   const endAppLoading = useCallback(() => setAppLoading(false), []);
 
   useEffect(() => {
@@ -76,10 +78,12 @@ export default function App() {
   return (
     <ProjectSetterContext.Provider value={[projectSource, setProjectSource]}>
       <BrickContext.Provider value={bricks}>
-        <View style={styles.container}>
-          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>
+        <ConceptContext.Provider value={conceptDeps}>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
+        </ConceptContext.Provider>
       </BrickContext.Provider>
     </ProjectSetterContext.Provider>
   );

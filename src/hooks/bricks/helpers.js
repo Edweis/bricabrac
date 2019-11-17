@@ -1,17 +1,7 @@
 import _ from 'lodash';
-import { createContext, useState, useEffect, useContext } from 'react';
-import { BrickT, StatusT, ConceptT } from '../../constants/types';
+import { useState, useEffect } from 'react';
+import { BrickT, StatusT } from '../../constants/types';
 import { usePrevious } from '../helpers';
-
-export const BrickContext = createContext([]);
-
-export const useBrickContext = (concept: ConceptT = null) => {
-  const bricks = useContext(BrickContext);
-
-  if (concept != null)
-    return bricks.filter(brick => brick.parentConcept === concept);
-  return bricks;
-};
 
 /* Return bricks filtered with the project source */
 export const useFilteredBricks = (

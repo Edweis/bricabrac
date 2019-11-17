@@ -9,13 +9,9 @@ import SourcePicker from './SourcePicker';
 import CommentButton from './CommentButton';
 import RelationshipPicker from './RelationshipPicker';
 import Comments from './Comments';
-import {
-  setBrick,
-  deleteBrick,
-  useFocusOnMount,
-  useUser,
-  updateBrickComment
-} from '../../hooks';
+import { setBrick, deleteBrick, updateBrickComment } from '../../hooks/bricks';
+import { useUser } from '../../hooks/users';
+import { useFocusOnMount } from '../../hooks/helpers';
 import { checkBrickError } from './helpers';
 import { EMPTY_BRICK } from '../../constants/defaults';
 import { BrickT } from '../../constants/types';

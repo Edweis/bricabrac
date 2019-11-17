@@ -1,15 +1,17 @@
 // @flow
 import React from 'react';
 import { View, Text } from 'react-native';
-import { BrickT } from '../../constants/types';
+import { ConceptT, StatusT } from '../../constants/types';
 import { formatConceptTitle } from './helpers';
 import Status from '../Status';
 
-export default function BrickTitle({
-  brick,
+function BrickTitle({
+  status,
+  concept,
   asConcept
 }: {
-  brick: BrickT,
+  status?: StatusT,
+  concept: ConceptT,
   asConcept: boolean
 }) {
   return (
@@ -20,12 +22,13 @@ export default function BrickTitle({
         alignItems: 'center'
       }}
     >
-      <Status status={brick.status} marginRight />
-      <Text>
-        {asConcept
-          ? formatConceptTitle(brick.parentConcept)
-          : brick.parentConcept}
-      </Text>
+      {status && <Status status={status} marginRight />}
+      <View>
+        <Text>{formatConceptTitle(concept, asConcept)}</Text>
+      </View>
     </View>
   );
 }
+BrickTitle.defaultProps = { status: null };
+
+export default BrickTitle;

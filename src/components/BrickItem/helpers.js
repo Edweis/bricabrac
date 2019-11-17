@@ -1,10 +1,9 @@
 import _ from 'lodash';
-import type { BrickT } from '../../constants/types';
+import type { BrickT, ConceptDepsT } from '../../constants/types';
 import { DEFAULT_BRICK } from '../../constants/defaults';
 
 export const getFeaturedBrick = (bricks: BrickT[]): BrickT | null => {
   if (!bricks.length) return null;
-  // console.debug(bricks.map(b => ({ id: b.id, submitTime: b.submitTime })));
   const grouped = _(bricks)
     .groupBy('status')
     .mapValues(bs => _.sortBy(bs, b => b.submitTime.toDate().getTime()))
@@ -17,9 +16,16 @@ export const getFeaturedBrick = (bricks: BrickT[]): BrickT | null => {
   return DEFAULT_BRICK;
 };
 
-export const formatConceptTitle = (title: string): string =>
-  `${title} (concept)`;
+export const formatConceptTitle = (title: string, asConcept: boolean): string =>
+  asConcept ? `${title} (concept)` : title;
 
-export const formatContent = (content: string) => {
-  return content.split('\n')[0].substring(0, 57);
+export const formatContent = (content: string, asConcept) => {
+  const text = content || 'Pas encore de brique !';
+  return asConcept ? null : text.split('\n')[0].substring(0, 57);
+};
+
+export const formatTags = (tags: ConceptDepsT) => {
+  let text = tags.deps.map(t => `#${t}`).join(' ');
+  if (tags.isCyclical) text += ' (Cyclique)';
+  return text;
 };

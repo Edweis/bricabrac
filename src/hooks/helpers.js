@@ -58,7 +58,6 @@ export async function setFirestore<T>(
   _data: T,
   effects?: T => void = () => {}
 ) {
-  console.debug(`ABOUT TO SET ${collection}`);
   const data = _.cloneDeep(_data);
 
   // Get the id of the data and remove it
@@ -69,7 +68,6 @@ export async function setFirestore<T>(
   // if there is an Id, we edit the brick, otherwise we add it. Dirty.
   if (id == null) {
     const results = await col.add(data);
-    console.debug({ results });
     effects(results);
   } else {
     await col.doc(id).set(data);

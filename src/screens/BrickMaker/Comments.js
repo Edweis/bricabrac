@@ -3,7 +3,8 @@ import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 import moment from 'moment';
 
-import { useBrickComments, useUser } from '../../hooks';
+import { useBrickComments } from '../../hooks/bricks';
+import { useUser } from '../../hooks/users';
 import { CommentT } from '../../constants/types';
 
 const styles = StyleSheet.create({

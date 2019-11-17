@@ -38,7 +38,7 @@ export async function facebookLogin() {
     .auth()
     .signInWithCredential(credential); // Sign in with Facebook credential
 
-  console.debug('facebookProfileData', { facebookProfileData });
+  console.log('facebookProfileData', { facebookProfileData });
   // Do something with Facebook profile data
   // OR you have subscribed to auth state change, authStateChange handler will process the profile data
 

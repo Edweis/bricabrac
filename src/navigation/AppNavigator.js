@@ -10,3 +10,4 @@ export default createAppContainer(
     Main: MainTabNavigator
   })
 );
+ 

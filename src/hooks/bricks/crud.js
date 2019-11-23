@@ -23,8 +23,9 @@ export const setBrick = (brick: BrickT) => {
   const userId = getCurrentUserId();
 
   const enrichedBrick = {
-    ...brick,
     submitTime: new Date(),
+    ...brick,
+    lastEditTime: new Date(),
     author: userId
   };
 

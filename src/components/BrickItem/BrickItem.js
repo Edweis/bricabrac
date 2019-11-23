@@ -27,12 +27,12 @@ function BrickItem(props: Props) {
   const bricks = useBrickContext(concept);
   const navigation = useNavigation();
   const featured = getFeaturedBrick(bricks);
-  const tags = useConceptDeps(concept);
+  const conceptDeps = useConceptDeps(concept);
   const isEmpty = bricks.length === 0;
 
   const getEmptyConceptItemProps = () => ({
     title: <BrickTitle concept={concept} asConcept={asConcept} />,
-    subtitle: <BrickContent tags={tags} asConcept={asConcept} />,
+    subtitle: <BrickContent conceptDeps={conceptDeps} asConcept={asConcept} />,
     onPress: () => props.onCreate(concept, navigation),
     rightSubtitle: '',
     rightIcon: { name: 'plus', type: 'evilicon' }
@@ -49,7 +49,7 @@ function BrickItem(props: Props) {
     subtitle: (
       <BrickContent
         content={featured.content}
-        tags={tags}
+        conceptDeps={conceptDeps}
         asConcept={asConcept}
       />
     ),
@@ -65,7 +65,7 @@ function BrickItem(props: Props) {
   if (props.onRemove != null)
     data.rightIcon = {
       name: 'delete',
-      onPress: () => props.onRemove()
+      onPress: () => props.onRemove(concept)
     };
 
   return (

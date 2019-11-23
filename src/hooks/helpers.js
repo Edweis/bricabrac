@@ -3,10 +3,19 @@ import _ from 'lodash';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import firebase from '../firebase';
 
+export const usePrevious = value => {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  }, [value]);
+  return ref.current;
+};
+
 export const useSubscribedState = defaultState => {
   const [state, setState] = useState(defaultState);
+  const prev = usePrevious(defaultState);
   useEffect(() => {
-    setState(defaultState);
+    if (!_.isEqual(defaultState, prev)) setState(defaultState);
   }, [defaultState]);
   return [state, setState];
 };
@@ -17,14 +26,6 @@ export const useFocusOnMount = () => {
     if (ref.current) ref.current.focus();
   }, [ref.current]);
   return ref;
-};
-
-export const usePrevious = value => {
-  const ref = useRef();
-  useEffect(() => {
-    ref.current = value;
-  }, [value]);
-  return ref.current;
 };
 
 /* Use firestore snapshots to use realtime database */
@@ -73,6 +74,17 @@ export async function setFirestore<T>(
     await col.doc(id).set(data);
     effects({ ...data, id });
   }
-  console.log(id != null ? `${collection} Edited` : `${collection} added !`);
+  console.log(
+    id != null ? `${collection} Edited` : `${collection} added at id ${id}!`
+  );
   console.log({ data });
+}
+
+export async function deleteFirestore(collection, id) {
+  await firebase
+    .firestore()
+    .collection(collection)
+    .doc(id)
+    .delete();
+  console.log(`Removed in ${collection} ${id}`);
 }

@@ -36,7 +36,7 @@ function ConceptPicker(props: Props) {
             <BrickItem
               key={concept}
               concept={concept}
-              onRemove={!readOnly ? () => removeConcept(concept) : null}
+              onRemove={!readOnly ? removeConcept : null}
               asConcept
             />
           ))

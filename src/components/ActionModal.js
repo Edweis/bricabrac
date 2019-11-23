@@ -13,48 +13,70 @@ type Props = {
   onSubmit: string => void,
   multiline?: boolean,
   noInput?: boolean,
-  children?: React.Node
+  children?: React.Node,
+  defaultValue?: string,
+  noCheck?: boolean
 };
 
 const styles = StyleSheet.create({
   content: {
     backgroundColor: 'white',
-    padding: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
     borderRadius: 4,
     borderColor: 'rgba(0, 0, 0, 0.1)'
+  },
+  children: {
+    display: 'flex'
+  },
+  title: {
+    padding: 22,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 
 function ActionModal(props: Props) {
   const navigation = useNavigation();
-  const [value, setValue] = useState('');
+  const { defaultValue, noInput, children, title, noCheck } = props;
+  const [value, setValue] = useState(defaultValue);
   const onSubmit = () => {
-    if (props.noInput || value !== '') {
+    if (noInput || noCheck) {
       props.onClose();
       props.onSubmit(value, navigation);
-      setValue('');
+      setValue(defaultValue);
     }
   };
+
+  // avoid to load it when unused
+  if (!props.show) return null;
+
   return (
     <Modal isVisible={props.show} onBackdropPress={props.onClose}>
       <View style={styles.content}>
-        <Text h4>{props.title}</Text>
-        {props.children || null}
-        {!props.noInput && (
+        <View style={styles.title}>
+          <Text h4>{title}</Text>
+        </View>
+        {children && <View>{children}</View>}
+        {!noInput && (
           <Input
             value={value}
             onChangeText={setValue}
             multiline={props.multiline}
           />
         )}
-        <Button title={props.submitText} onPress={onSubmit} />
+        <View style={styles.title}>
+          <Button title={props.submitText} onPress={onSubmit} />
+        </View>
       </View>
     </Modal>
   );
 }
 
-ActionModal.defaultProps = { multiline: false, noInput: false, children: null };
+ActionModal.defaultProps = {
+  multiline: false,
+  noInput: false,
+  children: null,
+  defaultValue: '',
+  noCheck: false
+};
 
 export default ActionModal;

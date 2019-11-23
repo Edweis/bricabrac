@@ -9,7 +9,7 @@ import BrickItem from '../../components/BrickItem';
 import LogoutButton from '../../components/LogoutButton';
 import ProjectButton from '../../components/ProjectButton';
 import GitHubButton from '../../components/GitHubButton';
-import NewConceptModal from './NewConceptModal';
+import NewConceptFAB from './NewConceptFAB';
 
 const styles = StyleSheet.create({
   content: {},
@@ -60,7 +60,7 @@ function ConceptList() {
           />
         ))}
       </ScrollView>
-      {hideFAB === false && <NewConceptModal onSubmit={onCreate} />}
+      {hideFAB === false && <NewConceptFAB />}
     </>
   );
 }

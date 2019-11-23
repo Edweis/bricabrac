@@ -6,17 +6,20 @@ import { formatContent, formatTags } from './helpers';
 
 function BrickContent({
   content,
-  tags,
+  conceptDeps,
   asConcept
 }: {
   content?: string,
-  tags: ConceptDepsT,
+  conceptDeps: ConceptDepsT,
   asConcept: boolean
 }) {
+  const displayedContent = formatContent(content, asConcept);
+  const hasDeps = !!conceptDeps.deps.length;
+  if (!hasDeps && !displayedContent) return null;
   return (
     <View>
-      {!!tags.deps.length && <Text>{formatTags(tags)}</Text>}
-      <Text>{formatContent(content, asConcept)}</Text>
+      {hasDeps && <Text>{formatTags(conceptDeps)}</Text>}
+      <Text>{displayedContent}</Text>
     </View>
   );
 }

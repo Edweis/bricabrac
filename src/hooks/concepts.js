@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { useContext, createContext, useMemo } from 'react';
-import { useFirestore, setFirestore } from './helpers';
+import { useFirestore, setFirestore, deleteFirestore } from './helpers';
 import { ConceptT, ConceptDepsT } from '../constants/types';
 
 export const CONCEPT_DEPS_COLLECTION = 'conceptDeps';
@@ -13,6 +13,9 @@ export const getDeps = (
   concept: ConceptT,
   occurendConcept: ConceptT[] = []
 ): { deps: ConceptDepsT[], isCyclical: boolean } => {
+  // edge case
+  if (!concept) return { deps: [], isCyclical: false };
+
   // detect cycle
   if (occurendConcept.includes(concept)) return { deps: [], isCyclical: true };
 
@@ -46,6 +49,21 @@ export const useConceptDeps = (concept: ConceptT) => {
   ]);
   return deps;
 };
-export const setConcepts = (concept: ConceptT) => {
-  setFirestore(CONCEPT_DEPS_COLLECTION, concept);
+
+export const useConceptTags = (concept: ConceptT) => {
+  const conceptDeps = useConceptContext();
+  const foundDeps = _.find(conceptDeps, dep => dep.name === concept);
+  if (!foundDeps || !foundDeps.deps) return [];
+  return foundDeps.deps;
+};
+
+export const setConceptDeps = (concept: ConceptDepsT) => {
+  const enrichedConcept = {
+    id: concept.name,
+    ...concept
+  };
+  setFirestore(CONCEPT_DEPS_COLLECTION, enrichedConcept);
+  // const prevousId = concept.id;
+  // if (prevousId !== concept.name)
+  //   deleteFirestore(CONCEPT_DEPS_COLLECTION, prevousId);
 };

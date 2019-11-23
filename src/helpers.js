@@ -1,4 +1,4 @@
-import type { BrickT } from './constants/types';
+import type { BrickT, ConceptDepsT } from './constants/types';
 
 export const normalize = (str: ?string): string => {
   if (!str) return '';

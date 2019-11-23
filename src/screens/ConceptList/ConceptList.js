@@ -4,13 +4,12 @@ import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
-import FAB from '../../components/FAB';
 import { useDisplayedConcepts, useNavigationEvent } from './hooks';
-import ActionModal from '../../components/ActionModal';
 import BrickItem from '../../components/BrickItem';
 import LogoutButton from '../../components/LogoutButton';
 import ProjectButton from '../../components/ProjectButton';
 import GitHubButton from '../../components/GitHubButton';
+import NewConceptModal from './NewConceptModal';
 
 const styles = StyleSheet.create({
   content: {},
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
 
 function ConceptList() {
   const [search, setSearch] = useState('');
-  const [showModal, setShowModal] = useState(false);
+
   useNavigationEvent('willFocus', () => setSearch(''));
 
   const concepts = useDisplayedConcepts(search);
@@ -61,18 +60,7 @@ function ConceptList() {
           />
         ))}
       </ScrollView>
-      {hideFAB === false && (
-        <>
-          <ActionModal
-            show={showModal}
-            onSubmit={onCreate}
-            onClose={() => setShowModal(false)}
-            title="Nouveau concept"
-            submitText="Créér"
-          />
-          <FAB onPress={() => setShowModal(true)} />
-        </>
-      )}
+      {hideFAB === false && <NewConceptModal onSubmit={onCreate} />}
     </>
   );
 }

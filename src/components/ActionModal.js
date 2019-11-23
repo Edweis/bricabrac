@@ -12,7 +12,8 @@ type Props = {
   onClose: () => void,
   onSubmit: string => void,
   multiline?: boolean,
-  noInput?: boolean
+  noInput?: boolean,
+  children?: React.Node
 };
 
 const styles = StyleSheet.create({
@@ -40,6 +41,7 @@ function ActionModal(props: Props) {
     <Modal isVisible={props.show} onBackdropPress={props.onClose}>
       <View style={styles.content}>
         <Text h4>{props.title}</Text>
+        {props.children || null}
         {!props.noInput && (
           <Input
             value={value}
@@ -53,6 +55,6 @@ function ActionModal(props: Props) {
   );
 }
 
-ActionModal.defaultProps = { multiline: false, noInput: false };
+ActionModal.defaultProps = { multiline: false, noInput: false, children: null };
 
 export default ActionModal;

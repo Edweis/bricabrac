@@ -39,7 +39,7 @@ function ActionModal(props: Props) {
   const { defaultValue, noInput, children, title, noCheck } = props;
   const [value, setValue] = useState(defaultValue);
   const onSubmit = () => {
-    if (noInput || noCheck) {
+    if (noInput || noCheck || value !== defaultValue) {
       props.onClose();
       props.onSubmit(value, navigation);
       setValue(defaultValue);

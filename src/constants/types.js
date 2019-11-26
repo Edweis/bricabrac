@@ -1,6 +1,10 @@
 // @flow
 export type ConceptT = string;
-export type ConceptDepsT = string;
+export type ConceptDepsT = {
+  name: ConceptT,
+  deps: ConceptT[],
+  datetime: Date
+};
 export type SourceT = string;
 export type StatusT = 'accepted' | 'refused' | 'none';
 export type RelationshipT =

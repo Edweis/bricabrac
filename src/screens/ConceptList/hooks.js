@@ -1,13 +1,14 @@
 import { useMemo, useEffect } from 'react';
 import _ from 'lodash';
 import { useNavigation } from '../../hooks/navigation';
-import { useBrickContext } from '../../hooks';
+import { useBrickContext, useConceptDeps } from '../../hooks';
 import { matchBrickSearch } from '../../helpers';
 
 const TODO_CONCEPT = '#TODO';
 
 export const useDisplayedConcepts = (search: string) => {
   const bricks = useBrickContext();
+  const conceptDeps = useConceptDeps();
 
   return useMemo(() => {
     const parentConceptBricks = _(bricks).map(brick => ({
@@ -25,9 +26,14 @@ export const useDisplayedConcepts = (search: string) => {
       )
       .flatten()
       .value();
+    const conceptFromDeps = _(conceptDeps)
+      .map(dep => [dep.name, ...dep.deps])
+      .flatten()
+      .value();
 
     const sortedConcepts = parentConceptBricks
       .union(orphanConceptBricks)
+      .union(conceptFromDeps)
       .filter(brick => matchBrickSearch(brick, search))
       .sortBy(['submitTime'])
       .reverse() // latest first

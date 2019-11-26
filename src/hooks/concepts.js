@@ -60,10 +60,8 @@ export const useConceptTags = (concept: ConceptT) => {
 export const setConceptDeps = (concept: ConceptDepsT) => {
   const enrichedConcept = {
     id: concept.name,
+    datetime: new Date(),
     ...concept
   };
   setFirestore(CONCEPT_DEPS_COLLECTION, enrichedConcept);
-  // const prevousId = concept.id;
-  // if (prevousId !== concept.name)
-  //   deleteFirestore(CONCEPT_DEPS_COLLECTION, prevousId);
 };

@@ -1,5 +1,5 @@
 import firebase from '../firebase';
-import type { BrickT } from './types';
+import type { BrickT, ReadingTimeT } from './types';
 
 export const DEFAULT_BRICK: BrickT = {
   id: 'idBrick1',
@@ -27,3 +27,11 @@ export const DEFAULT_CONCEPT = {
 };
 
 export const EMPTY_SOURCE = '(sans source)';
+
+export const DEFAULT_READING_TIME: ReadingTimeT = {
+  startTime: firebase.firestore.Timestamp.now(),
+  endtime: firebase.firestore.Timestamp.now(),
+  startPage: 0,
+  endPage: 0,
+  source: ''
+};

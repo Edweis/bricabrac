@@ -75,7 +75,9 @@ export async function setFirestore<T>(
     effects({ ...data, id });
   }
   console.log(
-    id != null ? `${collection} Edited` : `${collection} added at id ${id}!`
+    id != null
+      ? `${collection} Edited at id ${id}!`
+      : `${collection} added at id ${id}!`
   );
   console.log({ data });
 }

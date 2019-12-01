@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
 import { Input } from 'react-native-elements';
-import { useNavigation } from '../../hooks/navigation';
-import type { SourceT } from '../../constants/types';
-import { EMPTY_SOURCE } from '../../constants/defaults';
-import { useProject } from '../../hooks/project';
+import { useNavigation } from '../hooks/navigation';
+import type { SourceT } from '../constants/types';
+import { EMPTY_SOURCE } from '../constants/defaults';
+import { useProject } from '../hooks/project';
 
 type Props = {
   source: SourceT[],
@@ -28,14 +28,12 @@ function SourcePicker(props: Props) {
   const displayedSource = !source || source === '' ? EMPTY_SOURCE : source;
 
   return (
-    <View>
-      <Input
-        label="source"
-        value={displayedSource}
-        onFocus={() => navigation.push('SourceList', { onSelect })}
-        disabled={readOnly}
-      />
-    </View>
+    <Input
+      label="source"
+      value={displayedSource}
+      onFocus={() => navigation.push('SourceList', { onSelect })}
+      disabled={readOnly}
+    />
   );
 }
 SourcePicker.defaultProps = { readOnly: false };

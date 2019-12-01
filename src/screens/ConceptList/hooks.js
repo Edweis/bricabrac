@@ -26,7 +26,7 @@ export const useDisplayedConcepts = (search: string) => {
       )
       .flatten()
       .value();
-    const conceptFromDeps = _(conceptDeps)
+    const conceptFromDeps = _(conceptDeps.deps)
       .map(dep => [dep.name, ...dep.deps])
       .flatten()
       .value();

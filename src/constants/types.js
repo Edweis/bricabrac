@@ -38,3 +38,10 @@ export type AcceptationT = {
 };
 export type ProjectSourceT = SourceT;
 export type ProjectSetterT = [ProjectSourceT, (ProjectSourceT) => void];
+export type ReadingTimeT = {
+  startTime: Date,
+  endtime: Date,
+  startPage: number,
+  endPage: number,
+  source: SourceT
+};

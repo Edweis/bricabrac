@@ -5,7 +5,7 @@ import { useNavigation } from '../../hooks/navigation';
 import { getCurrentUserId } from '../../firebase';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
-import SourcePicker from './SourcePicker';
+import SourcePicker from '../../components/SourcePicker';
 import CommentButton from './CommentButton';
 import RelationshipPicker from './RelationshipPicker';
 import Comments from './Comments';

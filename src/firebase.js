@@ -6,6 +6,7 @@ import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 import firestoreCredentials from './firestoreCredentials';
 
+console.ignoredYellowBox = ['Setting a timer'];
 firebase.initializeApp(firestoreCredentials);
 
 export async function googleLogin() {

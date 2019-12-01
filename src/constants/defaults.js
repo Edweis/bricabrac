@@ -19,7 +19,8 @@ export const EMPTY_BRICK: BrickT = {
   submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: '',
   status: 'none',
-  author: null
+  author: null,
+  relationship: 'undefined'
 };
 
 export const DEFAULT_CONCEPT = {

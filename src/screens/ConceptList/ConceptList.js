@@ -1,6 +1,5 @@
 // @flow
-import React, { useState, useCallback, useEffect } from 'react';
-import _ from 'lodash';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
@@ -36,18 +35,17 @@ function ConceptList() {
     BrickItem.defaultProps.onCreate
   );
 
-  const throttledSearch = useCallback(_.throttle(setSearch, 100), []);
   // update title on search change
   useEffect(() => {
     navigation.setParams({ count: concepts.length });
-  }, [concepts.length]);
+  }, [concepts.length, navigation]);
 
   // Use FlatList if ScrollView becomes too slow
   return (
     <>
       <SearchBar
         placeholder="Search..."
-        onChangeText={throttledSearch}
+        onChangeText={setSearch}
         value={search}
       />
       <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">

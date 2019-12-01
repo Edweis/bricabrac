@@ -14,7 +14,6 @@ import { useConcepts, ConceptContext } from './src/hooks/concepts';
 import { ProjectSetterContext } from './src/hooks/project';
 
 const bootstrap = () => {
-  console.ignoredYellowBox = ['Setting a timer'];
   moment.locale('fr');
 };
 

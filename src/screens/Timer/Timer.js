@@ -48,13 +48,11 @@ const Timer = () => {
     if (isOn) {
       setStartTime(moment());
       const interval = setInterval(() => setTimer(moment() - startTime), 1000);
-      console.debug('A timer is set !');
       return () => {
         clearInterval(interval);
-        console.debug('timeout cleared');
       };
     }
-  }, [isOn]);
+  }, [isOn, startTime]);
 
   return (
     <View style={styles.container}>

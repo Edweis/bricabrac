@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Input, Divider, Button } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
@@ -17,6 +17,7 @@ import { EMPTY_BRICK } from '../../constants/defaults';
 import { BrickT } from '../../constants/types';
 import colors from '../../constants/colors';
 import ConfirmButton from '../../components/ConfirmButton';
+import HeaderIconButton from '../../components/HeaderIconButton';
 
 const styles = StyleSheet.create({
   main: {
@@ -42,10 +43,12 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   submitItem: { flexGrow: 1, marginLeft: 10, marginRight: 10 },
-  footer: { alignSelf: 'flex-end', alignSelf: 'stretch' },
+  footer: { alignSelf: 'stretch' },
   deleteButton: { backgroundColor: colors.errorBackground },
   deleteContainer: { marginTop: 10 }
 });
+
+const SAVE_ACTION_PROPS = 'saveAction';
 
 const useFilledBricked = (brick: BrickT): BrickT =>
   useMemo(
@@ -70,7 +73,7 @@ function BrickMaker() {
 
   const focusOnMountRef = useFocusOnMount();
 
-  const submit = () => {
+  const submit = useCallback(() => {
     checkBrickError(
       newBrick,
       () => {
@@ -80,7 +83,12 @@ function BrickMaker() {
       setDisplayedError
     );
     setIsEditEnable(false);
-  };
+  }, [navigation, newBrick]);
+
+  // Give action to header
+  useEffect(() => {
+    navigation.setParams({ SAVE_ACTION_PROPS: submit });
+  }, [navigation, submit]);
 
   const updateBrick = (data: $Shape<BrickT>): BrickT => {
     const updatedBrick = { ...newBrick, ...data };
@@ -183,7 +191,11 @@ BrickMaker.navigationOptions = ({ navigation }) => {
   const readOnly = navigation.getParam('readOnly', false);
   const title = readOnly ? parentConcept : `${parentConcept} > Ajouter`;
   const headerStyle = readOnly ? {} : { backgroundColor: colors.orange };
-  return { title, headerStyle };
+  const saveAction = navigation.getParam(SAVE_ACTION_PROPS, null); // should be populated on construction
+  const headerRight = (
+    <HeaderIconButton name="ios-checkmark" onPress={saveAction} />
+  );
+  return { title, headerStyle, headerRight };
 };
 
 export default BrickMaker;

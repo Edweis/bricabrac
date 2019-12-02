@@ -1,8 +1,10 @@
 // @flow
+import React from 'react';
+import { Icon } from 'react-native-elements';
 import { Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-
+import colors from '../constants/colors';
 import BrickMaker from '../screens/BrickMaker';
 import ConceptList from '../screens/ConceptList';
 import ConceptBrickList from '../screens/BrickMaker/ConceptBrickList';
@@ -38,9 +40,33 @@ const TimerNavigator = createStackNavigator(
   { initialRouteName: 'TimerScreen' }
 );
 
-const TabNavigator = createBottomTabNavigator({
-  Bricks: BrickNavigator,
-  Timer: TimerNavigator
-});
+const tabNavigatorSettings = {
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, horizontal, tintColor }) => {
+      const { routeName } = navigation.state;
+      let iconName;
+      if (routeName === 'Home') {
+        iconName = `ios-information-circle`;
+      } else if (routeName === 'Settings') {
+        iconName = `ios-timer`;
+      }
+      if (focused) iconName = `iconName${focused ? '' : '-outline'}`;
+      // You can return any component that you like here!
+      return <Icon name={iconName} color={tintColor} />;
+    }
+  }),
+  tabBarOptions: {
+    activeTintColor: colors.orange,
+    inactiveTintColor: colors.black
+  }
+};
+
+const TabNavigator = createBottomTabNavigator(
+  {
+    Bricks: BrickNavigator,
+    Timer: TimerNavigator
+  },
+  tabNavigatorSettings
+);
 
 export default TabNavigator;

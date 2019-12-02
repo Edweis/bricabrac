@@ -26,10 +26,6 @@ const styles = StyleSheet.create({
 
 async function loadResourcesAsync() {
   await Promise.all([
-    Asset.loadAsync([
-      require('./src/assets/images/robot-dev.png'),
-      require('./src/assets/images/robot-prod.png')
-    ]),
     Font.loadAsync({
       // This is the font that we are using for our tab bar
       ...Ionicons.font,

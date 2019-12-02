@@ -42,15 +42,12 @@ const Timer = () => {
     setIsOn(false);
   };
 
-  // useTimer(isOn, setTimer)
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (isOn) {
       setStartTime(moment());
       const interval = setInterval(() => setTimer(moment() - startTime), 1000);
-      return () => {
-        clearInterval(interval);
-      };
+      return () => clearInterval(interval);
     }
   }, [isOn, startTime]);
 

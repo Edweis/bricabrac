@@ -7,14 +7,15 @@ import { DEFAULT_READING_TIME } from '../constants/defaults';
 
 export const READING_TIME_COLLECTION = 'readingTimes';
 
-export const genAcceptationId = (brickId: string, userId: string) =>
-  `${userId}-${brickId}`;
-
 export const useUserReadingTimes = (userId?: string, source?: SourceT) => {
   const readingTimes = useFirestore(READING_TIME_COLLECTION);
-  const filteredReadingTimes = readingTimes
-    .filter(rt => userId == null || rt.userId === userId)
-    .filter(rt => source == null || rt.source === source);
+  const filteredReadingTimes = useMemo(
+    () =>
+      readingTimes
+        .filter(rt => userId == null || rt.userId === userId)
+        .filter(rt => source == null || rt.source === source),
+    [readingTimes, source, userId]
+  );
   return filteredReadingTimes;
 };
 
@@ -25,7 +26,7 @@ const useLastRead = (source?: SourceT) => {
   return useMemo(() => {
     if (!readingTimes.length) return DEFAULT_READING_TIME;
     return _.maxBy(readingTimes, 'endTime');
-  }, [readingTimes, source]);
+  }, [readingTimes]);
 };
 
 export const useLastReadPage = (source?: SourceT) => {

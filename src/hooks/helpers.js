@@ -16,7 +16,7 @@ export const useSubscribedState = defaultState => {
   const prev = usePrevious(defaultState);
   useEffect(() => {
     if (!_.isEqual(defaultState, prev)) setState(defaultState);
-  }, [defaultState]);
+  }, [defaultState, prev]);
   return [state, setState];
 };
 
@@ -24,7 +24,7 @@ export const useFocusOnMount = () => {
   const ref = useRef(null);
   useLayoutEffect(() => {
     if (ref.current) ref.current.focus();
-  }, [ref.current]);
+  }, []);
   return ref;
 };
 
@@ -48,7 +48,7 @@ export const useFirestore = (
         }
       });
     return () => unsubscribe();
-  }, []);
+  }, [collection, documents, omitFields]);
   return documents;
 };
 

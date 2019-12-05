@@ -45,12 +45,12 @@ const tabNavigatorSettings = {
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
       const { routeName } = navigation.state;
       let iconName;
-      if (routeName === 'Home') {
-        iconName = `ios-information-circle`;
-      } else if (routeName === 'Settings') {
-        iconName = `ios-timer`;
+      if (routeName === 'Bricks') {
+        iconName = `home`;
+      } else if (routeName === 'Timer') {
+        iconName = `timer`;
       }
-      if (focused) iconName = `iconName${focused ? '' : '-outline'}`;
+      // if (focused) iconName = `iconName${focused ? '' : '-outline'}`;
       // You can return any component that you like here!
       return <Icon name={iconName} color={tintColor} />;
     }

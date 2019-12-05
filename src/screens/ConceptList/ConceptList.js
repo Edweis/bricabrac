@@ -38,7 +38,7 @@ function ConceptList() {
   // update title on search change
   useEffect(() => {
     navigation.setParams({ count: concepts.length });
-  }, [concepts.length, navigation]);
+  }, [concepts.length]);
 
   // Use FlatList if ScrollView becomes too slow
   return (

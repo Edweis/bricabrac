@@ -48,7 +48,7 @@ export const useFirestore = (
         }
       });
     return () => unsubscribe();
-  }, [collection, documents, omitFields]);
+  }, []);
   return documents;
 };
 

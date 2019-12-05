@@ -2,6 +2,7 @@
 import React from 'react';
 import { FAB } from 'react-native-paper';
 import { StyleSheet } from 'react-native';
+import colors from '../constants/colors';
 
 const styles = StyleSheet.create({
   fab: {
@@ -14,6 +15,13 @@ const styles = StyleSheet.create({
 });
 
 export default (props: any) => {
-  /* eslint-disable-next-line react/jsx-props-no-spreading */
-  return <FAB style={[styles.fab, props.styles]} icon="plus" {...props} />;
+  return (
+    <FAB
+      style={[styles.fab, props.styles]}
+      color={colors.orange}
+      icon="plus"
+      /* eslint-disable-next-line react/jsx-props-no-spreading */
+      {...props}
+    />
+  );
 };

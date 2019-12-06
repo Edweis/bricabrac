@@ -73,22 +73,22 @@ function BrickMaker() {
 
   const focusOnMountRef = useFocusOnMount();
 
-  const submit = useCallback(() => {
+  const submit = useCallback(brick => {
     checkBrickError(
-      newBrick,
+      brick,
       () => {
-        setBrick(newBrick);
+        setBrick(brick);
         navigation.goBack();
       },
       setDisplayedError
     );
     setIsEditEnable(false);
-  }, [navigation, newBrick]);
+  }, []);
 
   // Give action to header
   useEffect(() => {
     navigation.setParams({ SAVE_ACTION_PROPS: submit });
-  }, [navigation, submit]);
+  }, []);
 
   const updateBrick = (data: $Shape<BrickT>): BrickT => {
     const updatedBrick = { ...newBrick, ...data };
@@ -162,7 +162,12 @@ function BrickMaker() {
             />
           )}
         </View>
-        {isEditEnabled && <Button title="Sauvegarder" onPress={submit} />}
+        {isEditEnabled && (
+          <Button
+            title="Sauvegarder"
+            onPress={() => submit(navigation, newBrick)}
+          />
+        )}
         {!isEditEnabled && isAuthor && (
           <ConfirmButton
             title="Supprimer"

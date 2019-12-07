@@ -1,6 +1,6 @@
 // @flow
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, FlatList } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
 import { useDisplayedConcepts, useNavigationEvent } from './hooks';
@@ -49,14 +49,18 @@ function ConceptList() {
         value={search}
       />
       <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
-        {concepts.map(parentConcept => (
-          <BrickItem
-            key={parentConcept}
-            concept={parentConcept}
-            onSelect={onSelect}
-            onCreate={onCreate}
-          />
-        ))}
+        <FlatList
+          data={concepts}
+          keyExtractor={parentConcept => parentConcept}
+          renderItem={({ item }) => (
+            <BrickItem
+              key={item}
+              concept={item}
+              onSelect={onSelect}
+              onCreate={onCreate}
+            />
+          )}
+        />
       </ScrollView>
       {hideFAB === false && <NewConceptFAB />}
     </>

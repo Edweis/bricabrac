@@ -10,7 +10,8 @@ const styles = StyleSheet.create({
     margin: 34,
     right: 0,
     bottom: 0,
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    backgroundColor: colors.orange
   }
 });
 
@@ -18,7 +19,7 @@ export default (props: any) => {
   return (
     <FAB
       style={[styles.fab, props.styles]}
-      color={colors.orange}
+      color={colors.white}
       icon="plus"
       /* eslint-disable-next-line react/jsx-props-no-spreading */
       {...props}

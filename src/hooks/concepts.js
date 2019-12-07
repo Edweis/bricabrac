@@ -4,7 +4,6 @@ import { useFirestore, setFirestore } from './helpers';
 import { ConceptT, ConceptDepsT } from '../constants/types';
 
 export const CONCEPT_DEPS_COLLECTION = 'conceptDeps';
-
 export const ConceptContext = createContext([]);
 export const useConceptContext = () => useContext(ConceptContext);
 

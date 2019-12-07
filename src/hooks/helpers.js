@@ -3,6 +3,14 @@ import _ from 'lodash';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import firebase from '../firebase';
 
+let firestoreCountRead = 0;
+const displayFirestoreBill = (collection, count) => {
+  firestoreCountRead += count;
+  console.debug(
+    `Firestore read : ${count} at ${collection}. Total : ${firestoreCountRead}`
+  );
+};
+
 export const usePrevious = value => {
   const ref = useRef();
   useEffect(() => {
@@ -33,7 +41,7 @@ export const useFirestore = (
   collection: string,
   omitFields: string[] | string = []
 ) => {
-  const [documents, setDocuements] = useState([]);
+  const [documents, setDocuments] = useState([]);
   useEffect(() => {
     const unsubscribe = firebase
       .firestore()
@@ -43,8 +51,9 @@ export const useFirestore = (
           ...document.data(),
           id: document.id
         }));
+        displayFirestoreBill(collection, newDocuments.length);
         if (!_.isEqual(newDocuments, _.omit(documents, omitFields))) {
-          setDocuements(newDocuments);
+          setDocuments(newDocuments);
         }
       });
     return () => unsubscribe();

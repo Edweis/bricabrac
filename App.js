@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import moment from 'moment';
 import 'moment/locale/fr';
 import { AppLoading } from 'expo';
-import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -12,6 +11,8 @@ import { onAuthChange, isUserConnected } from './src/firebase';
 import { useBricks, BrickContext } from './src/hooks/bricks';
 import { useConcepts, ConceptContext } from './src/hooks/concepts';
 import { ProjectSetterContext } from './src/hooks/project';
+import { useUsers, UserContext } from './src/hooks/users';
+import { useReadingTimes, ReadingTimeContext } from './src/hooks/readingTimes';
 
 const bootstrap = () => {
   moment.locale('fr');
@@ -45,11 +46,13 @@ function handleLoadingError(error) {
 export default function App() {
   const [isAppLoading, setAppLoading] = useState(true);
   const [authLoading, setAuthLoading] = useState(isUserConnected());
-  const [projectSource, setProjectSource] = useState(null);
+  const endAppLoading = useCallback(() => setAppLoading(false), []);
 
+  const [projectSource, setProjectSource] = useState(null);
   const bricks = useBricks(projectSource);
   const conceptDeps = useConcepts();
-  const endAppLoading = useCallback(() => setAppLoading(false), []);
+  const users = useUsers();
+  const readingTimes = useReadingTimes();
 
   useEffect(() => {
     bootstrap();
@@ -74,10 +77,14 @@ export default function App() {
     <ProjectSetterContext.Provider value={[projectSource, setProjectSource]}>
       <BrickContext.Provider value={bricks}>
         <ConceptContext.Provider value={conceptDeps}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
-          </View>
+          <UserContext.Provider value={users}>
+            <ReadingTimeContext.Provider value={readingTimes}>
+              <View style={styles.container}>
+                {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+                <AppNavigator />
+              </View>
+            </ReadingTimeContext.Provider>
+          </UserContext.Provider>
         </ConceptContext.Provider>
       </BrickContext.Provider>
     </ProjectSetterContext.Provider>

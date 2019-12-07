@@ -4,8 +4,6 @@ import { useNavigation } from '../../hooks/navigation';
 import { useBrickContext, useConceptDeps } from '../../hooks';
 import { matchBrickSearch } from '../../helpers';
 
-const TODO_CONCEPT = '#TODO';
-
 export const useDisplayedConcepts = (search: string) => {
   const bricks = useBrickContext();
   const conceptDeps = useConceptDeps();
@@ -40,15 +38,6 @@ export const useDisplayedConcepts = (search: string) => {
       .uniqBy('concept') // take the latest concept edited
       .map('concept')
       .value();
-
-    // Set #TODO concept on top if it exists
-    if (sortedConcepts.includes(TODO_CONCEPT)) {
-      const conceptsWithTodoOnTop = sortedConcepts.filter(
-        c => c !== TODO_CONCEPT
-      );
-      conceptsWithTodoOnTop.splice(0, 0, TODO_CONCEPT);
-      return conceptsWithTodoOnTop;
-    }
 
     // Add the search as a concept we can add
     if (search.trim() !== '') sortedConcepts.unshift(search.trim());

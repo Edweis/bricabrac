@@ -71,7 +71,7 @@ function BrickMaker() {
   const [displayedError, setDisplayedError] = useState('');
   const [isEditEnabled, setIsEditEnable] = useState(!isReadOnly);
 
-  const focusOnMountRef = useFocusOnMount();
+  const focusOnMountRef = useFocusOnMount(isReadOnly);
 
   const submit = () => {
     checkBrickError(

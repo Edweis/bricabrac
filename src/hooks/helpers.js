@@ -32,7 +32,7 @@ export const useFocusOnMount = dep => {
   const ref = useRef(null);
   useLayoutEffect(() => {
     if (ref.current) ref.current.focus();
-  }, [dep]);
+  }, [ref.current, dep]);
   return ref;
 };
 

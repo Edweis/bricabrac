@@ -27,9 +27,13 @@ const IS_SEARCH_OPEN_PROPS = 'isSearchOpenState';
 function ConceptList() {
   const searchState = useState('');
   const isSearchOpenState = useState(false);
+  const [, setIsSearchOpen] = isSearchOpenState;
   const [search, setSearch] = searchState;
 
-  useNavigationEvent('willFocus', () => setSearch(''));
+  useNavigationEvent('willFocus', () => {
+    setSearch('');
+    setIsSearchOpen(false);
+  });
 
   const concepts = useDisplayedConcepts(search);
   const navigation = useNavigation();

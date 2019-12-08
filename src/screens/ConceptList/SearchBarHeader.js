@@ -21,16 +21,17 @@ type Props = {
 export default function SearchBarHeader(props: Props) {
   // We need to use a state wraped around the component because it takes too long to commit the search to navigation
   const [localSearch, setLocalSearch] = useSubscribedState(props.value);
-
+  const [localIsOpen, setLocalIsOpen] = useSubscribedState(props.isOpen);
+  const setOpen = value => {
+    setLocalIsOpen(value);
+    props.onOpenChange(value);
+  };
   const ref = useFocusOnMount();
 
-  if (!props.isOpen) {
+  if (!localIsOpen) {
     return (
       <>
-        <HeaderIconButton
-          name="ios-search"
-          onPress={() => props.onOpenChange(true)}
-        />
+        <HeaderIconButton name="ios-search" onPress={() => setOpen(true)} />
         <ProjectButton />
       </>
     );
@@ -44,8 +45,8 @@ export default function SearchBarHeader(props: Props) {
           setLocalSearch(text);
           props.onChange(text);
         }}
-        onClear={() => props.onOpenChange(false)}
-        onCancel={() => props.onOpenChange(false)}
+        onClear={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
         platform="android"
         ref={ref}
       />

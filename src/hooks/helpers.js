@@ -32,7 +32,7 @@ export const useFocusOnMount = dep => {
   const ref = useRef(null);
   useLayoutEffect(() => {
     if (ref.current) ref.current.focus();
-  }, [dep]);
+  }, [ref.current, dep]);
   return ref;
 };
 
@@ -46,7 +46,6 @@ export const useFirestore = (
     const unsubscribe = firebase
       .firestore()
       .collection(collection)
-      .limit(20)
       .onSnapshot(snapshot => {
         const newDocuments = snapshot.docs.map(document => ({
           ...document.data(),

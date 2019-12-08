@@ -28,11 +28,11 @@ export const useSubscribedState = defaultState => {
   return [state, setState];
 };
 
-export const useFocusOnMount = () => {
+export const useFocusOnMount = dep => {
   const ref = useRef(null);
   useLayoutEffect(() => {
     if (ref.current) ref.current.focus();
-  }, []);
+  }, [dep]);
   return ref;
 };
 
@@ -46,6 +46,7 @@ export const useFirestore = (
     const unsubscribe = firebase
       .firestore()
       .collection(collection)
+      .limit(20)
       .onSnapshot(snapshot => {
         const newDocuments = snapshot.docs.map(document => ({
           ...document.data(),

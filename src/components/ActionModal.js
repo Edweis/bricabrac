@@ -4,6 +4,7 @@ import { View, Button, StyleSheet } from 'react-native';
 import { Text, Input } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { useNavigation } from '../hooks/navigation';
+import { useFocusOnMount } from '../hooks/helpers';
 
 type Props = {
   title: string,
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
 
 function ActionModal(props: Props) {
   const navigation = useNavigation();
+  const focusOnMountRef = useFocusOnMount(props.show);
   const { defaultValue, noInput, children, title, noCheck } = props;
   const [value, setValue] = useState(defaultValue);
   const onSubmit = () => {
@@ -61,6 +63,7 @@ function ActionModal(props: Props) {
             value={value}
             onChangeText={setValue}
             multiline={props.multiline}
+            ref={focusOnMountRef}
           />
         )}
         <View style={styles.title}>

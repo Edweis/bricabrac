@@ -87,6 +87,6 @@ const Timer = () => {
   );
 };
 
-Timer.navigationOptions = { title: 'Timeur' };
+Timer.navigationOptions = { title: 'Timer' };
 
 export default Timer;

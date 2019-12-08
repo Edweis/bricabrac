@@ -1,13 +1,10 @@
 // @flow
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, FlatList } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import SearchBarHeader from './SearchBarHeader';
 import { useNavigation } from '../../hooks/navigation';
 import { useDisplayedConcepts, useNavigationEvent } from './hooks';
 import BrickItem from '../../components/BrickItem';
-import LogoutButton from '../../components/LogoutButton';
-import ProjectButton from '../../components/ProjectButton';
-import GitHubButton from '../../components/GitHubButton';
 import NewConceptFAB from './NewConceptFAB';
 
 const styles = StyleSheet.create({
@@ -18,10 +15,19 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 50,
   },
+  searchBar: {
+    width: '100%',
+    backgroundColor: '#880',
+  },
 });
 
+const SEARCH_STATE_PROP = 'searchState';
+const IS_SEARCH_OPEN_PROPS = 'isSearchOpenState';
+
 function ConceptList() {
-  const [search, setSearch] = useState('');
+  const searchState = useState('');
+  const isSearchOpenState = useState(false);
+  const [search, setSearch] = searchState;
 
   useNavigationEvent('willFocus', () => setSearch(''));
 
@@ -39,15 +45,14 @@ function ConceptList() {
   useEffect(() => {
     navigation.setParams({ count: concepts.length });
   }, [concepts.length]);
+  useEffect(() => {
+    navigation.setParams({ [SEARCH_STATE_PROP]: searchState });
+    navigation.setParams({ [IS_SEARCH_OPEN_PROPS]: isSearchOpenState });
+  }, [search, isSearchOpenState[0]]);
 
   // Use FlatList if ScrollView becomes too slow
   return (
     <>
-      <SearchBar
-        placeholder="Search..."
-        onChangeText={setSearch}
-        value={search}
-      />
       <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
         <FlatList
           data={concepts}
@@ -70,19 +75,27 @@ function ConceptList() {
 ConceptList.navigationOptions = ({ navigation }) => {
   const rawTitle = navigation.getParam('title', 'Concepts');
   const brickCount = navigation.getParam('count', '...');
-  const title = `${rawTitle} (${brickCount})`;
+  const [search, setSearch] = navigation.getParam(SEARCH_STATE_PROP, [
+    null,
+    () => {},
+  ]);
+  const [isOpen, setIsOpen] = navigation.getParam(IS_SEARCH_OPEN_PROPS, [
+    null,
+    () => {},
+  ]);
+  const searchComponent = (
+    <SearchBarHeader
+      onChange={setSearch}
+      value={search}
+      isOpen={isOpen}
+      onOpenChange={setIsOpen}
+    />
+  );
+  const title = isOpen ? null : `${rawTitle} (${brickCount})`;
+  const headerTitle = isOpen ? searchComponent : null;
+  const headerRight = isOpen ? null : searchComponent;
 
-  const headerRight =
-    rawTitle === 'Concepts' ? (
-      <>
-        <ProjectButton />
-        <GitHubButton />
-        <LogoutButton />
-      </>
-    ) : (
-      <LogoutButton />
-    );
-  return { title, headerRight };
+  return { title, headerRight, headerTitle };
 };
 
 export default ConceptList;

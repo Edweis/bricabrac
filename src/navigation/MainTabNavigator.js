@@ -9,7 +9,7 @@ import BrickMaker from '../screens/BrickMaker';
 import ConceptList from '../screens/ConceptList';
 import ConceptBrickList from '../screens/BrickMaker/ConceptBrickList';
 import SourceList from '../screens/BrickMaker/SourceList';
-
+import SettingsNavigator from '../screens/Settings';
 import TimerScreen from '../screens/Timer';
 
 const config = Platform.select({
@@ -67,6 +67,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     Bricks: BrickNavigator,
     Timer: TimerNavigator,
+    Settings: SettingsNavigator,
   },
   tabNavigatorSettings,
 );

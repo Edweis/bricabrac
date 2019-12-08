@@ -16,11 +16,11 @@ export const useUserAcceptation = (userId: string): (string => StatusT) => {
     brickId => {
       if (!userId) return 'none';
       const foundAcceptations = acceptations.filter(
-        a => a.id === genAcceptationId(brickId, userId)
+        a => a.id === genAcceptationId(brickId, userId),
       );
       return foundAcceptations.length ? foundAcceptations[0].status : 'none';
     },
-    [acceptations]
+    [acceptations],
   );
 };
 
@@ -28,7 +28,7 @@ export const setAcceptation = (acceptation: AcceptationT) => {
   const enrichedAcceptation = {
     ...acceptation,
     datetime: new Date(),
-    id: genAcceptationId(acceptation.brickId, acceptation.userId)
+    id: genAcceptationId(acceptation.brickId, acceptation.userId),
   };
 
   setFirestore(ACCEPTATION_COLLECTION, enrichedAcceptation);

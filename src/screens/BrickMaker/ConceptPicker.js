@@ -9,13 +9,13 @@ const styles = StyleSheet.create({
   badges: { display: 'flex', flexDirection: 'row' },
   badge: { marginLeft: 30 },
   newBadge: {},
-  addConcept: { width: '50%', marginLeft: 'auto', marginRight: 'auto' }
+  addConcept: { width: '50%', marginLeft: 'auto', marginRight: 'auto' },
 });
 
 type Props = {
   concepts: ConceptT[],
   onChange: (ConceptT[]) => void,
-  readOnly?: boolean
+  readOnly?: boolean,
 };
 function ConceptPicker(props: Props) {
   const navigation = useNavigation();
@@ -51,7 +51,7 @@ function ConceptPicker(props: Props) {
               title: 'Lier un concept',
               hideFAB: true,
               onSelect: addConcept,
-              onCreate: addConcept
+              onCreate: addConcept,
             })
           }
           title="Lier un concept"

@@ -10,7 +10,7 @@ const providers = [
   [BrickContext, useBricks],
   [ConceptContext, useConcepts],
   [UserContext, useUsers],
-  [ReadingTimeContext, useReadingTimes]
+  [ReadingTimeContext, useReadingTimes],
 ];
 
 // Not used for the moment but can be a library by itself to replace redux for hooks
@@ -25,9 +25,9 @@ const useGlobalProvider = () => {
           </Component>
         );
       },
-      ({ children }) => <>{children}</>
+      ({ children }) => <>{children}</>,
     ),
-    []
+    [],
   );
 };
 export default useGlobalProvider;

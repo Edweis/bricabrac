@@ -7,11 +7,11 @@ import { formatContent, formatTags } from './helpers';
 function BrickContent({
   content,
   conceptDeps,
-  asConcept
+  asConcept,
 }: {
   content?: string,
   conceptDeps: ConceptDepsT,
-  asConcept: boolean
+  asConcept: boolean,
 }) {
   const displayedContent = formatContent(content, asConcept);
   const hasDeps = !!conceptDeps.deps.length;

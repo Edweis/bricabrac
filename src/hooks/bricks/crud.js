@@ -14,7 +14,7 @@ export const useBricks = (projectSource?: string) => {
   const filteredBricks = useFilteredBricks(bricks, projectSource);
   const bricksWithAcceptation = useBrickWithAcceptation(
     filteredBricks,
-    getUserAcceptation
+    getUserAcceptation,
   );
   return bricksWithAcceptation;
 };
@@ -26,7 +26,7 @@ export const setBrick = (brick: BrickT) => {
     submitTime: new Date(),
     ...brick,
     lastEditTime: new Date(),
-    author: userId
+    author: userId,
   };
 
   // Get the status and update it
@@ -37,14 +37,14 @@ export const setBrick = (brick: BrickT) => {
     const acceptation = {
       userId,
       brickId: brickWithId.id,
-      status
+      status,
     };
     setAcceptation(acceptation);
   };
 
   Promise.all([
     setFirestore(BRICK_COLLECTION, enrichedBrick, setAcceptationFromBrick),
-    setUser(getCurrentUser())
+    setUser(getCurrentUser()),
   ]);
 };
 

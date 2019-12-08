@@ -5,7 +5,7 @@ export const ProjectSetterContext = React.createContext([
   null,
   () => {
     throw Error('setProject is not yet defined');
-  }
+  },
 ]);
 export const useProject = (): ProjectSetterT =>
   useContext(ProjectSetterContext);

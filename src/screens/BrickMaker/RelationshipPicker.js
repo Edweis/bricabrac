@@ -6,7 +6,7 @@ import { translateRelationship } from '../../constants/translations';
 type Props = {
   relationship: RelationshipT,
   setReltionship: RelationshipT => void,
-  readOnly?: boolean
+  readOnly?: boolean,
 };
 
 const styles = StyleSheet.create({ main: { marginBottom: 10, marginTop: 10 } });
@@ -16,7 +16,7 @@ const relationships = [
   'implication',
   'partition',
   'definition',
-  'undefined'
+  'undefined',
 ];
 
 function RelationshipPicker(props: Props) {

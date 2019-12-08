@@ -15,7 +15,7 @@ import TimerScreen from '../screens/Timer';
 const config = Platform.select({
   web: { headerMode: 'screen' },
   initialRouteName: 'ConceptList',
-  default: {}
+  default: {},
 });
 // import { NavigationState, NavigationScreenProp } from 'react-navigation';
 // export const type NavigationProps = { navigation: NavigationScreenProp<NavigationState> };
@@ -25,9 +25,9 @@ const BrickNavigator = createStackNavigator(
     ConceptList,
     BrickMaker,
     ConceptBrickList,
-    SourceList
+    SourceList,
   },
-  config
+  config,
 );
 
 const TimerNavigator = createStackNavigator(
@@ -35,9 +35,9 @@ const TimerNavigator = createStackNavigator(
     TimerScreen,
     ConceptList,
     BrickMaker,
-    SourceList
+    SourceList,
   },
-  { initialRouteName: 'TimerScreen' }
+  { initialRouteName: 'TimerScreen' },
 );
 
 const tabNavigatorSettings = {
@@ -49,24 +49,26 @@ const tabNavigatorSettings = {
         iconName = `home`;
       } else if (routeName === 'Timer') {
         iconName = `timer`;
+      } else if (routeName === 'Settings') {
+        iconName = `settings`;
       }
       // if (focused) iconName = `iconName${focused ? '' : '-outline'}`;
       // You can return any component that you like here!
       return <Icon name={iconName} color={tintColor} />;
-    }
+    },
   }),
   tabBarOptions: {
     activeTintColor: colors.orange,
-    inactiveTintColor: colors.black
-  }
+    inactiveTintColor: colors.black,
+  },
 };
 
 const TabNavigator = createBottomTabNavigator(
   {
     Bricks: BrickNavigator,
-    Timer: TimerNavigator
+    Timer: TimerNavigator,
   },
-  tabNavigatorSettings
+  tabNavigatorSettings,
 );
 
 export default TabNavigator;

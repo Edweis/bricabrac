@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     padding: 10,
     height: '100%',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   definition: {
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   status: {},
   statusTitle: {},
@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10
+    marginTop: 10,
   },
   submitItem: { flexGrow: 1, marginLeft: 10, marginRight: 10 },
   footer: { alignSelf: 'stretch' },
   deleteButton: { backgroundColor: colors.errorBackground },
-  deleteContainer: { marginTop: 10 }
+  deleteContainer: { marginTop: 10 },
 });
 
 const SAVE_ACTION_PROPS = 'saveAction';
@@ -54,9 +54,9 @@ const useFilledBricked = (brick: BrickT): BrickT =>
   useMemo(
     () => ({
       ...EMPTY_BRICK,
-      ...brick
+      ...brick,
     }),
-    [brick]
+    [brick],
   );
 
 function BrickMaker() {
@@ -80,7 +80,7 @@ function BrickMaker() {
         setBrick(newBrick);
         navigation.goBack();
       },
-      setDisplayedError
+      setDisplayedError,
     );
     setIsEditEnable(false);
   };
@@ -186,7 +186,7 @@ function BrickMaker() {
 
 BrickMaker.navigationOptions = ({ navigation }) => {
   const { parentConcept } = navigation.getParam('brick', {
-    parentConcept: '...'
+    parentConcept: '...',
   });
   const readOnly = navigation.getParam('readOnly', false);
   const title = readOnly ? parentConcept : `${parentConcept} > Ajouter`;

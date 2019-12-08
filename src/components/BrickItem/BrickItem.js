@@ -11,7 +11,7 @@ import BrickTitle from './BrickTitle';
 import BrickContent from './BrickContent';
 
 const styles = StyleSheet.create({
-  empty: { display: 'flex', alignItems: 'center', justifyContent: 'center' }
+  empty: { display: 'flex', alignItems: 'center', justifyContent: 'center' },
 });
 
 export type Props = {
@@ -19,7 +19,7 @@ export type Props = {
   onRemove: () => void,
   onSelect?: (concept: ConceptT) => void,
   onCreate?: (concept: ConceptT) => void,
-  asConcept?: boolean
+  asConcept?: boolean,
 };
 
 function BrickItem(props: Props) {
@@ -35,7 +35,7 @@ function BrickItem(props: Props) {
     subtitle: <BrickContent conceptDeps={conceptDeps} asConcept={asConcept} />,
     onPress: () => props.onCreate(concept, navigation),
     rightSubtitle: '',
-    rightIcon: { name: 'plus', type: 'evilicon' }
+    rightIcon: { name: 'plus', type: 'evilicon' },
   });
 
   const getWithFeaturedConceptItempProps = () => ({
@@ -55,7 +55,7 @@ function BrickItem(props: Props) {
     ),
     onPress: () => props.onSelect(concept, navigation),
     rightSubtitle: asConcept ? '' : bricks.length.toString(),
-    rightIcon: { name: 'chevron-right', type: 'evilicon' }
+    rightIcon: { name: 'chevron-right', type: 'evilicon' },
   });
 
   const data = isEmpty
@@ -65,7 +65,7 @@ function BrickItem(props: Props) {
   if (props.onRemove != null)
     data.rightIcon = {
       name: 'delete',
-      onPress: () => props.onRemove(concept)
+      onPress: () => props.onRemove(concept),
     };
 
   return (
@@ -85,7 +85,7 @@ BrickItem.defaultProps = {
     navigation.push('ConceptBrickList', { concept }),
   onCreate: (concept, navigation) =>
     navigation.push('BrickMaker', { brick: { parentConcept: concept } }),
-  asConcept: false
+  asConcept: false,
 };
 
 BrickItem.Empty = () => (

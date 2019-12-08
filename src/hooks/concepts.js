@@ -10,7 +10,7 @@ export const useConceptContext = () => useContext(ConceptContext);
 export const getDeps = (
   allDeps: ConceptDepsT[],
   concept: ConceptT,
-  occurendConcept: ConceptT[] = []
+  occurendConcept: ConceptT[] = [],
 ): { deps: ConceptDepsT[], isCyclical: boolean } => {
   // edge case
   if (!concept) return { deps: [], isCyclical: false };
@@ -44,7 +44,7 @@ export const useConceptDeps = (concept: ConceptT) => {
   const conceptDeps = useConceptContext();
   const deps = useMemo(() => getDeps(conceptDeps, concept), [
     concept,
-    conceptDeps
+    conceptDeps,
   ]);
   return deps;
 };
@@ -60,7 +60,7 @@ export const setConceptDeps = (concept: ConceptDepsT) => {
   const enrichedConcept = {
     id: concept.name,
     datetime: new Date(),
-    ...concept
+    ...concept,
   };
   setFirestore(CONCEPT_DEPS_COLLECTION, enrichedConcept);
 };

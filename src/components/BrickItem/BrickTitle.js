@@ -8,18 +8,18 @@ import Status from '../Status';
 function BrickTitle({
   status,
   concept,
-  asConcept
+  asConcept,
 }: {
   status?: StatusT,
   concept: ConceptT,
-  asConcept: boolean
+  asConcept: boolean,
 }) {
   return (
     <View
       style={{
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
       }}
     >
       {status && <Status status={status} marginRight />}

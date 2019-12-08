@@ -9,9 +9,9 @@
     },
     "extends": [
         "airbnb",
-	"prettier",
-	"plugin:prettier/recommended",
-	"airbnb/hooks"
+      	"prettier",
+      	"plugin:prettier/recommended",
+      	"airbnb/hooks"
     ],
     "parser": "babel-eslint",
     "globals": {
@@ -28,40 +28,26 @@
     },
     "plugins": [
         "react",
-	"flowtype",
-	"react-hooks",
-	"import",
-	"prettier"
+      	"flowtype",
+      	"react-hooks",
+      	"import",
+      	"prettier"
     ],
     "rules": {
 	    "react/jsx-filename-extension": 0,
 	    "react/jsx-curly-newline": 0,
  	    "react/jsx-one-expression-per-line": 0,
-      "prettier/prettier": ["error", {
-          "singleQuote": true
-      }],
+      "prettier/prettier": ["error", { "singleQuote": true, "trailingComma": "all" }],
       "react-hooks/exhaustive-deps": "off",
 	    "react/destructuring-assignment": ["off"],
-	    "prefer-destructuring": [
-            "error",
-            {
-                "array": false,
-                "object": true
-            }
-        ]
-
+	    "prefer-destructuring": [ "error", { "array": false, "object": true } ],
+      "comma-dangle": ["error", "always-multiline"]
     },
     "settings": {
-		"import/resolver": {
-			"node": {
-				"paths": ["src"],
-				"alias": {
-				       "_assets":"./src/assets",
-                                       "_components":"./src/components",
-                                       "_constants":"./src/constants",
-                                       "_hooks":"./src/hooks"
-				}
-			}
-		}
-	}
+  		"import/resolver": {
+  			"node": {
+  				"paths": ["src"],
+  				"alias": { "_assets":"./src/assets", "_components":"./src/components", "_constants":"./src/constants", "_hooks":"./src/hooks" } }
+  		}
+  	}
 }

@@ -7,12 +7,12 @@ const styles = StyleSheet.create({
   dot: {
     width: 10,
     height: 10,
-    borderRadius: 5
+    borderRadius: 5,
   },
   accepted: { backgroundColor: colors.status.accepted },
   refused: { backgroundColor: colors.status.refused },
   none: { backgroundColor: colors.status.none },
-  marginRight: { marginRight: 10 }
+  marginRight: { marginRight: 10 },
 });
 
 type Props = { status: StatusT, marginRight?: boolean };

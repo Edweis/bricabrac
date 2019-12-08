@@ -9,7 +9,7 @@ export const DEFAULT_BRICK: BrickT = {
   submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: 'loading concept ...',
   source: 'loading source ...',
-  relationship: 'undefined'
+  relationship: 'undefined',
 };
 
 export const EMPTY_BRICK: BrickT = {
@@ -20,11 +20,11 @@ export const EMPTY_BRICK: BrickT = {
   parentConcept: '',
   status: 'none',
   author: null,
-  relationship: 'undefined'
+  relationship: 'undefined',
 };
 
 export const DEFAULT_CONCEPT = {
-  title: 'loading concept ...'
+  title: 'loading concept ...',
 };
 
 export const EMPTY_SOURCE = '(sans source)';
@@ -34,5 +34,5 @@ export const DEFAULT_READING_TIME: ReadingTimeT = {
   endtime: firebase.firestore.Timestamp.now(),
   startPage: 0,
   endPage: 0,
-  source: ''
+  source: '',
 };

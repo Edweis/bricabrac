@@ -12,15 +12,15 @@ export const useDisplayedConcepts = (search: string) => {
     const parentConceptBricks = _(bricks).map(brick => ({
       ...brick,
       submitTime: brick.submitTime.toMillis(),
-      concept: brick.parentConcept
+      concept: brick.parentConcept,
     }));
     const orphanConceptBricks = _(bricks)
       .map(brick =>
         brick.childrenConcepts.map(childConcept => ({
           ...brick,
           submitTime: brick.submitTime.toMillis(),
-          concept: childConcept
-        }))
+          concept: childConcept,
+        })),
       )
       .flatten()
       .value();

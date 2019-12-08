@@ -7,9 +7,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-  button: { marginTop: 16, width: '50%' }
+  button: { marginTop: 16, width: '50%' },
 });
 
 export default function SignUp() {

@@ -11,10 +11,10 @@ const styles = StyleSheet.create({
   header: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   author: { fontWeight: 'bold' },
-  container: { marginTop: 10 }
+  container: { marginTop: 10 },
 });
 
 const IS_URL = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/;
@@ -36,7 +36,7 @@ const Comment = (props: { comment: CommentT }) => {
         <Image
           style={{ width: 66, height: 58 }}
           source={{
-            uri: comment.text
+            uri: comment.text,
           }}
         />
       ) : (

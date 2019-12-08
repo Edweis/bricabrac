@@ -18,7 +18,7 @@ export const useUserReadingTimes = (userId?: string, source?: SourceT) => {
       readingTimes
         .filter(rt => userId == null || rt.userId === userId)
         .filter(rt => source == null || rt.source === source),
-    [readingTimes, source, userId]
+    [readingTimes, source, userId],
   );
   return filteredReadingTimes;
 };

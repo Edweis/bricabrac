@@ -11,7 +11,7 @@ export const updateBrickComment = (brickId: string, comment: string) => {
   const enrichedComment = {
     author: userId,
     datetime: new Date(),
-    text: comment
+    text: comment,
   };
 
   setFirestore(collection, enrichedComment);

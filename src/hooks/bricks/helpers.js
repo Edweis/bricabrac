@@ -6,7 +6,7 @@ import { usePrevious } from '../helpers';
 /* Return bricks filtered with the project source */
 export const useFilteredBricks = (
   bricks: BrickT[],
-  projectSource?: string
+  projectSource?: string,
 ): BrickT[] => {
   const [filteredBricks, setFilteredBricks] = useState(bricks);
 
@@ -20,7 +20,7 @@ export const useFilteredBricks = (
 
     if (didChange) {
       const updatedBricks = bricks.filter(
-        brick => !projectSource || brick.source === projectSource
+        brick => !projectSource || brick.source === projectSource,
       );
       setFilteredBricks(updatedBricks);
     }
@@ -31,7 +31,7 @@ export const useFilteredBricks = (
 
 export const useBrickWithAcceptation = (
   bricks: BrickT[],
-  getUserAcceptation: string => StatusT
+  getUserAcceptation: string => StatusT,
 ): BrickT[] => {
   const [bricksWithAcceptation, setBricksWithAcceptation] = useState(bricks);
 
@@ -45,7 +45,7 @@ export const useBrickWithAcceptation = (
     if (didChange) {
       const updatedBricks = bricks.map(brick => ({
         ...brick,
-        status: getUserAcceptation(brick.id)
+        status: getUserAcceptation(brick.id),
       }));
       setBricksWithAcceptation(updatedBricks);
     }

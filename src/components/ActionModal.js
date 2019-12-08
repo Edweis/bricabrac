@@ -16,23 +16,23 @@ type Props = {
   noInput?: boolean,
   children?: React.Node,
   defaultValue?: string,
-  noCheck?: boolean
+  noCheck?: boolean,
 };
 
 const styles = StyleSheet.create({
   content: {
     backgroundColor: 'white',
     borderRadius: 4,
-    borderColor: 'rgba(0, 0, 0, 0.1)'
+    borderColor: 'rgba(0, 0, 0, 0.1)',
   },
   children: {
-    display: 'flex'
+    display: 'flex',
   },
   title: {
     padding: 22,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 function ActionModal(props: Props) {
@@ -79,7 +79,7 @@ ActionModal.defaultProps = {
   noInput: false,
   children: null,
   defaultValue: '',
-  noCheck: false
+  noCheck: false,
 };
 
 export default ActionModal;

@@ -9,14 +9,14 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
-  item: { flexGrow: 1, marginLeft: 10, marginRight: 10 }
+  item: { flexGrow: 1, marginLeft: 10, marginRight: 10 },
 });
 
 type Props = {
   status: StatusT,
-  setStatus: StatusT => void
+  setStatus: StatusT => void,
 };
 
 export default function StatusPicker(props: Props) {
@@ -32,7 +32,7 @@ export default function StatusPicker(props: Props) {
             backgroundColor:
               props.status === value
                 ? colors.status[value]
-                : colors.status.neutral
+                : colors.status.neutral,
           }}
           containerStyle={styles.item}
         />

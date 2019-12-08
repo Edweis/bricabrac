@@ -8,14 +8,14 @@ import ActionModal from '../../components/ActionModal';
 import {
   useLastReadPage,
   useLastReadSource,
-  setReadingTime
+  setReadingTime,
 } from '../../hooks/readingTimes';
 
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 const Timer = () => {
   const [isOn, setIsOn] = useState(false);
@@ -79,7 +79,7 @@ const Timer = () => {
             endTime: new Date(endTime),
             startPage: _.toNumber(startPage),
             endPage: _.toNumber(endPage),
-            source
+            source,
           })
         }
       />

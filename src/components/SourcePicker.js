@@ -9,7 +9,7 @@ import { useProject } from '../hooks/project';
 type Props = {
   source: SourceT[],
   onChange: (SourceT[]) => void,
-  readOnly?: boolean
+  readOnly?: boolean,
 };
 function SourcePicker(props: Props) {
   const navigation = useNavigation();

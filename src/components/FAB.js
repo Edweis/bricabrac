@@ -11,8 +11,8 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     alignSelf: 'flex-end',
-    backgroundColor: colors.orange
-  }
+    backgroundColor: colors.orange,
+  },
 });
 
 export default (props: any) => {

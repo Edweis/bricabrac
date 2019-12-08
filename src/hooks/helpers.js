@@ -7,7 +7,7 @@ let firestoreCountRead = 0;
 const displayFirestoreBill = (collection, count) => {
   firestoreCountRead += count;
   console.debug(
-    `Firestore read : ${count} at ${collection}. Total : ${firestoreCountRead}`
+    `Firestore read : ${count} at ${collection}. Total : ${firestoreCountRead}`,
   );
 };
 
@@ -39,7 +39,7 @@ export const useFocusOnMount = dep => {
 /* Use firestore snapshots to use realtime database */
 export const useFirestore = (
   collection: string,
-  omitFields: string[] | string = []
+  omitFields: string[] | string = [],
 ) => {
   const [documents, setDocuments] = useState([]);
   useEffect(() => {
@@ -50,7 +50,7 @@ export const useFirestore = (
       .onSnapshot(snapshot => {
         const newDocuments = snapshot.docs.map(document => ({
           ...document.data(),
-          id: document.id
+          id: document.id,
         }));
         displayFirestoreBill(collection, newDocuments.length);
         if (!_.isEqual(newDocuments, _.omit(documents, omitFields))) {
@@ -67,7 +67,7 @@ export const useFirestore = (
 export async function setFirestore<T>(
   collection: string,
   _data: T,
-  effects?: T => void = () => {}
+  effects?: T => void = () => {},
 ) {
   const data = _.cloneDeep(_data);
 
@@ -87,7 +87,7 @@ export async function setFirestore<T>(
   console.log(
     id != null
       ? `${collection} Edited at id ${id}!`
-      : `${collection} added at id ${id}!`
+      : `${collection} added at id ${id}!`,
   );
   console.log({ data });
 }

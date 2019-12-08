@@ -1,2 +1,3 @@
-import BrickItem from './BrickItem'
+import BrickItem from './BrickItem';
+
 export default BrickItem;

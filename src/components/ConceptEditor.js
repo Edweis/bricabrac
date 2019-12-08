@@ -10,7 +10,7 @@ import BrickItem from './BrickItem';
 type Props = {
   concept?: ConceptT,
   show: boolean,
-  onClose: () => void
+  onClose: () => void,
 };
 function ConceptEditor(props: Props) {
   const { show, onClose } = props;
@@ -47,7 +47,7 @@ function ConceptEditor(props: Props) {
       title: `Lier ${originalConcept} à ...`,
       hideFAB: true,
       onSelect: onAdd,
-      onCreate: onAdd
+      onCreate: onAdd,
     });
   };
 

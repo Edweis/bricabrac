@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 34,
     right: 0,
-    bottom: 50
-  }
+    bottom: 50,
+  },
 });
 
 const useDisplayedSources = (search: string) => {
@@ -26,7 +26,7 @@ const useDisplayedSources = (search: string) => {
         .filter(brick => !!brick.source) // remove empty sources
         .map(brick => ({
           submitTime: brick.submitTime.toMillis(),
-          source: brick.source
+          source: brick.source,
         }))
         .sortBy(['submitTime'])
         .reverse()
@@ -34,7 +34,7 @@ const useDisplayedSources = (search: string) => {
         .mapValues((v, k) => ({ source: k, count: v.length }))
         .values()
         .value(),
-    [bricks]
+    [bricks],
   );
 
   return useMemo(() => {
@@ -80,7 +80,7 @@ function SourceList() {
 }
 
 SourceList.navigationOptions = ({ navigation }) => ({
-  title: navigation.getParam('title', 'Sources')
+  title: navigation.getParam('title', 'Sources'),
 });
 
 export default SourceList;

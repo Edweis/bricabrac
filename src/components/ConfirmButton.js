@@ -5,7 +5,7 @@ import ActionModal from './ActionModal';
 type ButtonProps = any;
 type Props = {
   modalTitle: string,
-  onSubmit: () => void
+  onSubmit: () => void,
 } & ButtonProps;
 export default function ConfirmButton(props: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);

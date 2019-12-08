@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     margin: 34,
     right: 0,
-    bottom: 50
-  }
+    bottom: 50,
+  },
 });
 
 function ConceptList() {
@@ -32,7 +32,7 @@ function ConceptList() {
   const onSelect = navigation.getParam('onSelect');
   const onCreate = navigation.getParam(
     'onCreate',
-    BrickItem.defaultProps.onCreate
+    BrickItem.defaultProps.onCreate,
   );
 
   // update title on search change

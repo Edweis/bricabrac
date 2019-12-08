@@ -11,7 +11,7 @@ import { useConceptDeps } from '../../hooks/concepts';
 import EditConceptButton from './EditConceptButton';
 
 const styles = StyleSheet.create({
-  main: {}
+  main: {},
 });
 
 function ConceptBrickList() {

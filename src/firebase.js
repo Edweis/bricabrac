@@ -13,7 +13,7 @@ export async function googleLogin() {
   const config = {
     androidClientId:
       '53205959987-cdkv1nfiseh6odte37uv1k9s9nvr2d9p.apps.googleusercontent.com',
-    scopes: ['profile', 'email']
+    scopes: ['profile', 'email'],
   };
   const { type, accessToken, user } = await Google.logInAsync(config);
   return { type, accessToken, user };
@@ -28,7 +28,7 @@ export async function facebookLogin() {
   const permissions = ['public_profile', 'email']; // Permissions required, consult Facebook docs
 
   const resp = await Facebook.logInWithReadPermissionsAsync(appId, {
-    permissions
+    permissions,
   });
   const { type, token } = resp;
 

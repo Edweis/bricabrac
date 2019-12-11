@@ -27,7 +27,19 @@
       "supportsTablet": true
     },
     "android": {
-  "package": "com.bricabrac.app"
-}
+      "package": "com.bricabrac.app"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "Kapochamo",
+            "project": "Bric-à-Brac",
+            "authToken": "4042890fdb5b40d29e0a0791d1716cb3bb4f6843b2b447e9bc06bb802db06b5f"
+          }
+        }
+      ]
+    }
 }
 }

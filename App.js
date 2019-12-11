@@ -5,6 +5,7 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import * as Sentry from 'sentry-expo';
 import SignUp from './src/components/SignUp';
 import AppNavigator from './src/navigation/AppNavigator';
 import { onAuthChange, isUserConnected } from './src/firebase';
@@ -16,6 +17,12 @@ import { useReadingTimes, ReadingTimeContext } from './src/hooks/readingTimes';
 
 const bootstrap = () => {
   moment.locale('fr');
+  Sentry.init({
+    dsn: 'YOUR DSN HERE',
+    enableInExpoDevelopment: true,
+    debug: true,
+  });
+  // Sentry.setRelease(Constants.manifest.revisionId);
 };
 
 const styles = StyleSheet.create({

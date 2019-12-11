@@ -12,7 +12,7 @@ export const ReadingTimeContext = createContext([]);
 export const useReadingTimeContext = () => useContext(ReadingTimeContext);
 
 export const useUserReadingTimes = (userId?: string, source?: SourceT) => {
-  const readingTimes = useFirestore(READING_TIME_COLLECTION);
+  const readingTimes = useReadingTimeContext();
   const filteredReadingTimes = useMemo(
     () =>
       readingTimes

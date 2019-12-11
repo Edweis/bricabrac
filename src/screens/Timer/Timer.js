@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Button } from 'react-native';
 import _ from 'lodash';
 import { Input } from 'react-native-elements';
 import SourcePicker from '../../components/SourcePicker';
@@ -10,6 +9,7 @@ import {
   useLastReadSource,
   setReadingTime,
 } from '../../hooks/readingTimes';
+import TimerDisplay from './TimerDisplay';
 
 const styles = StyleSheet.create({
   container: {
@@ -33,11 +33,14 @@ const Timer = () => {
 
   const startTimer = () => {
     if (_.isNaN(startPage)) setStartPage("Ce n'est pas un nombre !");
-    else setIsOn(true);
+    else {
+      setIsOn(true);
+      setStartTime(Date.now());
+    }
   };
 
   const stopTimer = () => {
-    setEndTime(moment());
+    setEndTime(Date.now());
     setIsEndPageModalShown(true);
     setIsOn(false);
   };
@@ -45,15 +48,17 @@ const Timer = () => {
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     if (isOn) {
-      setStartTime(moment());
-      const interval = setInterval(() => setTimer(moment() - startTime), 1000);
+      const interval = setInterval(() => {
+        setTimer(timer + 1);
+      }, 1000);
       return () => clearInterval(interval);
     }
-  }, [isOn, startTime]);
+  }, [isOn, timer]);
 
   return (
     <View style={styles.container}>
-      <Text>{moment.utc(timer).format('HH:mm:ss')}</Text>
+      <TimerDisplay timer={timer} />
+
       {!isOn ? (
         <Button title="Start" onPress={startTimer} />
       ) : (

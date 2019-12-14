@@ -4,6 +4,7 @@ import _ from 'lodash';
 import { Input } from 'react-native-elements';
 import SourcePicker from '../../components/SourcePicker';
 import ActionModal from '../../components/ActionModal';
+import TimerHistory from './TimerHistory';
 import {
   useLastReadPage,
   useLastReadSource,
@@ -88,6 +89,7 @@ const Timer = () => {
           })
         }
       />
+      <TimerHistory />
     </View>
   );
 };

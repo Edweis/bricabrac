@@ -62,11 +62,12 @@ function BrickItem(props: Props) {
     ? getEmptyConceptItemProps()
     : getWithFeaturedConceptItempProps();
 
-  if (props.onRemove != null)
+  if (props.onRemove != null) {
     data.rightIcon = {
       name: 'delete',
       onPress: () => props.onRemove(concept),
     };
+  }
 
   return (
     <ListItem

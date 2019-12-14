@@ -1,18 +1,20 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { formatTimer } from './helpers';
 
-const pad = (n: number) => {
-  return `0${n}`.slice(-2);
-};
-const formatTimer = (timer: number) => {
-  const minutes = Math.floor(timer / 60);
-  const formatedSeconds = pad(timer % 60);
-  const fornatedHours = pad(Math.floor(minutes / 60));
-  const formatedMinutes = pad(minutes % 60);
-  return `${fornatedHours}:${formatedMinutes}:${formatedSeconds}`;
-};
+const styles = StyleSheet.create({
+  container: {
+    marginTop: 32,
+    marginBottom: 32,
+  },
+  text: { fontSize: 42 },
+});
 
 type Props = { timer: number };
 export default (props: Props) => {
-  return <Text>{formatTimer(props.timer)}</Text>;
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>{formatTimer(props.timer)}</Text>
+    </View>
+  );
 };

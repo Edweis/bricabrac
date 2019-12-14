@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Input, Icon, Button } from 'react-native-elements';
+import { Icon, Button } from 'react-native-elements';
 import { useNavigation } from '../hooks/navigation';
 import type { SourceT } from '../constants/types';
-import { EMPTY_SOURCE } from '../constants/defaults';
 import { useProject } from '../hooks/project';
+import { getDisplayedSource } from '../helpers';
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +40,7 @@ function SourcePicker(props: Props) {
     if (projectSource != null && !readOnly) props.onChange(projectSource);
   }, [projectSource]);
 
-  const displayedSource = !source || source === '' ? EMPTY_SOURCE : source;
+  const displayedSource = getDisplayedSource(source);
 
   return (
     <View style={styles.container}>
@@ -52,15 +52,6 @@ function SourcePicker(props: Props) {
         type="outline"
       />
     </View>
-  );
-
-  return (
-    <Input
-      label="source"
-      value={displayedSource}
-      onFocus={() => navigation.push('SourceList', { onSelect })}
-      disabled={readOnly}
-    />
   );
 }
 SourcePicker.defaultProps = { readOnly: false };

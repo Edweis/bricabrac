@@ -1,4 +1,5 @@
-import type { BrickT, ConceptDepsT } from './constants/types';
+import type { BrickT } from './constants/types';
+import { EMPTY_SOURCE } from './constants/defaults';
 
 export const normalize = (str: ?string): string => {
   if (!str) return '';
@@ -22,3 +23,6 @@ export const matchBrickSearch = (brick: BrickT, search: string): boolean => {
     matchSearch(brick.content, search)
   );
 };
+
+export const getDisplayedSource = (source: string) =>
+  !source || source === '' ? EMPTY_SOURCE : source;

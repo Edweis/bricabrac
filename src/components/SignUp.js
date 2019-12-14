@@ -17,8 +17,19 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   return (
     <View style={styles.container}>
-      <Input label="email" value={email} onChangeText={setEmail} />
-      <Input label="password" value={password} onChangeText={setPassword} />
+      <Input
+        label="email"
+        value={email}
+        onChangeText={setEmail}
+        autoCompleteType="email"
+        keyboardType="email-address"
+      />
+      <Input
+        label="password"
+        value={password}
+        onChangeText={setPassword}
+        autoCompleteType="password"
+      />
       <Button
         containerStyle={styles.button}
         title="Se connecter"

@@ -7,12 +7,6 @@ export type ConceptDepsT = {
 };
 export type SourceT = string;
 export type StatusT = 'accepted' | 'refused' | 'none';
-export type RelationshipT =
-  | 'deduction'
-  | 'implication'
-  | 'partition'
-  | 'definition'
-  | 'undefined';
 export type BrickT = {
   id: string,
   childrenConcepts: ConceptT[],
@@ -20,7 +14,7 @@ export type BrickT = {
   submitTime: Date,
   parentConcept: ConceptT,
   source: string,
-  relationship: RelationshipT,
+  isDefinition: boolean,
 };
 export type UserT = { id: string, email: string };
 export type CommentT = {

@@ -7,7 +7,7 @@ import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
 import SourcePicker from '../../components/SourcePicker';
 import CommentButton from './CommentButton';
-import RelationshipPicker from './RelationshipPicker';
+import IsDefinitionPicker from './IsDefinitionPicker';
 import Comments from './Comments';
 import { setBrick, deleteBrick, updateBrickComment } from '../../hooks/bricks';
 import { useUser } from '../../hooks/users';
@@ -132,9 +132,9 @@ function BrickMaker() {
           readOnly={!isEditEnabled}
         />
         <Divider style={styles.divider} />
-        <RelationshipPicker
-          relationship={newBrick.relationship}
-          setReltionship={relationship => updateBrick({ relationship })}
+        <IsDefinitionPicker
+          isDefinition={newBrick.isDefinition}
+          onChange={isDefinition => updateBrick({ isDefinition })}
           readOnly={!isEditEnabled}
         />
         <Divider style={styles.divider} />

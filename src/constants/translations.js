@@ -1,4 +1,4 @@
-import type { StatusT, RelationshipT } from './types';
+import type { StatusT } from './types';
 
 export const translateStatus: { [StatusT]: string } = {
   accepted: 'acceptée',
@@ -6,11 +6,4 @@ export const translateStatus: { [StatusT]: string } = {
   none: 'sans avis',
 };
 
-export const translateRelationship: { [RelationshipT]: string } = {
-  deduction: 'déduction ->X',
-  implication: 'implication X->',
-  partition: 'partition X=A+B',
-  definition: 'définition X=A',
-  undefined: 'non définie',
-};
 export const a = 1;

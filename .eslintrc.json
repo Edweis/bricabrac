@@ -41,7 +41,8 @@
       "react-hooks/exhaustive-deps": "off",
 	    "react/destructuring-assignment": ["off"],
 	    "prefer-destructuring": [ "error", { "array": false, "object": true } ],
-      "comma-dangle": ["error", "always-multiline"]
+      "comma-dangle": ["error", "always-multiline"],
+      "curly": ["error", "multi-or-nest"]
     },
     "settings": {
   		"import/resolver": {

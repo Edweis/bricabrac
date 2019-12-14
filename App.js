@@ -17,6 +17,7 @@ import { useUsers, UserContext } from './src/hooks/users';
 import { useReadingTimes, ReadingTimeContext } from './src/hooks/readingTimes';
 
 const bootstrap = () => {
+  console.ignoredYellowBox = ['Setting a timer'];
   moment.locale('fr');
   Sentry.init({
     dsn: 'https://f9ed9a0bbc9541a19756b306c3ebb3ac@sentry.io/1853328',

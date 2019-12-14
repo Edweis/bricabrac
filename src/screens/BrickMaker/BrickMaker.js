@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Input, Divider, Button } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
@@ -73,7 +73,7 @@ function BrickMaker() {
 
   const focusOnMountRef = useFocusOnMount(isReadOnly);
 
-  const submit = () => {
+  const submit = useCallback(() => {
     checkBrickError(
       newBrick,
       () => {
@@ -83,12 +83,12 @@ function BrickMaker() {
       setDisplayedError,
     );
     setIsEditEnable(false);
-  };
+  }, [newBrick]);
 
   // Give action to header
   useEffect(() => {
-    navigation.setParams({ SAVE_ACTION_PROPS: submit });
-  }, []);
+    if (isEditEnabled) navigation.setParams({ [SAVE_ACTION_PROPS]: submit });
+  }, [isEditEnabled, newBrick]);
 
   const updateBrick = (data: $Shape<BrickT>): BrickT => {
     const updatedBrick = { ...newBrick, ...data };
@@ -192,9 +192,9 @@ BrickMaker.navigationOptions = ({ navigation }) => {
   const title = readOnly ? parentConcept : `${parentConcept} > Ajouter`;
   const headerStyle = readOnly ? {} : { backgroundColor: colors.orange };
   const saveAction = navigation.getParam(SAVE_ACTION_PROPS, null); // should be populated on construction
-  const headerRight = (
-    <HeaderIconButton name="ios-checkmark" onPress={saveAction} />
-  );
+  const headerRight = saveAction ? (
+    <HeaderIconButton name="ios-checkmark" onPress={saveAction} size={32} />
+  ) : null;
   return { title, headerStyle, headerRight };
 };
 

@@ -46,15 +46,15 @@ export const useFirestore = (
     const unsubscribe = firebase
       .firestore()
       .collection(collection)
+      .limit(20)
       .onSnapshot(snapshot => {
         const newDocuments = snapshot.docs.map(document => ({
           ...document.data(),
           id: document.id,
         }));
         displayFirestoreBill(collection, newDocuments.length);
-        if (!_.isEqual(newDocuments, _.omit(documents, omitFields))) {
+        if (!_.isEqual(newDocuments, _.omit(documents, omitFields)))
           setDocuments(newDocuments);
-        }
       });
     return () => unsubscribe();
   }, []);

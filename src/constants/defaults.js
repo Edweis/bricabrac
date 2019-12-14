@@ -27,7 +27,7 @@ export const DEFAULT_CONCEPT = {
   title: 'loading concept ...',
 };
 
-export const EMPTY_SOURCE = '(sans source)';
+export const EMPTY_SOURCE = 'Aucune source';
 
 export const DEFAULT_READING_TIME: ReadingTimeT = {
   startTime: firebase.firestore.Timestamp.now(),

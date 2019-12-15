@@ -1,5 +1,6 @@
 const ora = require('ora')
 const admin = require('firebase-admin');
+const _ = require('lodash')
 const prompts = require('prompts');
 const prodServiceAccount = require('../../keys/prod-firestore');
 const devServiceAccount = require('../../keys/dev-firestore');
@@ -15,6 +16,11 @@ const db = {
   prod: prodFirestore.firestore(),
   dev: devFirestore.firestore(),
 };
+
+// We can't know if there are sub collections
+// https://stackoverflow.com/questions/48440382/how-to-list-subcollection-on-firestore
+// We reference them here
+// const subCollection = { bricks:  "comments"  }
 
 
 
@@ -61,9 +67,42 @@ async function dumpDevDatabase(){
 }
 
 
+// Use https://blog.cloudboost.io/copy-export-a-cloud-firestore-database-388cde99259b
+// for subcollections
+async function copyProdToDev(){
+  source = db.prod;
+  dest = db.dev;
+
+  const collections = await source.listCollections()
+  const collectionIds = collections.map(c=>c.id)
+  const batchs = []
+  await Promise.all(
+    collectionIds.map(async cId => {
+      const snapshots = await source.collection(cId).get()
+       snapshots.forEach(async doc => {
+
+        const data = doc.data()
+        batchs.push({
+          log: cId+' > doc :' + doc.id,
+          path: dest.collection(cId).doc(doc.id),
+          data
+        })
+      })
+    })
+  )
+  await Promise.all(
+    _.chunk(batchs, 500).map(async chunk => {
+      const batch = dest.batch()
+      chunk.forEach(req => batch.set(req.path, req.data) )
+      await batch.commit()
+    })
+  )
+  console.log(batchs.length + ' documents written.')
+
+}
+
 
 module.exports = async (args) => {
-  // const spinner = ora().start()
   try {
     const collections = {
       prod: await getCollections('prod'),
@@ -75,13 +114,8 @@ module.exports = async (args) => {
     console.log('And replace them with :')
     console.log(collections.prod)
     await confirmPrompt()
-
     await dumpDevDatabase();
-    // await copyProdToDev()
-
-
-
-
+    await copyProdToDev()
   } catch(err){
     console.error('ERROR', err)
   }

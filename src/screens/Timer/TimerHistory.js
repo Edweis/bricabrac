@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, Text } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useReadingTimeContext } from '../../hooks/readingTimes';
 import { formatTimer } from './helpers';
@@ -20,7 +20,6 @@ export default () => {
         const duration = formatTimer(durationTime);
         const displayedSource = getDisplayedSource(source);
 
-        console.debug({ source, durationTime, startPage, endPage });
         return (
           <ListItem
             key={startTime.toMillis()}

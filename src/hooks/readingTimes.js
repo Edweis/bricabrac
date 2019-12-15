@@ -27,6 +27,8 @@ const useLastRead = (source?: SourceT) => {
   const userId = getCurrentUserId();
   const readingTimes = useUserReadingTimes(userId, source);
 
+  console.debug('lastRead', { readingTimes, source, userId });
+
   return useMemo(() => {
     if (!readingTimes.length) return DEFAULT_READING_TIME;
     return _.maxBy(readingTimes, 'endTime');
@@ -42,5 +44,9 @@ export const useLastReadSource = (source?: SourceT) => {
 };
 
 export const setReadingTime = (readingTime: ReadingTimeT) => {
+  const enrichedReadingTimes = {
+    ...readingTime,
+    userId: getCurrentUserId(),
+  };
   setFirestore(READING_TIME_COLLECTION, readingTime);
 };

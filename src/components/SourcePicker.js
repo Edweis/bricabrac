@@ -44,7 +44,7 @@ function SourcePicker(props: Props) {
 
   return (
     <View style={styles.container}>
-      <Icon name="format-quote" type="ionicon" />
+      <Icon name="ios-quote" type="ionicon" />
       <Text style={styles.text}>{displayedSource}</Text>
       <Button
         title="Editer"

@@ -14,3 +14,4 @@ app/migrations/credentials.py
 app/migrations/serviceAccount.json
 app/.idea/*
 app/src/firestoreCredentials.js
+cli/keys/*

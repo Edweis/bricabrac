@@ -1,7 +1,6 @@
 module.exports = {
   presets: ['@babel/preset-flow', 'babel-preset-expo'],
   plugins: [
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
     [
       'module-resolver',
       {

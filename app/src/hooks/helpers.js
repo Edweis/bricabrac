@@ -1,7 +1,10 @@
 // $Flow
 import _ from 'lodash';
+import Constants from 'expo-constants';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import firebase from '../firebase';
+
+const IS_DEV = Constants.manifest.releaseChannel == null;
 
 let firestoreCountRead = 0;
 const displayFirestoreBill = (collection, count) => {
@@ -43,19 +46,17 @@ export const useFirestore = (
 ) => {
   const [documents, setDocuments] = useState([]);
   useEffect(() => {
-    const unsubscribe = firebase
-      .firestore()
-      .collection(collection)
-      // .limit(20)
-      .onSnapshot(snapshot => {
-        const newDocuments = snapshot.docs.map(document => ({
-          ...document.data(),
-          id: document.id,
-        }));
-        displayFirestoreBill(collection, newDocuments.length);
-        if (!_.isEqual(newDocuments, _.omit(documents, omitFields)))
-          setDocuments(newDocuments);
-      });
+    let collector = firebase.firestore().collection(collection);
+    if (IS_DEV) collector = collector.limit(20);
+    const unsubscribe = collector.onSnapshot(snapshot => {
+      const newDocuments = snapshot.docs.map(document => ({
+        ...document.data(),
+        id: document.id,
+      }));
+      displayFirestoreBill(collection, newDocuments.length);
+      if (!_.isEqual(newDocuments, _.omit(documents, omitFields)))
+        setDocuments(newDocuments);
+    });
     return () => unsubscribe();
   }, []);
   return documents;

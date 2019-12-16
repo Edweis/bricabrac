@@ -6,8 +6,8 @@ module.exports = args => {
   switch (cmd) {
     case 'reset':
       return reset(args);
-      break;
     default:
-      console.error(`database has no ${target} command`);
+      console.error(`database has no ${cmd} command`);
+      return null;
   }
 };

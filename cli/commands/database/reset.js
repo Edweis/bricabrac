@@ -5,6 +5,16 @@ const prompts = require('prompts');
 const prodServiceAccount = require('../../keys/prod-firestore');
 const devServiceAccount = require('../../keys/dev-firestore');
 
+if (devServiceAccount.project_id !== 'bricabrac-dev') {
+  console.debug({ devServiceAccount });
+  console.error('devServiceAccount is NOT bricabrac-dev');
+  process.exit(1);
+}
+if (prodServiceAccount.project_id !== 'bric-a-brac-fb') {
+  console.error('prodServiceAccount is NOT bricabrac');
+  process.exit(1);
+}
+
 const prodFirestore = admin.initializeApp(
   {
     credential: admin.credential.cert(prodServiceAccount),

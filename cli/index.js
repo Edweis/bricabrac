@@ -1,14 +1,10 @@
 const minimist = require('minimist');
-const commands = require('./commands/database')
+const commands = require('./commands');
 // see https://timber.io/blog/creating-a-real-world-cli-app-with-node/
 
 module.exports = () => {
   const args = minimist(process.argv.slice(2));
   let cmd = args._[0];
-
-
-
-
 
   if (args.version || args.v) cmd = 'version';
   if (args.help || args.h) cmd = 'help';

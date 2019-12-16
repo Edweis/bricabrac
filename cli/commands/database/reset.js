@@ -1,17 +1,23 @@
-const ora = require('ora')
+const ora = require('ora');
 const admin = require('firebase-admin');
-const _ = require('lodash')
+const _ = require('lodash');
 const prompts = require('prompts');
 const prodServiceAccount = require('../../keys/prod-firestore');
 const devServiceAccount = require('../../keys/dev-firestore');
 
-const prodFirestore = admin.initializeApp({
-  credential: admin.credential.cert(prodServiceAccount)
-}, 'prod');
+const prodFirestore = admin.initializeApp(
+  {
+    credential: admin.credential.cert(prodServiceAccount),
+  },
+  'prod',
+);
 
-const devFirestore = admin.initializeApp({
-  credential: admin.credential.cert(devServiceAccount)
-}, 'dev');
+const devFirestore = admin.initializeApp(
+  {
+    credential: admin.credential.cert(devServiceAccount),
+  },
+  'dev',
+);
 const db = {
   prod: prodFirestore.firestore(),
   dev: devFirestore.firestore(),
@@ -22,102 +28,93 @@ const db = {
 // We reference them here
 // const subCollection = { bricks:  "comments"  }
 
-
-
-async function confirmPrompt(){
+async function confirmPrompt() {
   const response = await prompts({
-      type: 'toggle',
-      name: 'value',
-      message: 'Wanna proceed?',
-      initial: false,
-      active: 'yes',
-      inactive: 'no'
-    });
+    type: 'toggle',
+    name: 'value',
+    message: 'Wanna proceed?',
+    initial: false,
+    active: 'yes',
+    inactive: 'no',
+  });
 
-  if(!response.value) process.exit(1)
-};
+  if (!response.value) process.exit(1);
+}
 
+async function getCollections(env) {
+  const spinner = ora().start();
+  const collections = await db[env].listCollections();
 
-
-async function getCollections(env){
-  const spinner = ora().start()
-  const collections = await db[env].listCollections()
-
-  const results = await Promise.all(collections
-    .map(async c => {
+  const results = await Promise.all(
+    collections.map(async c => {
       const snapshot = await db[env].collection(c.id).get();
-      return ({name:c.id, count:snapshot.size})
-    }))
+      return { name: c.id, count: snapshot.size };
+    }),
+  );
 
-  spinner.stop()
+  spinner.stop();
   return results;
 }
 
-
-
-async function dumpDevDatabase(){
-  console.log('Dumping dev...')
-  const collections = await db.dev.listCollections()
+async function dumpDevDatabase() {
+  console.log('Dumping dev...');
+  const collections = await db.dev.listCollections();
   collections.map(async c => {
-    const snapshot = await db.dev.collection(c.id).get()
-    let batch = db.dev.batch();
-    snapshot.forEach( doc => batch.delete(doc.ref))
-    await batch.commit()
-  })
+    const snapshot = await db.dev.collection(c.id).get();
+    const batch = db.dev.batch();
+    snapshot.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
+  });
 }
-
 
 // Use https://blog.cloudboost.io/copy-export-a-cloud-firestore-database-388cde99259b
 // for subcollections
-async function copyProdToDev(){
+async function copyProdToDev() {
   source = db.prod;
   dest = db.dev;
 
-  const collections = await source.listCollections()
-  const collectionIds = collections.map(c=>c.id)
-  const batchs = []
+  const collections = await source.listCollections();
+  const collectionIds = collections.map(c => c.id);
+  const batchs = [];
   await Promise.all(
     collectionIds.map(async cId => {
-      const snapshots = await source.collection(cId).get()
-       snapshots.forEach(async doc => {
-
-        const data = doc.data()
+      const snapshots = await source.collection(cId).get();
+      snapshots.forEach(async doc => {
+        const data = doc.data();
         batchs.push({
-          log: cId+' > doc :' + doc.id,
+          log: `${cId} > doc :${doc.id}`,
           path: dest.collection(cId).doc(doc.id),
-          data
-        })
-      })
-    })
-  )
+          data,
+        });
+      });
+    }),
+  );
   await Promise.all(
     _.chunk(batchs, 500).map(async chunk => {
-      const batch = dest.batch()
-      chunk.forEach(req => batch.set(req.path, req.data) )
-      await batch.commit()
-    })
-  )
-  console.log(batchs.length + ' documents written.')
-
+      const batch = dest.batch();
+      chunk.forEach(req => batch.set(req.path, req.data));
+      await batch.commit();
+    }),
+  );
+  console.log(`${batchs.length} documents written.`);
 }
 
-
-module.exports = async (args) => {
+module.exports = async args => {
   try {
     const collections = {
       prod: await getCollections('prod'),
       dev: await getCollections('dev'),
     };
 
-    console.log('About to delete these collections in DEV database :')
-    console.log(collections.dev)
-    console.log('And replace them with :')
-    console.log(collections.prod)
-    await confirmPrompt()
+    console.log('About to delete these collections in DEV database :');
+    console.log(collections.dev);
+    console.log('And replace them with :');
+    console.log(collections.prod);
+    await confirmPrompt();
     await dumpDevDatabase();
-    await copyProdToDev()
-  } catch(err){
-    console.error('ERROR', err)
+    await copyProdToDev();
+  } catch (err) {
+    console.error('ERROR', err);
   }
-  console.log('done.')
-}
+  console.log('done.');
+};

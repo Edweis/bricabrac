@@ -6,7 +6,9 @@
   "bin": {
     "bricabrac-cli": "bin/bricabrac-cli"
   },
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint"
+  },
   "author": "François Rullière",
   "license": "ISC",
   "dependencies": {
@@ -18,5 +20,12 @@
     "ora": "^4.0.3",
     "prompts": "^2.3.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "prettier": "^1.19.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1"
+  }
 }

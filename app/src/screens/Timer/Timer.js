@@ -44,7 +44,17 @@ const Timer = () => {
     setEndTime(Date.now());
     setIsEndPageModalShown(true);
     setIsOn(false);
+    setTimer(0);
   };
+
+  const submitReadingTime = endPage =>
+    setReadingTime({
+      startTime: new Date(startTime),
+      endTime: new Date(endTime),
+      startPage: _.toNumber(startPage),
+      endPage: _.toNumber(endPage),
+      source,
+    });
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
@@ -60,34 +70,24 @@ const Timer = () => {
     <View style={styles.container}>
       <TimerDisplay timer={timer} />
 
-      {!isOn ? (
-        <Button title="Start" onPress={startTimer} />
-      ) : (
-        <>
-          <Button title="Stop" onPress={stopTimer} />
-        </>
-      )}
+      <SourcePicker source={source} onChange={setSource} readOnly={isOn} />
       <Input
         label="Page de début de lecture"
         value={startPage}
         disabled={isOn}
         onChangeText={setStartPage}
       />
-      <SourcePicker source={source} onChange={setSource} readOnly={isOn} />
+      {!isOn ? (
+        <Button title="Start" onPress={startTimer} />
+      ) : (
+        <Button title="Stop" onPress={stopTimer} />
+      )}
       <ActionModal
         show={isEndPageModalShown}
         title="T'es à quelle page ?"
         submitText="Envoyer"
         onClose={() => setIsEndPageModalShown(false)}
-        onSubmit={endPage =>
-          setReadingTime({
-            startTime: new Date(startTime),
-            endTime: new Date(endTime),
-            startPage: _.toNumber(startPage),
-            endPage: _.toNumber(endPage),
-            source,
-          })
-        }
+        onSubmit={submitReadingTime}
       />
       <TimerHistory />
     </View>

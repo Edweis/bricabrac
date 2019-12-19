@@ -27,12 +27,12 @@ const useLastRead = (source?: SourceT) => {
   const userId = getCurrentUserId();
   const readingTimes = useUserReadingTimes(userId, source);
 
-  console.debug('lastRead', { readingTimes, source, userId });
-
-  return useMemo(() => {
+  const res = useMemo(() => {
+    console.debug('readingTimes changed !');
     if (!readingTimes.length) return DEFAULT_READING_TIME;
     return _.maxBy(readingTimes, 'endTime');
   }, [readingTimes]);
+  return res;
 };
 
 export const useLastReadPage = (source?: SourceT) => {
@@ -40,7 +40,7 @@ export const useLastReadPage = (source?: SourceT) => {
 };
 
 export const useLastReadSource = (source?: SourceT) => {
-  return useLastRead(source).source;
+  return useLastRead(source).source || '';
 };
 
 export const setReadingTime = (readingTime: ReadingTimeT) => {
@@ -48,5 +48,5 @@ export const setReadingTime = (readingTime: ReadingTimeT) => {
     ...readingTime,
     userId: getCurrentUserId(),
   };
-  setFirestore(READING_TIME_COLLECTION, readingTime);
+  setFirestore(READING_TIME_COLLECTION, enrichedReadingTimes);
 };

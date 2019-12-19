@@ -50,6 +50,7 @@ function SourcePicker(props: Props) {
         title="Editer"
         onPress={() => navigation.push('SourceList', { onSelect })}
         type="outline"
+        disabled={readOnly}
       />
     </View>
   );

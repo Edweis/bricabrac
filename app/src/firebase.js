@@ -4,7 +4,13 @@ import 'firebase/firestore';
 import 'firebase/database';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
-import firestoreCredentials from './firestoreCredentials';
+import Constants from 'expo-constants';
+
+let firestoreCredentials;
+export const IS_DEV = Constants.manifest.releaseChannel == null;
+if (IS_DEV) console.log('Welcome in DEV environment');
+if (IS_DEV) firestoreCredentials = require('./firestoreCredentialsDev.json');
+else firestoreCredentials = require('./firestoreCredentialsProd.json');
 
 firebase.initializeApp(firestoreCredentials);
 

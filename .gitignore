@@ -9,9 +9,7 @@ app/npm-debug.*
 *.orig.*
 app/web-build/
 app/web-report/
-app/.firebaserc
-app/migrations/credentials.py
-app/migrations/serviceAccount.json
 app/.idea/*
-app/src/firestoreCredentials.js
-cli/keys/*
+
+app/src/firestoreCredential*
+cli/keys

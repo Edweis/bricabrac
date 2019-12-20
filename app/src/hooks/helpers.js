@@ -1,10 +1,7 @@
 // $Flow
 import _ from 'lodash';
-import Constants from 'expo-constants';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import firebase from '../firebase';
-
-const IS_DEV = Constants.manifest.releaseChannel == null;
+import firebase, { IS_DEV } from '../firebase';
 
 let firestoreCountRead = 0;
 const displayFirestoreBill = (collection, count) => {

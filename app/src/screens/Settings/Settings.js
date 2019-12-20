@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { Linking } from 'expo';
-import firebase, { IS_DEV } from '../../firebase';
+import firebase, { IS_DEV, getCurrentUser } from '../../firebase';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +25,8 @@ const Settings = () => {
         name: 'Production',
         description: 'Les changements sont sauvegardé sur le serveur officiel.',
       };
+  const user = getCurrentUser();
+  const loginInfo = `${user.email} - ${user.uid.substring(0, 7)}`;
   return (
     <View style={styles.container}>
       <View>
@@ -33,6 +35,7 @@ const Settings = () => {
           title={release.name}
           subtitle={release.description}
           onPress={() => firebase.auth().signOut()}
+          bottomDivider
         />
         <ListItem
           leftIcon={{ name: 'logo-github', type: 'ionicon' }}
@@ -44,6 +47,7 @@ const Settings = () => {
         <ListItem
           leftIcon={{ name: 'ios-log-out', type: 'ionicon' }}
           title="Se deconnecter"
+          subtitle={loginInfo}
           onPress={() => firebase.auth().signOut()}
         />
       </View>

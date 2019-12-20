@@ -58,12 +58,12 @@ export const isUserConnected = () => {
 export const onAuthChange = action =>
   firebase.auth().onAuthStateChanged(user => action(user));
 
+export const getCurrentUser = () => firebase.auth().currentUser;
+
 export const getCurrentUserId = () => {
-  const user = firebase.auth().currentUser;
+  const user = getCurrentUser();
   if (user != null) return user.uid;
   return null;
 };
-
-export const getCurrentUser = () => firebase.auth().currentUser;
 
 export default firebase;

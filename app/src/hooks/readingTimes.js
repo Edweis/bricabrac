@@ -27,12 +27,10 @@ const useLastRead = (source?: SourceT) => {
   const userId = getCurrentUserId();
   const readingTimes = useUserReadingTimes(userId, source);
 
-  const res = useMemo(() => {
-    console.debug('readingTimes changed !');
+  return useMemo(() => {
     if (!readingTimes.length) return DEFAULT_READING_TIME;
     return _.maxBy(readingTimes, 'endTime');
   }, [readingTimes]);
-  return res;
 };
 
 export const useLastReadPage = (source?: SourceT) => {

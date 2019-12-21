@@ -18,6 +18,7 @@ const useGlobalProvider = () => {
   return useCallback(
     providers.reduce(
       (Component, [Context, useGetter]) => ({ children }) => {
+        /* eslint-disable-next-line react-hooks/rules-of-hooks */
         const value = useGetter();
         return (
           <Component>

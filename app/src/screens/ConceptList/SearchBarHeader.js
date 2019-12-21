@@ -25,6 +25,8 @@ export default function SearchBarHeader(props: Props) {
   const setOpen = value => {
     setLocalIsOpen(value);
     props.onOpenChange(value);
+    setLocalSearch('');
+    props.onChange('');
   };
   const ref = useFocusOnMount();
 

@@ -84,7 +84,7 @@ const Timer = () => {
       )}
       <ActionModal
         show={isEndPageModalShown}
-        title="T'es à quelle page ?"
+        title="Quelle est la prochaine page non lue ? (décimales acceptées)"
         submitText="Envoyer"
         onClose={() => setIsEndPageModalShown(false)}
         onSubmit={submitReadingTime}

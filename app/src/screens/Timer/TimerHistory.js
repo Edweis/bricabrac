@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useUserReadingTimes } from '../../hooks/readingTimes';
-import { formatTimer } from './helpers';
+import { getReadingInsight } from './helpers';
 import { getDisplayedSource } from '../../helpers';
 import { getCurrentUserId } from '../../firebase';
 
@@ -20,16 +20,8 @@ export default () => {
   return (
     <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
       {sortedReadingTimes.map(readingTime => {
-        const {
-          source,
-          endTime,
-          startTime,
-          startPage,
-          endPage,
-          id,
-        } = readingTime;
-        const durationTime = endTime.toMillis() - startTime.toMillis();
-        const duration = formatTimer(durationTime / 1000);
+        const { source, startPage, endPage, id } = readingTime;
+        const readingInsight = getReadingInsight(readingTime);
         const displayedSource = getDisplayedSource(source);
 
         return (
@@ -37,7 +29,7 @@ export default () => {
             key={id}
             title={displayedSource}
             rightSubtitle={`${startPage} - ${endPage}`}
-            subtitle={duration}
+            subtitle={readingInsight}
             bottomDivider
           />
         );

@@ -42,10 +42,7 @@ export const setBrick = (brick: BrickT) => {
     setAcceptation(acceptation);
   };
 
-  Promise.all([
-    setFirestore(BRICK_COLLECTION, enrichedBrick, setAcceptationFromBrick),
-    setUser(getCurrentUser()),
-  ]);
+  setFirestore(BRICK_COLLECTION, enrichedBrick, setAcceptationFromBrick);
 };
 
 export const deleteBrick = (brickId: string) => {

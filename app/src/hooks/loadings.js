@@ -5,9 +5,14 @@ export const LoadingContext = createContext([]);
 export const useLoadings = () => useState({});
 export const useLoadingContext = () => useContext(LoadingContext);
 export const useIsStateLoading = () => {
-  const [loadings] = useLoadingContext();
+  const [loadings, setLoadings] = useLoadingContext();
+  // DIRTY, Once everything is done, the hook always returns true
+  if (loadings.shouldLoadAgain) return false;
   const values = _.values(loadings);
-  return values.length === 0 || values.some(value => value);
+  const isLoading = values.length === 0 || values.some(value => value);
+  if (!isLoading)
+    setLoadings(prevLoading => ({ ...prevLoading, shouldLoadAgain: true }));
+  return isLoading;
 };
 
 export const useSetLoading = (collection: string) => {

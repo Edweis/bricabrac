@@ -53,10 +53,10 @@ export const useFirestore = (
         ...document.data(),
         id: document.id,
       }));
-      setLoading(false);
       displayFirestoreBill(collection, newDocuments.length);
       if (!_.isEqual(newDocuments, _.omit(documents, omitFields)))
         setDocuments(newDocuments);
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);

@@ -1,6 +1,5 @@
-import firebase, { getCurrentUserId, getCurrentUser } from '../../firebase';
+import firebase, { getCurrentUserId } from '../../firebase';
 import { BrickT } from '../../constants/types';
-import { setUser } from '../users';
 import { useUserAcceptation, setAcceptation } from '../acceptations';
 import { useFilteredBricks, useBrickWithAcceptation } from './helpers';
 import { useFirestore, setFirestore } from '../helpers';

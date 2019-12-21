@@ -29,7 +29,7 @@ export default () => {
           id,
         } = readingTime;
         const durationTime = endTime.toMillis() - startTime.toMillis();
-        const duration = formatTimer(durationTime);
+        const duration = formatTimer(durationTime / 1000);
         const displayedSource = getDisplayedSource(source);
 
         return (

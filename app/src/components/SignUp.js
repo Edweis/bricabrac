@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Input, Button } from 'react-native-elements';
-import { facebookLogin, emailLogin, googleLogin } from '../firebase';
+import { Input, Button, Icon } from 'react-native-elements';
+import { facebookLogin, emailLogin, googleLogin, IS_DEV } from '../firebase';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,6 +11,8 @@ const styles = StyleSheet.create({
   },
   button: { marginTop: 16, width: '50%' },
 });
+
+const iconName = IS_DEV ? 'ios-bug' : 'ios-information';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');
@@ -45,6 +47,7 @@ export default function SignUp() {
         title="Google Login"
         onPress={() => googleLogin()}
       />
+      <Icon name={iconName} type="ionicon" />
     </View>
   );
 }

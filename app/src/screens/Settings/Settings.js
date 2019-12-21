@@ -10,21 +10,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+const release = IS_DEV
+  ? {
+      icon: 'ios-bug',
+      name: 'Développement',
+      description:
+        'La base de developpement ne contient pas tous les éléments de la base de production',
+    }
+  : {
+      icon: 'ios-information',
+      name: 'Production',
+      description: 'Les changements sont sauvegardé sur le serveur officiel.',
+    };
 
 const GITHUB_LINK = 'https://github.com/Edweis/bricabrac/issues';
 const Settings = () => {
-  const release = IS_DEV
-    ? {
-        icon: 'ios-bug',
-        name: 'Développement',
-        description:
-          'La base de developpement ne contient pas tous les éléments de la base de production',
-      }
-    : {
-        icon: 'ios-information',
-        name: 'Production',
-        description: 'Les changements sont sauvegardé sur le serveur officiel.',
-      };
   const user = getCurrentUser();
   const loginInfo = `${user.email} - ${user.uid.substring(0, 7)}`;
   return (

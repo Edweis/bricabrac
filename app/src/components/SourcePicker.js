@@ -11,11 +11,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingLeft: 8,
+    paddingRight: 26,
     justifyContent: 'space-between',
     width: '100%',
-    marginTop: 16,
   },
   icon: { marginRight: 16 },
   text: { maxWidth: '80%' },
@@ -44,14 +43,15 @@ function SourcePicker(props: Props) {
 
   return (
     <View style={styles.container}>
-      <Icon name="ios-quote" type="ionicon" />
+      <Icon name="ios-quote" type="ionicon" iconStyle={styles.icon} />
       <Text style={styles.text}>{displayedSource}</Text>
-      <Button
-        title="Editer"
-        onPress={() => navigation.push('SourceList', { onSelect })}
-        type="outline"
-        disabled={readOnly}
-      />
+      {readOnly && (
+        <Button
+          title="Editer"
+          onPress={() => navigation.push('SourceList', { onSelect })}
+          type="outline"
+        />
+      )}
     </View>
   );
 }

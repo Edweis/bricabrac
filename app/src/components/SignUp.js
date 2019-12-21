@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   button: { marginTop: 16, width: '50%' },
 });
 
-const iconName = IS_DEV ? 'ios-bug' : 'ios-information';
+const iconName = IS_DEV ? 'ios-bug' : 'ios-information-circle';
 
 export default function SignUp() {
   const [email, setEmail] = useState('');

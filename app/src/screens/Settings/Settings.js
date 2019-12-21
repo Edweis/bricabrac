@@ -18,7 +18,7 @@ const release = IS_DEV
         'La base de developpement ne contient pas tous les éléments de la base de production',
     }
   : {
-      icon: 'ios-information',
+      icon: 'ios-information-circle',
       name: 'Production',
       description: 'Les changements sont sauvegardé sur le serveur officiel.',
     };

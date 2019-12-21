@@ -2,6 +2,7 @@
 import _ from 'lodash';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import firebase, { IS_DEV } from '../firebase';
+import { useSetLoading } from './loadings';
 
 let firestoreCountRead = 0;
 const displayFirestoreBill = (collection, count) => {
@@ -42,7 +43,9 @@ export const useFirestore = (
   omitFields: string[] | string = [],
 ) => {
   const [documents, setDocuments] = useState([]);
+  const setLoading = useSetLoading(collection);
   useEffect(() => {
+    setLoading(true);
     let collector = firebase.firestore().collection(collection);
     if (IS_DEV) collector = collector.limit(20);
     const unsubscribe = collector.onSnapshot(snapshot => {
@@ -50,6 +53,7 @@ export const useFirestore = (
         ...document.data(),
         id: document.id,
       }));
+      setLoading(false);
       displayFirestoreBill(collection, newDocuments.length);
       if (!_.isEqual(newDocuments, _.omit(documents, omitFields)))
         setDocuments(newDocuments);

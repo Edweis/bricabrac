@@ -45,7 +45,7 @@ function SourcePicker(props: Props) {
     <View style={styles.container}>
       <Icon name="ios-quote" type="ionicon" iconStyle={styles.icon} />
       <Text style={styles.text}>{displayedSource}</Text>
-      {readOnly && (
+      {!readOnly && (
         <Button
           title="Editer"
           onPress={() => navigation.push('SourceList', { onSelect })}

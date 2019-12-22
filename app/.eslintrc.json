@@ -42,7 +42,8 @@
 	    "react/destructuring-assignment": ["off"],
 	    "prefer-destructuring": [ "error", { "array": false, "object": true } ],
       "comma-dangle": ["error", "always-multiline"],
-      "curly": ["error", "multi-or-nest"]
+      "curly": ["error", "multi-or-nest"],
+      "import/prefer-default-export": "off"
     },
     "settings": {
   		"import/resolver": {

@@ -8,6 +8,7 @@ import AppNavigator from './src/navigation/AppNavigator';
 import SplashLoading from './src/screens/Splash';
 import { onAuthChange, isUserConnected } from './src/firebase';
 import GlobalProvider from './src/hooks/globalProvider';
+import { EMAIL_KEY, store } from './src/storage';
 
 const bootstrap = () => {
   console.ignoredYellowBox = ['Setting a timer'];
@@ -32,6 +33,9 @@ export default function App() {
     bootstrap();
     const subscriber = onAuthChange(newUser => {
       setAuthLoading(newUser == null);
+      // storing last connected user should happen in SignUp component
+      // however setting auth loading unmounts it before it can store it.
+      if (newUser != null) store(EMAIL_KEY, newUser.email);
     });
     return subscriber; // unsubscribe on unmount
   }, []);

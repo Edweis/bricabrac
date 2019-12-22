@@ -5,6 +5,7 @@ import { Input } from 'react-native-elements';
 import SourcePicker from '../../components/SourcePicker';
 import ActionModal from '../../components/ActionModal';
 import TimerHistory from './TimerHistory';
+import TimerNotification from './TimerNotification';
 import {
   useLastReadPage,
   useLastReadSource,
@@ -68,6 +69,7 @@ const Timer = () => {
 
   return (
     <View style={styles.container}>
+      <TimerNotification />
       <TimerDisplay timer={timer} />
 
       <SourcePicker source={source} onChange={setSource} readOnly={isOn} />

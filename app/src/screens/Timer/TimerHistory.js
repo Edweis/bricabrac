@@ -16,7 +16,7 @@ export default () => {
   const readingTimes = useUserReadingTimes(userId);
   const sortedReadingTimes = _.sortBy(readingTimes, readingTime =>
     readingTime.endTime.toMillis(),
-  );
+  ).reverse();
   return (
     <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
       {sortedReadingTimes.map(readingTime => {

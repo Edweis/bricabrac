@@ -5,6 +5,7 @@ import { Input } from 'react-native-elements';
 import SourcePicker from '../../components/SourcePicker';
 import ActionModal from '../../components/ActionModal';
 import TimerHistory from './TimerHistory';
+import { useSubscribedState } from '../../hooks/helpers';
 import {
   useLastReadPage,
   useLastReadSource,
@@ -27,7 +28,7 @@ const Timer = () => {
   const [source, setSource] = useState(lastReadSource);
 
   const lastReadPage = useLastReadPage(source);
-  const [startPage, setStartPage] = useState(lastReadPage.toString());
+  const [startPage, setStartPage] = useSubscribedState(lastReadPage.toString());
 
   const [isEndPageModalShown, setIsEndPageModalShown] = useState(false);
   const [endTime, setEndTime] = useState(null);

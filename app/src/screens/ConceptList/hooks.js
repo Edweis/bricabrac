@@ -35,8 +35,8 @@ export const useDisplayedConcepts = (search: string) => {
       .filter(brick => matchBrickSearch(brick, search))
       .sortBy(['submitTime'])
       .reverse() // latest first
-      .uniqBy('concept') // take the latest concept edited
       .map('concept')
+      .uniq() // remove duplicates
       .value();
 
     // Add the search as a concept we can add

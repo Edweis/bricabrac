@@ -20,7 +20,7 @@ const release = IS_DEV
   : {
       icon: 'ios-information-circle',
       name: 'Production',
-      description: 'Les changements sont sauvegardé sur le serveur officiel.',
+      description: 'Les changements sont sauvegardés sur le serveur officiel.',
     };
 
 const GITHUB_LINK = 'https://github.com/Edweis/bricabrac/issues';
@@ -40,7 +40,7 @@ const Settings = () => {
         <ListItem
           leftIcon={{ name: 'logo-github', type: 'ionicon' }}
           title="Issues github"
-          subtitle="Un problème ? clique ici !"
+          subtitle="Un problème ? une suggestion ? clique ici !"
           onPress={() => Linking.openURL(GITHUB_LINK)}
           bottomDivider
         />

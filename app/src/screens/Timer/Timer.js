@@ -61,7 +61,7 @@ const Timer = () => {
   useEffect(() => {
     if (isOn) {
       const interval = setInterval(() => {
-        setTimer(timer + 1);
+        setTimer((Date.now() - startTime) / 1000);
       }, 1000);
       return () => clearInterval(interval);
     }

@@ -5,7 +5,7 @@ import { useObservable } from '../../helpers/observable';
 import { bricksService } from '../../helpers/store';
 
 export const useBrickComments = (brickId: string) =>
-  useObservable(bricksService.commentsService(brickId).value);
+  useObservable(bricksService.commentsService(brickId));
 
 export const updateBrickComment = (brickId: string, comment: string) => {
   const collection = getCommentCollection(brickId);

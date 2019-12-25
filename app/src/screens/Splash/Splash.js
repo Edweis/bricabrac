@@ -35,8 +35,6 @@ export default ({ children, onError }: Props) => {
   const isStateLoading = loadingService.isLoading();
   const endAppLoading = useCallback(() => setAppLoading(false), []);
 
-  console.debug('isStateLoading', isStateLoading);
-
   if (isAppLoading || isStateLoading) {
     return (
       <AppLoading

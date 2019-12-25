@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import _ from 'lodash';
+import rxjs from 'rxjs';
 import { Observable } from './observable';
 import {
   ProjectT,
@@ -14,10 +15,12 @@ import { subscribeFirestore } from './firestore';
 export class FirestoreService<T> {
   readonly value: Observable<T[]>;
 
+  readonly subscription: rxjs.Subscription;
+
   constructor(collection: CollectionE) {
     this.value = new Observable<T[]>([]);
     const firestoreObs = subscribeFirestore<T[]>(collection);
-    firestoreObs.subscribe(docs => this.value.set(docs));
+    this.subscription = firestoreObs.subscribe(docs => this.value.set(docs));
   }
 }
 
@@ -25,7 +28,7 @@ export const getCommentCollection = (brickId: string): ComputedCollection =>
   `${CollectionE.BRICKS}/${brickId}/${CollectionE.COMMENTS}`;
 
 export class BricksService extends FirestoreService<BrickT> {
-  readonly comments: { [k: string]: Observable<CommentT[]> } = {};
+  readonly comments: { [brickId: string]: Observable<CommentT[]> } = {};
 
   constructor() {
     super(CollectionE.BRICKS);
@@ -33,12 +36,15 @@ export class BricksService extends FirestoreService<BrickT> {
 
   commentsService(brickId: string) {
     const collection = getCommentCollection(brickId);
-    if (!(collection in this.comments)) {
-      this.comments[collection] = new Observable<CommentT[]>([]);
+    if (!(brickId in this.comments)) {
+      this.comments[brickId] = new Observable<CommentT[]>([]);
       const firestoreObs = subscribeFirestore<CommentT[]>(collection);
-      firestoreObs.subscribe(docs => this.comments[collection].set(docs));
+      const subscription = firestoreObs.subscribe(docs =>
+        this.comments[brickId].set(docs),
+      );
+      this.subscription.add(subscription);
     }
-    return this.comments[collection].get();
+    return this.comments[brickId];
   }
 }
 

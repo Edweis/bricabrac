@@ -1,6 +1,5 @@
 import { Observable } from '../observable';
-
-export type ProjectT = string | null;
+import { ProjectT } from '../../constants/types';
 
 export default class ProjectService {
   readonly project = new Observable<ProjectT>(null);

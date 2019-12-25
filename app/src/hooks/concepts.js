@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import { useContext, createContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useFirestore, setFirestore } from './firestore';
 import { ConceptT, ConceptDepsT } from '../constants/types';
+import { useObservable } from '../helpers/observable';
+import { conceptService } from '../helpers/store';
 
 export const CONCEPT_DEPS_COLLECTION = 'conceptDeps';
-export const ConceptContext = createContext([]);
-export const useConceptContext = () => useContext(ConceptContext);
 
 export const getDeps = (
   allDeps: ConceptDepsT[],
@@ -41,7 +41,7 @@ export const getDeps = (
 export const useConcepts = () => useFirestore(CONCEPT_DEPS_COLLECTION);
 
 export const useConceptDeps = (concept: ConceptT) => {
-  const conceptDeps = useConceptContext();
+  const conceptDeps = useObservable(conceptService.concepts);
   const deps = useMemo(() => getDeps(conceptDeps, concept), [
     concept,
     conceptDeps,
@@ -50,7 +50,7 @@ export const useConceptDeps = (concept: ConceptT) => {
 };
 
 export const useConceptTags = (concept: ConceptT) => {
-  const conceptDeps = useConceptContext();
+  const conceptDeps = useObservable(conceptService.concepts);
   const foundDeps = _.find(conceptDeps, dep => dep.name === concept);
   if (!foundDeps || !foundDeps.deps) return [];
   return foundDeps.deps;

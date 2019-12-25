@@ -6,6 +6,7 @@ export type ConceptDepsT = {
   datetime: Date;
 };
 export type SourceT = string;
+export type ProjectT = SourceT | null;
 export type StatusT = 'accepted' | 'refused' | 'none';
 export type BrickT = {
   id: string;

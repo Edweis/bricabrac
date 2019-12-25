@@ -1,13 +1,11 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useBricks, BrickContext } from './bricks';
 import { useConcepts, ConceptContext } from './concepts';
-import { ProjectSetterContext } from './project';
 import { useUsers, UserContext } from './users';
 import { useReadingTimes, ReadingTimeContext } from './readingTimes';
 import { LoadingContext, useLoadings } from './loadings';
 
 const providers = [
-  [ProjectSetterContext, useState],
   [BrickContext, useBricks],
   [ConceptContext, useConcepts],
   [UserContext, useUsers],

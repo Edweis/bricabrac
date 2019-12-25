@@ -2,13 +2,13 @@ import _ from 'lodash';
 import { useState, useEffect } from 'react';
 import { BrickT, StatusT } from '../../constants/types';
 import { usePrevious } from '../helpers';
+import { useObservable } from '../../helpers/observable';
+import { projectService } from '../../helpers/store';
 
 /* Return bricks filtered with the project source */
-export const useFilteredBricks = (
-  bricks: BrickT[],
-  projectSource?: string,
-): BrickT[] => {
+export const useFilteredBricks = (bricks: BrickT[]): BrickT[] => {
   const [filteredBricks, setFilteredBricks] = useState(bricks);
+  const projectSource = useObservable(projectService.project);
 
   // filter bricks by project
   const prevBricks = usePrevious(bricks);

@@ -5,12 +5,12 @@ import { useFilteredBricks, useBrickWithAcceptation } from './helpers';
 import { useFirestore, setFirestore } from '../firestore';
 import { BRICK_COLLECTION } from './constants';
 
-export const useBricks = (projectSource?: string) => {
+export const useBricks = () => {
   const userId = getCurrentUserId();
   const getUserAcceptation = useUserAcceptation(userId);
   const bricks = useFirestore(BRICK_COLLECTION, 'status');
 
-  const filteredBricks = useFilteredBricks(bricks, projectSource);
+  const filteredBricks = useFilteredBricks(bricks);
   const bricksWithAcceptation = useBrickWithAcceptation(
     filteredBricks,
     getUserAcceptation, // PUT ME IN TYHE FUCNTION

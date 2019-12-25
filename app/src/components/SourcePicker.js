@@ -3,7 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 import { useNavigation } from '../hooks/navigation';
 import { SourceT } from '../constants/types';
-import { useProject } from '../hooks/project';
+import { useObservable } from '../helpers/observable';
+import { projectService } from '../helpers/store';
 import { getDisplayedSource } from '../helpers';
 
 const styles = StyleSheet.create({
@@ -27,7 +28,7 @@ type Props = {
 };
 function SourcePicker(props: Props) {
   const navigation = useNavigation();
-  const [projectSource] = useProject();
+  const projectSource = useObservable(projectService.project);
   const { source, readOnly } = props;
   const onSelect = (newSource: SourceT): void => {
     props.onChange(newSource);

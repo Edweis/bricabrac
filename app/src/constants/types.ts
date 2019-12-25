@@ -11,6 +11,7 @@ export enum CollectionE {
   BRICKS = 'bricks',
   COMMENTS = 'comments',
   ACCEPTATIONS = 'acceptations',
+  READING_TIMES = 'readingTimes',
 }
 export type SourceT = string;
 export type ProjectT = SourceT | null;

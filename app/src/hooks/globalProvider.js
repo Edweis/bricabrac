@@ -1,46 +1,9 @@
-import React, { useCallback } from 'react';
-import { useReadingTimes, ReadingTimeContext } from './readingTimes';
+import React from 'react';
 import { LoadingContext, useLoadings } from './loadings';
-
-const providers = [[ReadingTimeContext, useReadingTimes]];
-
-// Not used for the moment but can be a library by itself to replace redux for hooks
-const useGlobalProvider = () => {
-  return useCallback(
-    providers.reduce(
-      (Component, [Context, useGetter]) => ({ children }) => {
-        /* eslint-disable-next-line react-hooks/rules-of-hooks */
-        const value = useGetter();
-        return (
-          <Component>
-            <Context.Provider value={value}>{children}</Context.Provider>
-          </Component>
-        );
-      },
-      ({ children }) => <>{children}</>,
-    ),
-    [],
-  );
-};
-
-// const AppLoading = () =>{
-//   const isStateLoading = useIsFullyLoaded();
-//   const [isAppLoading, setAppLoading] = useState(true);
-//
-// }
-
-/* Has to be in a sub component to reach the LoadingContext */
-type Props = { children: JSX.Element };
-const SubGlobalProvider = ({ children }: Props) => {
-  const GlobalProvider = useGlobalProvider();
-  return <GlobalProvider>{children}</GlobalProvider>;
-};
 
 export default ({ children }: Props) => {
   const state = useLoadings();
   return (
-    <LoadingContext.Provider value={state}>
-      <SubGlobalProvider>{children}</SubGlobalProvider>
-    </LoadingContext.Provider>
+    <LoadingContext.Provider value={state}>{children}</LoadingContext.Provider>
   );
 };

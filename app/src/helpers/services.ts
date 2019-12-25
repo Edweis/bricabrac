@@ -7,8 +7,21 @@ import {
   BrickT,
   CollectionE,
   AcceptationT,
+  ReadingTimeT,
 } from '../constants/types';
 import { subscribeFirestore } from './firestore';
+
+export class ReadingTimesService {
+  readonly readingTimes: Observable<ReadingTimeT[]>;
+
+  constructor() {
+    this.readingTimes = new Observable<ReadingTimeT[]>([]);
+    const firestoreObs = subscribeFirestore<ReadingTimeT[]>(
+      CollectionE.READING_TIMES,
+    );
+    firestoreObs.subscribe(docs => this.readingTimes.set(docs));
+  }
+}
 
 export class AcceptationService {
   readonly acceptations: Observable<AcceptationT[]>;

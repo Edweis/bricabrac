@@ -1,18 +1,16 @@
 import _ from 'lodash';
-import { useMemo, useContext, createContext } from 'react';
+import { useMemo } from 'react';
 import { getCurrentUserId } from '../firebase';
-import { useFirestore, setFirestore } from './firestore';
+import { setFirestore } from './firestore';
 import { ReadingTimeT, SourceT } from '../constants/types';
 import { DEFAULT_READING_TIME } from '../constants/defaults';
+import { useObservable } from '../helpers/observable';
+import { readingTimesService } from '../helpers/store';
 
 export const READING_TIME_COLLECTION = 'readingTimes';
 
-export const useReadingTimes = () => useFirestore(READING_TIME_COLLECTION);
-export const ReadingTimeContext = createContext([]);
-export const useReadingTimeContext = () => useContext(ReadingTimeContext);
-
 export const useUserReadingTimes = (userId?: string, source?: SourceT) => {
-  const readingTimes = useReadingTimeContext();
+  const readingTimes = useObservable(readingTimesService.readingTimes);
   const filteredReadingTimes = useMemo(
     () =>
       readingTimes

@@ -8,6 +8,8 @@ export type ConceptDepsT = {
 export enum CollectionE {
   CONCEPT_DEPS = 'conceptDeps',
   USERS = 'users',
+  BRICKS = 'bricks',
+  COMMENTS = 'comments',
 }
 export type SourceT = string;
 export type ProjectT = SourceT | null;

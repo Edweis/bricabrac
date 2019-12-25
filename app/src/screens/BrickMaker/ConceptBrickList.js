@@ -6,7 +6,7 @@ import { useNavigation } from '../../hooks/navigation';
 import Status from '../../components/Status';
 import FAB from '../../components/FAB';
 import BrickItem from '../../components/BrickItem';
-import { useBrickContext } from '../../hooks';
+import { useBricks } from '../../hooks';
 import { useConceptDeps } from '../../hooks/concepts';
 import EditConceptButton from './EditConceptButton';
 
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 function ConceptBrickList() {
   const navigation = useNavigation();
   const parentConcept = navigation.getParam('concept');
-  const bricks = useBrickContext(parentConcept);
+  const bricks = useBricks(parentConcept);
   const conceptDeps = useConceptDeps(parentConcept);
 
   return (

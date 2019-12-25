@@ -1,11 +1,11 @@
 import { useMemo, useEffect } from 'react';
 import _ from 'lodash';
 import { useNavigation } from '../../hooks/navigation';
-import { useBrickContext, useConceptDeps } from '../../hooks';
+import { useBricks, useConceptDeps } from '../../hooks';
 import { matchBrickSearch } from '../../helpers';
 
 export const useDisplayedConcepts = (search: string) => {
-  const bricks = useBrickContext();
+  const bricks = useBricks();
   const conceptDeps = useConceptDeps();
 
   return useMemo(() => {

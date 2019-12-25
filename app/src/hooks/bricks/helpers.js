@@ -6,25 +6,22 @@ import { useObservable } from '../../helpers/observable';
 import { projectService } from '../../helpers/store';
 
 /* Return bricks filtered with the project source */
-export const useFilteredBricks = (bricks: BrickT[]): BrickT[] => {
+export const useFilteredBricks = (
+  bricks: BrickT[],
+  concept?: ConceptT,
+): BrickT[] => {
   const [filteredBricks, setFilteredBricks] = useState(bricks);
   const projectSource = useObservable(projectService.project);
 
   // filter bricks by project
-  const prevBricks = usePrevious(bricks);
-  const prevProjectSource = usePrevious(projectSource);
-  useEffect(() => {
-    const didChange =
-      !_.isEqual(prevBricks, bricks) ||
-      !_.isEqual(prevProjectSource, projectSource);
+  const sourceToFilterOn = projectSource || concept;
 
-    if (didChange) {
-      const updatedBricks = bricks.filter(
-        brick => !projectSource || brick.source === projectSource,
-      );
-      setFilteredBricks(updatedBricks);
-    }
-  }, [bricks, projectSource]);
+  useEffect(() => {
+    const updatedBricks = bricks.filter(
+      brick => !sourceToFilterOn || brick.source === sourceToFilterOn,
+    );
+    setFilteredBricks(updatedBricks);
+  }, [bricks, sourceToFilterOn]);
 
   return filteredBricks;
 };

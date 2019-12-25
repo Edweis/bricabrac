@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { SearchBar, ListItem } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
-import { useBrickContext, useFocusOnMount } from '../../hooks';
+import { useBricks, useFocusOnMount } from '../../hooks';
 import { EMPTY_SOURCE } from '../../constants/defaults';
 
 const styles = StyleSheet.create({
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
 });
 
 const useDisplayedSources = (search: string) => {
-  const bricks = useBrickContext();
+  const bricks = useBricks();
 
   const orderedSourceBlocks = useMemo(
     () =>

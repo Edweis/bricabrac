@@ -11,8 +11,8 @@ const displayFirestoreBill = (collection: CollectionE, count: number) => {
   );
 };
 
-export const subscribeFirestore = <T>(collection: CollectionE) => {
-  return new ObservableRx<T>(subscriber => {
+export const subscribeFirestore = <T>(collection: CollectionE) =>
+  new ObservableRx<T>(subscriber => {
     const unsubscribe = firebase
       .firestore()
       .collection(collection)
@@ -29,4 +29,3 @@ export const subscribeFirestore = <T>(collection: CollectionE) => {
 
     return unsubscribe;
   });
-};

@@ -1,12 +1,8 @@
 import React, { useCallback } from 'react';
-import { useBricks, BrickContext } from './bricks';
 import { useReadingTimes, ReadingTimeContext } from './readingTimes';
 import { LoadingContext, useLoadings } from './loadings';
 
-const providers = [
-  [BrickContext, useBricks],
-  [ReadingTimeContext, useReadingTimes],
-];
+const providers = [[ReadingTimeContext, useReadingTimes]];
 
 // Not used for the moment but can be a library by itself to replace redux for hooks
 const useGlobalProvider = () => {

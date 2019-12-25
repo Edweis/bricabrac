@@ -7,8 +7,11 @@ type Unsubscriber = () => void;
 export class Observable<T> {
   private listeners: Listener<T>[];
 
-  constructor(private val: T) {
+  private omitFields: string[];
+
+  constructor(private val: T, omitField?: string) {
     this.listeners = [];
+    this.omitFields = omitField != null ? [omitField] : [];
   }
 
   get(): T {
@@ -16,10 +19,17 @@ export class Observable<T> {
   }
 
   set(val: T) {
-    if (_.isEqual(this.val, val)) {
+    const valToCompare =
+      val instanceof Object
+        ? _.omit((val as unknown) as object, this.omitFields)
+        : val;
+    if (!_.isEqual(this.val, valToCompare)) {
       this.val = val;
-      this.listeners.forEach(l => l(val));
-      console.debug('observable set to ', this.val, this.listeners);
+      if (!this.listeners) {
+        console.warn('no listeners ! skipped.');
+        return;
+      }
+      this.listeners.forEach(listener => listener(val));
     }
   }
 
@@ -31,7 +41,7 @@ export class Observable<T> {
   }
 }
 
-export function useObservable<T>(observable: Observable<T>): T {
+export function useObservable<T extends object>(observable: Observable<T>): T {
   const [val, setVal] = useState(observable.get());
 
   useEffect(() => {

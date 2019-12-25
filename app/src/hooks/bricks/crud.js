@@ -2,15 +2,16 @@ import firebase, { getCurrentUserId } from '../../firebase';
 import { BrickT } from '../../constants/types';
 import { useUserAcceptation, setAcceptation } from '../acceptations';
 import { useFilteredBricks, useBrickWithAcceptation } from './helpers';
-import { useFirestore, setFirestore } from '../firestore';
+import { setFirestore } from '../firestore';
 import { BRICK_COLLECTION } from './constants';
+import { useObservable } from '../../helpers/observable';
+import { bricksService } from '../../helpers/store';
 
-export const useBricks = () => {
+export const useBricks = (concept?: ConceptT) => {
   const userId = getCurrentUserId();
   const getUserAcceptation = useUserAcceptation(userId);
-  const bricks = useFirestore(BRICK_COLLECTION, 'status');
-
-  const filteredBricks = useFilteredBricks(bricks);
+  const bricks = useObservable(bricksService.bricks);
+  const filteredBricks = useFilteredBricks(bricks, concept);
   const bricksWithAcceptation = useBrickWithAcceptation(
     filteredBricks,
     getUserAcceptation, // PUT ME IN TYHE FUCNTION

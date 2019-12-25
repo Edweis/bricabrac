@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useFirestore, setFirestore } from './firestore';
 import { ConceptT, ConceptDepsT } from '../constants/types';
 import { useObservable } from '../helpers/observable';
-import { conceptService } from '../helpers/store';
+import { conceptDepsService } from '../helpers/store';
 
 export const CONCEPT_DEPS_COLLECTION = 'conceptDeps';
 
@@ -38,10 +38,8 @@ export const getDeps = (
   return { deps, isCyclical };
 };
 
-export const useConcepts = () => useFirestore(CONCEPT_DEPS_COLLECTION);
-
 export const useConceptDeps = (concept: ConceptT) => {
-  const conceptDeps = useObservable(conceptService.concepts);
+  const conceptDeps = useObservable(conceptDepsService.concepts);
   const deps = useMemo(() => getDeps(conceptDeps, concept), [
     concept,
     conceptDeps,
@@ -50,7 +48,7 @@ export const useConceptDeps = (concept: ConceptT) => {
 };
 
 export const useConceptTags = (concept: ConceptT) => {
-  const conceptDeps = useObservable(conceptService.concepts);
+  const conceptDeps = useObservable(conceptDepsService.concepts);
   const foundDeps = _.find(conceptDeps, dep => dep.name === concept);
   if (!foundDeps || !foundDeps.deps) return [];
   return foundDeps.deps;

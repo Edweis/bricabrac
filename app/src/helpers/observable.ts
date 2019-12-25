@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import _ from 'lodash';
 
 type Listener<T> = (val: T) => void;
 type Unsubscriber = () => void;
@@ -15,7 +16,7 @@ export class Observable<T> {
   }
 
   set(val: T) {
-    if (this.val !== val) {
+    if (_.isEqual(this.val, val)) {
       this.val = val;
       this.listeners.forEach(l => l(val));
       console.debug('observable set to ', this.val, this.listeners);

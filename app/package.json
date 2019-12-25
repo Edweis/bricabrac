@@ -53,6 +53,7 @@
     "react-navigation": "^3.0.0",
     "react-navigation-addon-search-layout": "^0.13.1",
     "react-navigation-tabs": "^2.6.0",
+    "rxjs": "^6.5.3",
     "sentry-expo": "^2.0.1"
   },
   "devDependencies": {

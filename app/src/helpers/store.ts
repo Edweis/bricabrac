@@ -1,5 +1,5 @@
-import ProjectService from './services/project';
-import ConceptsService from './services/concepts';
+import { ProjectService, ConceptDepsService, UsersService } from './services';
 
 export const projectService = new ProjectService();
-export const conceptService = new ConceptsService();
+export const conceptDepsService = new ConceptDepsService();
+export const usersService = new UsersService();

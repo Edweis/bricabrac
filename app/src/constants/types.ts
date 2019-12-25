@@ -5,6 +5,9 @@ export type ConceptDepsT = {
   deps: ConceptT[];
   datetime: Date;
 };
+export enum CollectionE {
+  CONCEPT_DEPS = 'conceptDeps',
+}
 export type SourceT = string;
 export type ProjectT = SourceT | null;
 export type StatusT = 'accepted' | 'refused' | 'none';

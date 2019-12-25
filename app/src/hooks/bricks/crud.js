@@ -1,6 +1,6 @@
 import firebase, { getCurrentUserId } from '../../firebase';
 import { BrickT } from '../../constants/types';
-import { useUserAcceptation, setAcceptation } from '../acceptations';
+import { setAcceptation } from '../acceptations';
 import { useFilteredBricks, useBrickWithAcceptation } from './helpers';
 import { setFirestore } from '../firestore';
 import { BRICK_COLLECTION } from './constants';
@@ -8,14 +8,9 @@ import { useObservable } from '../../helpers/observable';
 import { bricksService } from '../../helpers/store';
 
 export const useBricks = (concept?: ConceptT) => {
-  const userId = getCurrentUserId();
-  const getUserAcceptation = useUserAcceptation(userId);
   const bricks = useObservable(bricksService.bricks);
   const filteredBricks = useFilteredBricks(bricks, concept);
-  const bricksWithAcceptation = useBrickWithAcceptation(
-    filteredBricks,
-    getUserAcceptation, // PUT ME IN TYHE FUCNTION
-  );
+  const bricksWithAcceptation = useBrickWithAcceptation(filteredBricks);
   return bricksWithAcceptation;
 };
 

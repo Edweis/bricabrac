@@ -49,6 +49,7 @@ function ConceptList() {
   useEffect(() => {
     navigation.setParams({ count: concepts.length });
   }, [concepts.length]);
+
   useEffect(() => {
     navigation.setParams({ [SEARCH_STATE_PROP]: searchState });
     navigation.setParams({ [IS_SEARCH_OPEN_PROPS]: isSearchOpenState });

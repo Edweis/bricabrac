@@ -6,8 +6,21 @@ import {
   UserT,
   BrickT,
   CollectionE,
+  AcceptationT,
 } from '../constants/types';
 import { subscribeFirestore } from './firestore';
+
+export class AcceptationService {
+  readonly acceptations: Observable<AcceptationT[]>;
+
+  constructor() {
+    this.acceptations = new Observable<AcceptationT[]>([], 'status');
+    const firestoreObs = subscribeFirestore<AcceptationT[]>(
+      CollectionE.ACCEPTATIONS,
+    );
+    firestoreObs.subscribe(docs => this.acceptations.set(docs));
+  }
+}
 
 export class BricksService {
   readonly bricks: Observable<BrickT[]>;
@@ -15,7 +28,7 @@ export class BricksService {
   constructor() {
     this.bricks = new Observable<BrickT[]>([], 'status');
     const firestoreObs = subscribeFirestore<BrickT[]>(CollectionE.BRICKS);
-    firestoreObs.subscribe(b => this.bricks.set(b));
+    firestoreObs.subscribe(docs => this.bricks.set(docs));
   }
 }
 
@@ -27,7 +40,7 @@ export class ConceptDepsService {
     const firestoreObs = subscribeFirestore<ConceptT[]>(
       CollectionE.CONCEPT_DEPS,
     );
-    firestoreObs.subscribe(this.concepts.set);
+    firestoreObs.subscribe(docs => this.concepts.set(docs));
   }
 }
 
@@ -37,7 +50,7 @@ export class UsersService {
   constructor() {
     this.users = new Observable<UserT[]>([]);
     const firestoreObs = subscribeFirestore<UserT[]>(CollectionE.USERS);
-    firestoreObs.subscribe(this.users.set);
+    firestoreObs.subscribe(docs => this.users.set(docs));
   }
 }
 

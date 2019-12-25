@@ -10,6 +10,7 @@ export enum CollectionE {
   USERS = 'users',
   BRICKS = 'bricks',
   COMMENTS = 'comments',
+  ACCEPTATIONS = 'acceptations',
 }
 export type SourceT = string;
 export type ProjectT = SourceT | null;

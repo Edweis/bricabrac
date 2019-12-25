@@ -16,7 +16,7 @@ export const subscribeFirestore = <T>(collection: CollectionE) =>
     const unsubscribe = firebase
       .firestore()
       .collection(collection)
-      .limit(IS_DEV ? 20 : 1000000)
+      .limit(IS_DEV ? 20 : 10000)
       .onSnapshot(snapshot => {
         const newDocuments = snapshot.docs.map(document => ({
           ...document.data(),

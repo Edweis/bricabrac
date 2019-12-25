@@ -1,18 +1,18 @@
 import { useCallback } from 'react';
-import { useFirestore, setFirestore } from './firestore';
+import { setFirestore } from './firestore';
 import { AcceptationT, StatusT } from '../constants/types';
+import { useObservable } from '../helpers/observable';
+import { acceptationService } from '../helpers/store';
 
 export const ACCEPTATION_COLLECTION = 'acceptations';
 
 export const genAcceptationId = (brickId: string, userId: string) =>
   `${userId}-${brickId}`;
 
-export const useAcceptations = () => useFirestore(ACCEPTATION_COLLECTION);
-
 export const useUserAcceptation = (
   userId: string,
 ): ((acceptation: string) => StatusT) => {
-  const acceptations = useAcceptations();
+  const acceptations = useObservable(acceptationService.acceptations);
 
   return useCallback(
     brickId => {

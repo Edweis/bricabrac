@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useFirestore, setFirestore } from './firestore'
+import { useFirestore, setFirestore } from './firestore';
 import { AcceptationT, StatusT } from '../constants/types';
 
 export const ACCEPTATION_COLLECTION = 'acceptations';

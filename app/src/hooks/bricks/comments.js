@@ -1,4 +1,4 @@
-import { useFirestore, setFirestore } from '../firestore'
+import { useFirestore, setFirestore } from '../firestore';
 import { getCurrentUserId } from '../../firebase';
 import { getCommentCollection } from './constants';
 

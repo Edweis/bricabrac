@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { useMemo, useContext, createContext } from 'react';
 import { getCurrentUserId } from '../firebase';
-import { useFirestore, setFirestore } from './firestore'
+import { useFirestore, setFirestore } from './firestore';
 import { ReadingTimeT, SourceT } from '../constants/types';
 import { DEFAULT_READING_TIME } from '../constants/defaults';
 

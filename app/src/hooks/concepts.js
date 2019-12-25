@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { useContext, createContext, useMemo } from 'react';
-import { useFirestore, setFirestore } from './firestore'
+import { useFirestore, setFirestore } from './firestore';
 import { ConceptT, ConceptDepsT } from '../constants/types';
 
 export const CONCEPT_DEPS_COLLECTION = 'conceptDeps';

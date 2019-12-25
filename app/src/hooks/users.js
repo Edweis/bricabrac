@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { useFirestore, setFirestore } from './firestore'
+import { useFirestore, setFirestore } from './firestore';
 import { UserT } from '../constants/types';
 
 const USER_COLLECTION = 'users';

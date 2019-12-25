@@ -2,7 +2,7 @@ import firebase, { getCurrentUserId } from '../../firebase';
 import { BrickT } from '../../constants/types';
 import { useUserAcceptation, setAcceptation } from '../acceptations';
 import { useFilteredBricks, useBrickWithAcceptation } from './helpers';
-import { useFirestore, setFirestore } from '../firestore'
+import { useFirestore, setFirestore } from '../firestore';
 import { BRICK_COLLECTION } from './constants';
 
 export const useBricks = (projectSource?: string) => {

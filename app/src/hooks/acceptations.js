@@ -12,7 +12,7 @@ export const genAcceptationId = (brickId: string, userId: string) =>
 export const useUserAcceptation = (
   userId: string,
 ): ((acceptation: string) => StatusT) => {
-  const acceptations = useObservable(acceptationService.acceptations);
+  const acceptations = useObservable(acceptationService.value);
 
   return useCallback(
     brickId => {

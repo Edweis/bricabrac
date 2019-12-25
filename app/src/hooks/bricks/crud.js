@@ -8,7 +8,7 @@ import { useObservable } from '../../helpers/observable';
 import { bricksService } from '../../helpers/store';
 
 export const useBricks = (concept?: ConceptT) => {
-  const bricks = useObservable(bricksService.bricks);
+  const bricks = useObservable(bricksService.value);
   const filteredBricks = useFilteredBricks(bricks, concept);
   const bricksWithAcceptation = useBrickWithAcceptation(filteredBricks);
   return bricksWithAcceptation;

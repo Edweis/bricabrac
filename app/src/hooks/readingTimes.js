@@ -10,7 +10,7 @@ import { readingTimesService } from '../helpers/store';
 export const READING_TIME_COLLECTION = 'readingTimes';
 
 export const useUserReadingTimes = (userId?: string, source?: SourceT) => {
-  const readingTimes = useObservable(readingTimesService.readingTimes);
+  const readingTimes = useObservable(readingTimesService.value);
   const filteredReadingTimes = useMemo(
     () =>
       readingTimes

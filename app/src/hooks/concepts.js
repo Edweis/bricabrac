@@ -39,7 +39,7 @@ export const getDeps = (
 };
 
 export const useConceptDeps = (concept: ConceptT) => {
-  const conceptDeps = useObservable(conceptDepsService.concepts);
+  const conceptDeps = useObservable(conceptDepsService.value);
   const deps = useMemo(() => getDeps(conceptDeps, concept), [
     concept,
     conceptDeps,
@@ -48,7 +48,7 @@ export const useConceptDeps = (concept: ConceptT) => {
 };
 
 export const useConceptTags = (concept: ConceptT) => {
-  const conceptDeps = useObservable(conceptDepsService.concepts);
+  const conceptDeps = useObservable(conceptDepsService.value);
   const foundDeps = _.find(conceptDeps, dep => dep.name === concept);
   if (!foundDeps || !foundDeps.deps) return [];
   return foundDeps.deps;

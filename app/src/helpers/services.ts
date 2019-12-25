@@ -15,6 +15,11 @@ export class ConceptDepsService {
 }
 export class UsersService {
   readonly users = new Observable<UserT[]>([]);
+
+  constructor() {
+    const firestoreObs = subscribeFirestore<UserT[]>(CollectionE.USERS);
+    firestoreObs.subscribe(this.users.set);
+  }
 }
 
 export class ProjectService {

@@ -1,12 +1,10 @@
 import React, { useCallback } from 'react';
 import { useBricks, BrickContext } from './bricks';
-import { useUsers, UserContext } from './users';
 import { useReadingTimes, ReadingTimeContext } from './readingTimes';
 import { LoadingContext, useLoadings } from './loadings';
 
 const providers = [
   [BrickContext, useBricks],
-  [UserContext, useUsers],
   [ReadingTimeContext, useReadingTimes],
 ];
 

@@ -7,6 +7,7 @@ export type ConceptDepsT = {
 };
 export enum CollectionE {
   CONCEPT_DEPS = 'conceptDeps',
+  USERS = 'users',
 }
 export type SourceT = string;
 export type ProjectT = SourceT | null;

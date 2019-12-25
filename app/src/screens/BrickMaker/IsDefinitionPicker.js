@@ -3,7 +3,7 @@ import { Switch, StyleSheet, Text, View } from 'react-native';
 
 type Props = {
   isDefinition: boolean,
-  onChange: boolean => void,
+  onChange: (isDefinition: boolean) => void,
   readOnly?: boolean,
 };
 

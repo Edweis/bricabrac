@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import colors from '../../constants/colors';
-import type { StatusT } from '../../constants/types';
+import { StatusT } from '../../constants/types';
 import { translateStatus } from '../../constants/translations';
 
 const styles = StyleSheet.create({
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 
 type Props = {
   status: StatusT,
-  setStatus: StatusT => void,
+  setStatus: (status: StatusT) => void,
 };
 
 export default function StatusPicker(props: Props) {

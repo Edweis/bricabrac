@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Icon, Button } from 'react-native-elements';
 import { useNavigation } from '../hooks/navigation';
-import type { SourceT } from '../constants/types';
+import { SourceT } from '../constants/types';
 import { useProject } from '../hooks/project';
 import { getDisplayedSource } from '../helpers';
 
@@ -22,14 +22,14 @@ const styles = StyleSheet.create({
 
 type Props = {
   source: SourceT[],
-  onChange: (SourceT[]) => void,
+  onChange: (value: SourceT[]) => void,
   readOnly?: boolean,
 };
 function SourcePicker(props: Props) {
   const navigation = useNavigation();
   const [projectSource] = useProject();
   const { source, readOnly } = props;
-  const onSelect = (newSource: SourceT) => {
+  const onSelect = (newSource: SourceT): void => {
     props.onChange(newSource);
     navigation.pop();
   };
@@ -48,7 +48,7 @@ function SourcePicker(props: Props) {
       {!readOnly && (
         <Button
           title="Editer"
-          onPress={() => navigation.push('SourceList', { onSelect })}
+          onPress={(): void => navigation.push('SourceList', { onSelect })}
           type="outline"
         />
       )}

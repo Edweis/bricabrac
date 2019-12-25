@@ -1,5 +1,5 @@
 import firebase from '../firebase';
-import type { BrickT, ReadingTimeT } from './types';
+import { BrickT, ReadingTimeT } from './types';
 
 export const DEFAULT_BRICK: BrickT = {
   id: 'idBrick1',

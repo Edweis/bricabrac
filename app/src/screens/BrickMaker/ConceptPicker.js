@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
-import type { ConceptT } from '../../constants/types';
+import { ConceptT } from '../../constants/types';
 import BrickItem from '../../components/BrickItem';
 
 const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
 type Props = {
   concepts: ConceptT[],
-  onChange: (ConceptT[]) => void,
+  onChange: (concepts: ConceptT[]) => void,
   readOnly?: boolean,
 };
 function ConceptPicker(props: Props) {

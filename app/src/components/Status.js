@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import type { StatusT } from '../constants/types';
+import { StatusT } from '../constants/types';
 import colors from '../constants/colors';
 
 const styles = StyleSheet.create({

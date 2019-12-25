@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, View } from 'react-native';
-import type { ConceptT } from '../constants/types';
+import { ConceptT } from '../constants/types';
 import { useConceptTags, setConceptDeps } from '../hooks/concepts';
 import { useNavigation } from '../hooks/navigation';
 import { useSubscribedState } from '../hooks/helpers';
@@ -20,7 +20,7 @@ function ConceptEditor(props: Props) {
   const [deps, setDeps] = useSubscribedState(taggedConcepts);
   const navigation = useNavigation();
 
-  if (!originalConcept)
+  if (!originalConcept) {
     return (
       <ActionModal
         show={show && localShow}
@@ -32,6 +32,7 @@ function ConceptEditor(props: Props) {
         submitText="Créér"
       />
     );
+  }
 
   const onRemove = concept => {
     setDeps(deps.filter(d => d !== concept));

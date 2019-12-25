@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -20,9 +21,10 @@ export async function googleLogin() {
     androidClientId:
       '53205959987-cdkv1nfiseh6odte37uv1k9s9nvr2d9p.apps.googleusercontent.com',
     scopes: ['profile', 'email'],
+    clientId: 'xxx',
   };
-  const { type, accessToken, user } = await Google.logInAsync(config);
-  return { type, accessToken, user };
+  const { type } = await Google.logInAsync(config);
+  return { type };
 }
 
 export function emailLogin(email: string, password: string) {
@@ -40,7 +42,7 @@ export async function facebookLogin() {
 
   if (type === 'cancel') return null;
   await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL); // Set persistent auth state
-  const credential = firebase.auth.FacebookAuthProvider.credential(token);
+  const credential = firebase.auth.FacebookAuthProvider.credential(token || '');
   const facebookProfileData = await firebase
     .auth()
     .signInWithCredential(credential); // Sign in with Facebook credential
@@ -56,7 +58,7 @@ export const isUserConnected = () => {
   return firebase.auth().currentUser != null;
 };
 
-export const onAuthChange = action =>
+export const onAuthChange = (action: (value: any) => void) =>
   firebase.auth().onAuthStateChanged(user => action(user));
 
 export const getCurrentUser = () => firebase.auth().currentUser;

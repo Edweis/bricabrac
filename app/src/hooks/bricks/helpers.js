@@ -31,7 +31,7 @@ export const useFilteredBricks = (
 
 export const useBrickWithAcceptation = (
   bricks: BrickT[],
-  getUserAcceptation: string => StatusT,
+  getUserAcceptation: (userId: string) => StatusT,
 ): BrickT[] => {
   const [bricksWithAcceptation, setBricksWithAcceptation] = useState(bricks);
 
@@ -45,7 +45,7 @@ export const useBrickWithAcceptation = (
     if (didChange) {
       const updatedBricks = bricks.map(brick => ({
         ...brick,
-        status: getUserAcceptation(brick.id),
+        status: getUserAcceptation(brick.author),
       }));
       setBricksWithAcceptation(updatedBricks);
     }

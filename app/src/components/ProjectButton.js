@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigation } from '../hooks/navigation';
 import { useProject } from '../hooks/project';
-import type { SourceT } from '../constants/types';
+import { SourceT } from '../constants/types';
 import colors from '../constants/colors';
 import HeaderIconButton from './HeaderIconButton';
 

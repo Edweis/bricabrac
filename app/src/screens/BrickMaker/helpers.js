@@ -1,4 +1,4 @@
-import type { BrickT } from '../../constants/types';
+import { BrickT } from '../../constants/types';
 
 const getBrickError = (brick: BrickT): string | null => {
   if (!brick.content) return 'Invalid content';

@@ -3,7 +3,10 @@ import { Button } from 'react-native-elements';
 import { CommentT } from '../../constants/types';
 import ActionModal from '../../components/ActionModal';
 
-function CommentButton(props: { onSubmit: CommentT => void, style?: {} }) {
+function CommentButton(props: {
+  onSubmit: (comment: CommentT) => void,
+  style?: {},
+}) {
   const [displayInput, setDisplayInput] = useState(false);
 
   return (

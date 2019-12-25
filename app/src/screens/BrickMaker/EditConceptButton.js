@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import ConceptEditor from '../../components/ConceptEditor';
-import type { ConceptT } from '../../constants/types';
+import { ConceptT } from '../../constants/types';
 
 const styles = StyleSheet.create({ container: { marginRight: 16 } });
 export default function EditConceptButton(props: { concept: ConceptT }) {

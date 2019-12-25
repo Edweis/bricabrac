@@ -11,7 +11,7 @@ type Props = {
   submitText: string,
   show: boolean,
   onClose: () => void,
-  onSubmit: string => void,
+  onSubmit: (value: string) => void,
   multiline?: boolean,
   noInput?: boolean,
   children?: React.Node,

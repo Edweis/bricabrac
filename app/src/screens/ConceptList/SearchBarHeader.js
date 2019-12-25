@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
   },
 });
 type Props = {
-  onChange: string => void,
+  onChange: (value: string) => void,
   value: string,
   isOpen: boolean,
-  onOpenChange: boolean => void,
+  onOpenChange: (isOpen: boolean) => void,
 };
 export default function SearchBarHeader(props: Props) {
   // We need to use a state wraped around the component because it takes too long to commit the search to navigation

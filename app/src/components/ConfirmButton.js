@@ -12,6 +12,7 @@ export default function ConfirmButton(props: Props) {
   const { modalTitle, onSubmit, ...buttonProps } = props;
   return (
     <>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <Button {...buttonProps} onPress={() => setIsModalOpen(true)} />
       <ActionModal
         show={isModalOpen}

@@ -13,13 +13,14 @@ const styles = StyleSheet.create({
   },
 });
 
-async function loadResourcesAsync() {
+async function loadResourcesAsync(): Promise<string> {
   await Promise.all([
     Font.loadAsync({
       // This is the font that we are using for our tab bar
       ...Ionicons.font,
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
+      /* eslint-disable-next-line global-require */
       'space-mono': require('../../assets/fonts/SpaceMono-Regular.ttf'),
     }),
   ]);
@@ -27,7 +28,7 @@ async function loadResourcesAsync() {
 
 type Props = {
   children: React.Node,
-  onError: any => void,
+  onError: (error: string) => void,
 };
 export default ({ children, onError }: Props) => {
   const [isAppLoading, setAppLoading] = useState(true);

@@ -13,3 +13,5 @@ app/.idea/*
 
 app/src/firestoreCredential*
 cli/keys
+
+app/build

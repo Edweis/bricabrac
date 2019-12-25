@@ -45,7 +45,7 @@ export const useDisplayedConcepts = (search: string) => {
   }, [bricks, search]);
 };
 
-export const useNavigationEvent = (event: string, cb: any => void) => {
+export const useNavigationEvent = (event: string, cb: (value: any) => void) => {
   const navigation = useNavigation();
   useEffect(() => {
     const subscription = navigation.addListener('willFocus', cb);

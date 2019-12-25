@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useFirestore, setFirestore } from './helpers';
+import { useFirestore, setFirestore } from './firestore'
 import { AcceptationT, StatusT } from '../constants/types';
 
 export const ACCEPTATION_COLLECTION = 'acceptations';
@@ -9,7 +9,9 @@ export const genAcceptationId = (brickId: string, userId: string) =>
 
 export const useAcceptations = () => useFirestore(ACCEPTATION_COLLECTION);
 
-export const useUserAcceptation = (userId: string): (string => StatusT) => {
+export const useUserAcceptation = (
+  userId: string,
+): ((acceptation: string) => StatusT) => {
   const acceptations = useAcceptations();
 
   return useCallback(

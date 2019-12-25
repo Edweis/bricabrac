@@ -1,5 +1,5 @@
-import type { BrickT } from './constants/types';
-import { EMPTY_SOURCE } from './constants/defaults';
+import { BrickT } from '../constants/types';
+import { EMPTY_SOURCE } from '../constants/defaults';
 
 export const normalize = (str: ?string): string => {
   if (!str) return '';

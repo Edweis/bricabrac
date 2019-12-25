@@ -42,16 +42,13 @@ const TimerNavigator = createStackNavigator(
 
 const tabNavigatorSettings = {
   defaultNavigationOptions: ({ navigation }) => ({
-    tabBarIcon: ({ focused, horizontal, tintColor }) => {
+    tabBarIcon: ({ tintColor }: { tintColor: string }) => {
       const { routeName } = navigation.state;
       let iconName;
-      if (routeName === 'Bricks') {
-        iconName = `home`;
-      } else if (routeName === 'Timer') {
-        iconName = `timer`;
-      } else if (routeName === 'Settings') {
-        iconName = `settings`;
-      }
+      if (routeName === 'Bricks') iconName = `home`;
+      else if (routeName === 'Timer') iconName = `timer`;
+      else if (routeName === 'Settings') iconName = `settings`;
+
       // if (focused) iconName = `iconName${focused ? '' : '-outline'}`;
       // You can return any component that you like here!
       return <Icon name={iconName} color={tintColor} />;

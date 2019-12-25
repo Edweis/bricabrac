@@ -1,8 +1,10 @@
 import { createContext, useContext, useCallback, useState } from 'react';
 import _ from 'lodash';
 
+type LoadingT = { shouldLoadAgain: boolean, [key: string]: boolean };
+const defaultLoading = { shouldLoadAgain: false };
+export const useLoadings = () => useState(defaultLoading);
 export const LoadingContext = createContext([]);
-export const useLoadings = () => useState({});
 export const useLoadingContext = () => useContext(LoadingContext);
 export const useIsStateLoading = () => {
   const [loadings, setLoadings] = useLoadingContext();

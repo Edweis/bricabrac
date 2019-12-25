@@ -1,4 +1,4 @@
-import type { StatusT } from './types';
+import { StatusT } from './types';
 
 export const translateStatus: { [StatusT]: string } = {
   accepted: 'acceptée',

@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import type { BrickT, ConceptDepsT } from '../../constants/types';
+import { BrickT, ConceptDepsT } from '../../constants/types';
 import { DEFAULT_BRICK } from '../../constants/defaults';
 
 export const getFeaturedBrick = (bricks: BrickT[]): BrickT | null => {

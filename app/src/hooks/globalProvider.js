@@ -1,10 +1,10 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useBricks, BrickContext } from './bricks';
 import { useConcepts, ConceptContext } from './concepts';
 import { ProjectSetterContext } from './project';
 import { useUsers, UserContext } from './users';
 import { useReadingTimes, ReadingTimeContext } from './readingTimes';
-import { LoadingContext, useLoadings, useIsFullyLoaded } from './loadings';
+import { LoadingContext, useLoadings } from './loadings';
 
 const providers = [
   [ProjectSetterContext, useState],
@@ -40,12 +40,13 @@ const useGlobalProvider = () => {
 // }
 
 /* Has to be in a sub component to reach the LoadingContext */
-const SubGlobalProvider = ({ children }) => {
+type Props = { children: JSX.Element };
+const SubGlobalProvider = ({ children }: Props) => {
   const GlobalProvider = useGlobalProvider();
   return <GlobalProvider>{children}</GlobalProvider>;
 };
 
-export default ({ children }) => {
+export default ({ children }: Props) => {
   const state = useLoadings();
   return (
     <LoadingContext.Provider value={state}>

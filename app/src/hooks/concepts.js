@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { useMemo } from 'react';
-import { useFirestore, setFirestore } from './firestore';
+import { setFirestore } from './firestore';
 import { ConceptT, ConceptDepsT } from '../constants/types';
 import { useObservable } from '../helpers/observable';
 import { conceptDepsService } from '../helpers/store';

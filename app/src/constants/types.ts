@@ -13,6 +13,11 @@ export enum CollectionE {
   ACCEPTATIONS = 'acceptations',
   READING_TIMES = 'readingTimes',
 }
+export type ComputedCollection = string;
+export type LoadingT = {
+  shouldLoadAgain: boolean;
+  [keys: string]: boolean;
+};
 export type SourceT = string;
 export type ProjectT = SourceT | null;
 export type StatusT = 'accepted' | 'refused' | 'none';

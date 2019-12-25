@@ -7,7 +7,6 @@ import SignUp from './src/components/SignUp';
 import AppNavigator from './src/navigation/AppNavigator';
 import SplashLoading from './src/screens/Splash';
 import { onAuthChange, isUserConnected } from './src/firebase';
-import GlobalProvider from './src/hooks/globalProvider';
 import { EMAIL_KEY, store } from './src/storage';
 
 const bootstrap = () => {
@@ -43,10 +42,8 @@ export default function App() {
   if (authLoading) return <SignUp />;
 
   return (
-    <GlobalProvider>
-      <SplashLoading onError={onError}>
-        <AppNavigator />
-      </SplashLoading>
-    </GlobalProvider>
+    <SplashLoading onError={onError}>
+      <AppNavigator />
+    </SplashLoading>
   );
 }

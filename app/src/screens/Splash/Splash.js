@@ -4,7 +4,7 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useIsStateLoading } from '../../hooks/loadings';
+import { loadingService } from '../../helpers/store';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,8 +32,10 @@ type Props = {
 };
 export default ({ children, onError }: Props) => {
   const [isAppLoading, setAppLoading] = useState(true);
-  const isStateLoading = useIsStateLoading();
+  const isStateLoading = loadingService.isLoading();
   const endAppLoading = useCallback(() => setAppLoading(false), []);
+
+  console.debug('isStateLoading', isStateLoading);
 
   if (isAppLoading || isStateLoading) {
     return (

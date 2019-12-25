@@ -1,6 +1,14 @@
 /* eslint-disable max-classes-per-file */
+import _ from 'lodash';
 import { Observable } from './observable';
-import { ProjectT, CollectionE } from '../constants/types';
+import {
+  ProjectT,
+  CollectionE,
+  LoadingT,
+  BrickT,
+  ComputedCollection,
+  CommentT,
+} from '../constants/types';
 import { subscribeFirestore } from './firestore';
 
 export class FirestoreService<T> {
@@ -10,6 +18,46 @@ export class FirestoreService<T> {
     this.value = new Observable<T[]>([]);
     const firestoreObs = subscribeFirestore<T[]>(collection);
     firestoreObs.subscribe(docs => this.value.set(docs));
+  }
+}
+
+export const getCommentCollection = (brickId: string): ComputedCollection =>
+  `${CollectionE.BRICKS}/${brickId}/${CollectionE.COMMENTS}`;
+
+export class BricksService extends FirestoreService<BrickT> {
+  readonly comments: { [k: string]: Observable<CommentT[]> } = {};
+
+  constructor() {
+    super(CollectionE.BRICKS);
+  }
+
+  commentsService(brickId: string) {
+    const collection = getCommentCollection(brickId);
+    if (!(collection in this.comments)) {
+      this.comments[collection] = new Observable<CommentT[]>([]);
+      const firestoreObs = subscribeFirestore<CommentT[]>(collection);
+      firestoreObs.subscribe(docs => this.comments[collection].set(docs));
+    }
+    return this.comments[collection].get();
+  }
+}
+
+export class LoadingService {
+  readonly loadings = new Observable<LoadingT>({ shouldLoadAgain: false });
+
+  isLoading() {
+    const { loadings } = this;
+    if (loadings.get().shouldLoadAgain) return false;
+    return false;
+    // const values = _.values(loadings);
+    // const isLoading = values.length === 0 || values.some(value => value);
+    // if (!isLoading) loadings.set({ ...loadings.get(), shouldLoadAgain: true });
+    // return isLoading;
+  }
+
+  set(collection: CollectionE | string, status: boolean) {
+    const { loadings } = this;
+    loadings.set({ ...loadings.get(), [collection]: status });
   }
 }
 

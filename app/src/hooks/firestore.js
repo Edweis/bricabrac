@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash';
 import { Observable as ObservableRx } from 'rxjs';
 import firebase, { IS_DEV } from '../firebase';
-import { useSetLoading } from './loadings';
 
 let firestoreCountRead = 0;
 const displayFirestoreBill = (collection, count) => {
@@ -10,32 +9,6 @@ const displayFirestoreBill = (collection, count) => {
   console.debug(
     `Firestore read : ${count} at ${collection}. Total : ${firestoreCountRead}`,
   );
-};
-
-/* Use firestore snapshots to use realtime database */
-export const useFirestore = (
-  collection: string,
-  omitFields: string[] | string = [],
-) => {
-  const [documents, setDocuments] = useState([]);
-  const setLoading = useSetLoading(collection);
-  useEffect(() => {
-    setLoading(true);
-    let collector = firebase.firestore().collection(collection);
-    if (IS_DEV) collector = collector.limit(20);
-    const unsubscribe = collector.onSnapshot(snapshot => {
-      const newDocuments = snapshot.docs.map(document => ({
-        ...document.data(),
-        id: document.id,
-      }));
-      displayFirestoreBill(collection, newDocuments.length);
-      if (!_.isEqual(newDocuments, _.omit(documents, omitFields)))
-        setDocuments(newDocuments);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
-  return documents;
 };
 
 /* Use to set data to firestore */

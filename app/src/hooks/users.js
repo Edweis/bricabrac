@@ -5,10 +5,6 @@ import { usersService } from '../helpers/store';
 
 const EMPTY_USER: UserT = { email: "(pas d'autheur)" };
 
-// export const UserContext = createContext([]);
-// export const useUserContext = () => useContext(UserContext);
-// export const useUsers = () => useFirestore(USER_COLLECTION);
-
 export function useUser(id: string): UserT {
   const users = useObservable(usersService.value);
   const match = users.find(user => user.id === id);

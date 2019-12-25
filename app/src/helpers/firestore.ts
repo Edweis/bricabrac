@@ -4,14 +4,14 @@ import firebase, { IS_DEV } from '../firebase';
 import { CollectionE } from '../constants/types';
 
 let firestoreCountRead = 0;
-const displayFirestoreBill = (collection: CollectionE, count: number) => {
+const displayFirestoreBill = (collection: string, count: number) => {
   firestoreCountRead += count;
   console.debug(
     `Firestore read : ${count} at ${collection}. Total : ${firestoreCountRead}`,
   );
 };
 
-export const subscribeFirestore = <T>(collection: CollectionE) =>
+export const subscribeFirestore = <T>(collection: CollectionE | string) =>
   new ObservableRx<T>(subscriber => {
     const unsubscribe = firebase
       .firestore()

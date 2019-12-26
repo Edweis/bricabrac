@@ -1,7 +1,8 @@
 import _ from 'lodash';
-import { getDeps } from '../concepts';
+import { getDeps } from '../concepts/helpers';
+import { ConceptDepsT } from '../../constants/types';
 
-const allDeps = _.map(
+const allDepsRaw = _.map(
   {
     one: [],
     'one bis': [],
@@ -17,6 +18,7 @@ const allDeps = _.map(
   },
   (v, k) => ({ name: k, deps: v }),
 );
+const allDeps = (allDepsRaw as unknown) as ConceptDepsT[];
 
 describe('test getDeps', () => {
   it('should return only the dep when it has no deps', () => {

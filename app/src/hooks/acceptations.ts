@@ -11,16 +11,18 @@ export const genAcceptationId = (brickId: string, userId: string) =>
 
 export const useUserAcceptation = (
   userId: string,
-): ((acceptation: string) => StatusT) => {
+): ((brickId: string) => StatusT) => {
   const acceptations = useObservable(acceptationService.value);
 
   return useCallback(
     brickId => {
-      if (!userId) return 'none';
+      if (!userId) return StatusT.none;
       const foundAcceptations = acceptations.filter(
         a => a.id === genAcceptationId(brickId, userId),
       );
-      return foundAcceptations.length ? foundAcceptations[0].status : 'none';
+      return foundAcceptations.length
+        ? foundAcceptations[0].status
+        : StatusT.none;
     },
     [acceptations],
   );

@@ -7,7 +7,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest",
+    "test": "jest ./src",
     "lint": "DEBUG=eslint:cli-engine eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },
   "jest": {
@@ -62,6 +62,7 @@
     "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.7.0",
+    "@types/jest": "^24.0.24",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
     "@typescript-eslint/eslint-plugin": "^2.13.0",
@@ -81,9 +82,11 @@
     "eslint-plugin-react": ">=7.14.3",
     "eslint-plugin-react-hooks": "^2.1.2",
     "husky": "^3.1.0",
+    "jest": "^24.9.0",
     "jest-expo": "^35.0.0",
     "lint-staged": "^9.5.0",
     "prettier": "^1.18.2",
+    "ts-jest": "^24.2.0",
     "tslint": "^5.20.1",
     "typescript": "^3.7.4"
   },

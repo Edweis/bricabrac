@@ -6,6 +6,7 @@ import { useObservable } from '../../helpers/observable';
 import { conceptDepsService } from '../../helpers/store';
 import { getDeps } from './helpers';
 
+export { getDeps };
 export const CONCEPT_DEPS_COLLECTION = 'conceptDeps';
 
 const useConceptObservable = () =>

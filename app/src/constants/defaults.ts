@@ -24,7 +24,7 @@ export const EMPTY_BRICK: Partial<BrickT> = {
 
 export const EMPTY_SOURCE = 'Aucune source';
 
-export const DEFAULT_READING_TIME: ReadingTimeT = {
+export const DEFAULT_READING_TIME: Partial<ReadingTimeT> = {
   startTime: Timestamp.now(),
   endTime: null,
   startPage: 0,

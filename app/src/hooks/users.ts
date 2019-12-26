@@ -3,17 +3,14 @@ import { UserT, CollectionE } from '../constants/types';
 import { useObservable } from '../helpers/observable';
 import { usersService } from '../helpers/store';
 
-const EMPTY_USER: UserT = { email: "(pas d'autheur)" };
-
 export function useUser(id: string): UserT {
   const users = useObservable(usersService.value);
   const match = users.find(user => user.id === id);
-  return match == null ? EMPTY_USER : match;
+  if (match == null) throw Error(`User not found : ${id}`);
+  return match;
 }
 
 export const setUser = (user: UserT) => {
-  const { uid, email } = user;
-  const lightUser = { email };
-
+  const lightUser = { email: user.email };
   setFirestore(CollectionE.USERS, lightUser);
 };

@@ -27,7 +27,7 @@ const useLastRead = (source?: SourceT) => {
 
   return useMemo(() => {
     if (!readingTimes.length) return DEFAULT_READING_TIME;
-    return _.maxBy(readingTimes, 'endTime');
+    return _.maxBy(readingTimes, 'endTime') as ReadingTimeT;
   }, [readingTimes]);
 };
 

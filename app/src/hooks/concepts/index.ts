@@ -9,8 +9,7 @@ import { getDeps } from './helpers';
 export { getDeps };
 export const CONCEPT_DEPS_COLLECTION = 'conceptDeps';
 
-const useConceptObservable = () =>
-  useObservable<ConceptDepsT[]>(conceptDepsService.value);
+const useConceptObservable = () => useObservable(conceptDepsService.value);
 
 export const useConceptDeps = (concept: ConceptT) => {
   const conceptDeps = useConceptObservable();

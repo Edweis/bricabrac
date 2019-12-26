@@ -73,4 +73,5 @@ export type ReadingTimeT = {
   startPage: number;
   endPage: number;
   source: SourceT;
+  userId: string;
 };

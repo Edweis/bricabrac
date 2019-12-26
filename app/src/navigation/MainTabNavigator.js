@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Icon } from 'react-native-elements';
 import { Platform } from 'react-native';

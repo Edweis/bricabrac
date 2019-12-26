@@ -1,4 +1,3 @@
-// @flow
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, FlatList } from 'react-native';
 import SearchBarHeader from './SearchBarHeader';

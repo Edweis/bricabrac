@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { View, Text } from 'react-native';
 import { ConceptDepsT } from '../../constants/types';

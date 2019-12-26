@@ -1,4 +1,3 @@
-// @flow
 import React, { useState } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { Text, Input } from 'react-native-elements';

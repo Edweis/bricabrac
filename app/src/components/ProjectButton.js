@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { useNavigation } from '../hooks/navigation';
 import { useObservable } from '../helpers/observable';

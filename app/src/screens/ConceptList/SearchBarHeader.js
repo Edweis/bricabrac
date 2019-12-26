@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SearchBar as RNESearchBar } from 'react-native-elements';

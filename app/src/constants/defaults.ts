@@ -1,5 +1,5 @@
 import firebase from '../firebase';
-import { BrickT, ReadingTimeT } from './types';
+import { BrickT, ReadingTimeT, StatusT } from './types';
 
 export const DEFAULT_BRICK: BrickT = {
   id: 'idBrick1',
@@ -9,18 +9,17 @@ export const DEFAULT_BRICK: BrickT = {
   submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: 'loading concept ...',
   source: 'loading source ...',
-  relationship: 'undefined',
+  isDefinition: false,
+  status: StatusT.none,
 };
 
-export const EMPTY_BRICK: BrickT = {
+export const EMPTY_BRICK: Partial<BrickT> = {
   childrenConcepts: [],
   content: '',
   datetime: firebase.firestore.Timestamp.now(),
   submitTime: firebase.firestore.Timestamp.now(),
   parentConcept: '',
-  status: 'none',
-  author: null,
-  relationship: 'undefined',
+  status: StatusT.none,
 };
 
 export const DEFAULT_CONCEPT = {
@@ -31,7 +30,7 @@ export const EMPTY_SOURCE = 'Aucune source';
 
 export const DEFAULT_READING_TIME: ReadingTimeT = {
   startTime: firebase.firestore.Timestamp.now(),
-  endtime: firebase.firestore.Timestamp.now(),
+  endTime: null,
   startPage: 0,
   endPage: 0,
   source: '',

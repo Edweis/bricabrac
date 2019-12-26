@@ -1,7 +1,7 @@
 import { BrickT } from '../constants/types';
 import { EMPTY_SOURCE } from '../constants/defaults';
 
-export const normalize = (str: ?string): string => {
+export const normalize = (str: string | null): string => {
   if (!str) return '';
   return str
     .toLowerCase()
@@ -11,7 +11,10 @@ export const normalize = (str: ?string): string => {
     .trim();
 };
 
-export const matchSearch = (value: ?string, search: ?string): boolean => {
+export const matchSearch = (
+  value: string | null,
+  search: string | null,
+): boolean => {
   if (search === '') return true;
   if (!search || !value) return false;
   return normalize(value).includes(normalize(search));

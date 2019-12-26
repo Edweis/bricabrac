@@ -1,4 +1,3 @@
-// @flow
 import React, { useState, useMemo } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';

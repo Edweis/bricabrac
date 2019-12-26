@@ -1,10 +1,11 @@
 import _ from 'lodash';
+import { ConceptT, ConceptDepsT } from '../../constants/types';
 
 export const getDeps = (
   allDeps: ConceptDepsT[],
   concept: ConceptT,
   occurendConcept: ConceptT[] = [],
-): { deps: ConceptDepsT[], isCyclical: boolean } => {
+): { deps: string[]; isCyclical: boolean } => {
   // edge case
   if (!concept) return { deps: [], isCyclical: false };
 
@@ -21,8 +22,9 @@ export const getDeps = (
   const childrenConcepts = foundDeps.deps.map(dep => {
     const subDeps = getDeps(allDeps, dep, updatedOccurendConcept);
     if (subDeps.isCyclical) isCyclical = true;
-    return [dep].concat(subDeps.deps);
+    return _.concat(dep, ...subDeps.deps);
   });
+
   const deps = _(childrenConcepts)
     .flatten()
     .uniq()

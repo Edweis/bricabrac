@@ -8,8 +8,11 @@ import { getDeps } from './helpers';
 
 export const CONCEPT_DEPS_COLLECTION = 'conceptDeps';
 
+const useConceptObservable = () =>
+  useObservable<ConceptDepsT[]>(conceptDepsService.value);
+
 export const useConceptDeps = (concept: ConceptT) => {
-  const conceptDeps = useObservable(conceptDepsService.value);
+  const conceptDeps = useConceptObservable();
   const deps = useMemo(() => getDeps(conceptDeps, concept), [
     concept,
     conceptDeps,
@@ -18,7 +21,7 @@ export const useConceptDeps = (concept: ConceptT) => {
 };
 
 export const useConceptTags = (concept: ConceptT) => {
-  const conceptDeps = useObservable(conceptDepsService.value);
+  const conceptDeps = useConceptObservable();
   const foundDeps = _.find(conceptDeps, dep => dep.name === concept);
   if (!foundDeps || !foundDeps.deps) return [];
   return foundDeps.deps;

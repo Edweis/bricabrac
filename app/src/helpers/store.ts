@@ -6,7 +6,7 @@ import {
 } from './services';
 
 import {
-  ConceptT,
+  ConceptDepsT,
   UserT,
   CollectionE,
   AcceptationT,
@@ -23,6 +23,6 @@ export const acceptationService = new FirestoreService<AcceptationT>(
 export const readingTimesService = new FirestoreService<ReadingTimeT>(
   CollectionE.READING_TIMES,
 );
-export const conceptDepsService = new FirestoreService<ConceptT>(
+export const conceptDepsService = new FirestoreService<ConceptDepsT>(
   CollectionE.CONCEPT_DEPS,
 );

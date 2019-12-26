@@ -1,7 +1,7 @@
-import _ from 'lodash';
-import { Observable as ObservableRx } from 'rxjs';
-import firebase, { IS_DEV } from '../firebase';
-import { CollectionE } from '../constants/types';
+import * as rxjs from 'rxjs';
+import { Observable } from '../observable';
+import { CollectionE } from '../../constants/types';
+import firebase, { IS_DEV } from '../../firebase';
 
 let firestoreCountRead = 0;
 const displayFirestoreBill = (collection: string, count: number) => {
@@ -12,7 +12,7 @@ const displayFirestoreBill = (collection: string, count: number) => {
 };
 
 export const subscribeFirestore = <T>(collection: CollectionE | string) =>
-  new ObservableRx<T>(subscriber => {
+  new rxjs.Observable<T>(subscriber => {
     const unsubscribe = firebase
       .firestore()
       .collection(collection)
@@ -29,3 +29,15 @@ export const subscribeFirestore = <T>(collection: CollectionE | string) =>
 
     return unsubscribe;
   });
+
+export default class FirestoreService<T> {
+  readonly value: Observable<T[]>;
+
+  readonly subscription: rxjs.Subscription;
+
+  constructor(collection: CollectionE) {
+    this.value = new Observable<T[]>([]);
+    const firestoreObs = subscribeFirestore<T[]>(collection);
+    this.subscription = firestoreObs.subscribe(docs => this.value.set(docs));
+  }
+}

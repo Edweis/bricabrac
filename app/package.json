@@ -15,7 +15,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsc && lint-staged && npm test"
+      "pre-commit": "tsc && echo '✔ TS linter OK' && lint-staged && npm test"
     }
   },
   "lint-staged": {

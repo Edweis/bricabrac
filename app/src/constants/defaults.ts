@@ -22,10 +22,6 @@ export const EMPTY_BRICK: Partial<BrickT> = {
   status: StatusT.none,
 };
 
-export const DEFAULT_CONCEPT = {
-  title: 'loading concept ...',
-};
-
 export const EMPTY_SOURCE = 'Aucune source';
 
 export const DEFAULT_READING_TIME: ReadingTimeT = {

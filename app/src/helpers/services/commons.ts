@@ -1,7 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import _ from 'lodash';
-import rxjs from 'rxjs';
-import { Observable } from './observable';
+import { Observable } from '../observable';
 import {
   ProjectT,
   CollectionE,
@@ -9,20 +7,8 @@ import {
   BrickT,
   ComputedCollection,
   CommentT,
-} from '../constants/types';
-import { subscribeFirestore } from './firestore';
-
-export class FirestoreService<T> {
-  readonly value: Observable<T[]>;
-
-  readonly subscription: rxjs.Subscription;
-
-  constructor(collection: CollectionE) {
-    this.value = new Observable<T[]>([]);
-    const firestoreObs = subscribeFirestore<T[]>(collection);
-    this.subscription = firestoreObs.subscribe(docs => this.value.set(docs));
-  }
-}
+} from '../../constants/types';
+import FirestoreService, { subscribeFirestore } from './firestore';
 
 export const getCommentCollection = (brickId: string): ComputedCollection =>
   `${CollectionE.BRICKS}/${brickId}/${CollectionE.COMMENTS}`;

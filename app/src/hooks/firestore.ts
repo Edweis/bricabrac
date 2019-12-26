@@ -1,37 +1,28 @@
-import { useState, useEffect } from 'react';
 import _ from 'lodash';
-import { Observable as ObservableRx } from 'rxjs';
-import firebase, { IS_DEV } from '../firebase';
-
-let firestoreCountRead = 0;
-const displayFirestoreBill = (collection, count) => {
-  firestoreCountRead += count;
-  console.debug(
-    `Firestore read : ${count} at ${collection}. Total : ${firestoreCountRead}`,
-  );
-};
+import firebase from '../firebase';
+import { CollectionE } from '../constants/types';
 
 /* Use to set data to firestore */
-
-export async function setFirestore<T>(
+// type DocumentReference = firebase.firestore.DocumentReference;
+type FirestoreObject = Record<string, any> & { id?: string };
+export async function setFirestore<T extends FirestoreObject>(
   collection: string,
   _data: T,
-  effects?: (cb: T) => void = () => {},
+  effects: (cb: T) => void = () => {},
 ) {
-  const data = _.cloneDeep(_data);
+  const data = _.omit(_data, 'id');
 
   // Get the id of the data and remove it
-  const id = data.id || null;
-  delete data.id;
+  const id = _data.id || null;
 
   const col = firebase.firestore().collection(collection);
   // if there is an Id, we edit the brick, otherwise we add it. Dirty.
   if (id == null) {
-    const results = await col.add(data);
+    const results = ((await col.add(data)) as unknown) as T;
     effects(results);
   } else {
     await col.doc(id).set(data);
-    effects({ ...data, id });
+    effects({ ...data, id } as T);
   }
   console.log(
     id != null
@@ -41,7 +32,7 @@ export async function setFirestore<T>(
   console.log({ data });
 }
 
-export async function deleteFirestore(collection, id) {
+export async function deleteFirestore(collection: CollectionE, id: string) {
   await firebase
     .firestore()
     .collection(collection)

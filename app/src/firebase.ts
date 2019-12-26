@@ -58,7 +58,7 @@ export const isUserConnected = () => {
   return firebase.auth().currentUser != null;
 };
 
-export const onAuthChange = (action: (value: any) => void) =>
+export const onAuthChange = (action: (user: firebase.User | null) => void) =>
   firebase.auth().onAuthStateChanged(user => action(user));
 
 export const getCurrentUser = () => firebase.auth().currentUser;
@@ -66,7 +66,9 @@ export const getCurrentUser = () => firebase.auth().currentUser;
 export const getCurrentUserId = () => {
   const user = getCurrentUser();
   if (user != null) return user.uid;
-  return null;
+  throw Error('User is not registered.');
 };
+
+export const { Timestamp } = firebase.firestore;
 
 export default firebase;

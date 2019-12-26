@@ -1,12 +1,12 @@
-import firebase from '../firebase';
+import { Timestamp } from '../firebase';
 import { BrickT, ReadingTimeT, StatusT } from './types';
 
 export const DEFAULT_BRICK: BrickT = {
   id: 'idBrick1',
   childrenConcepts: [],
   content: 'loading content ...',
-  datetime: firebase.firestore.Timestamp.now(),
-  submitTime: firebase.firestore.Timestamp.now(),
+  datetime: Timestamp.now(),
+  submitTime: Timestamp.now(),
   parentConcept: 'loading concept ...',
   source: 'loading source ...',
   isDefinition: false,
@@ -16,8 +16,8 @@ export const DEFAULT_BRICK: BrickT = {
 export const EMPTY_BRICK: Partial<BrickT> = {
   childrenConcepts: [],
   content: '',
-  datetime: firebase.firestore.Timestamp.now(),
-  submitTime: firebase.firestore.Timestamp.now(),
+  datetime: Timestamp.now(),
+  submitTime: Timestamp.now(),
   parentConcept: '',
   status: StatusT.none,
 };
@@ -29,7 +29,7 @@ export const DEFAULT_CONCEPT = {
 export const EMPTY_SOURCE = 'Aucune source';
 
 export const DEFAULT_READING_TIME: ReadingTimeT = {
-  startTime: firebase.firestore.Timestamp.now(),
+  startTime: Timestamp.now(),
   endTime: null,
   startPage: 0,
   endPage: 0,

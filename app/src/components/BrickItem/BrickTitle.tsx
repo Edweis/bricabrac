@@ -9,9 +9,9 @@ function BrickTitle({
   concept,
   asConcept,
 }: {
-  status?: StatusT,
-  concept: ConceptT,
-  asConcept: boolean,
+  status?: StatusT;
+  concept: ConceptT;
+  asConcept: boolean;
 }) {
   return (
     <View

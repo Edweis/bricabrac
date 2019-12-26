@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { useMemo } from 'react';
 import { setFirestore } from '../firestore';
-import { ConceptT, ConceptDepsT } from '../../constants/types';
+import { ConceptT, ConceptDepSetT } from '../../constants/types';
 import { useObservable } from '../../helpers/observable';
 import { conceptDepsService } from '../../helpers/store';
 import { getDeps } from './helpers';
@@ -20,14 +20,14 @@ export const useConceptDeps = (concept: ConceptT) => {
   return deps;
 };
 
-export const useConceptTags = (concept: ConceptT) => {
+export const useConceptTags = (concept: ConceptT | null) => {
   const conceptDeps = useConceptObservable();
   const foundDeps = _.find(conceptDeps, dep => dep.name === concept);
   if (!foundDeps || !foundDeps.deps) return [];
   return foundDeps.deps;
 };
 
-export const setConceptDeps = (concept: ConceptDepsT) => {
+export const setConceptDeps = (concept: ConceptDepSetT) => {
   const enrichedConcept = {
     id: concept.name,
     datetime: new Date(),

@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Icon, IconProps } from 'react-native-elements';
 
 const styles = StyleSheet.create({ container: { marginRight: 16 } });
 
-type Props = { name: string, onPress: () => void, style: ?{} };
+type Props = {
+  name: string;
+  onPress: () => void;
+  style?: Record<string, any>;
+} & IconProps;
 export default function HeaderIconButton(props: Props) {
   const { style, name, onPress, ...other } = props;
   return (

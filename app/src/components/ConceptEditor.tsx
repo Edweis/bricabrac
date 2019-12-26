@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Button, View } from 'react-native';
 import { ConceptT } from '../constants/types';
 import { useConceptTags, setConceptDeps } from '../hooks/concepts';
-import { useNavigation } from '../hooks/navigation';
+import { useNavigation, NavigationProp } from '../hooks/navigation';
 import { useSubscribedState } from '../hooks/helpers';
 import ActionModal from './ActionModal';
 import BrickItem from './BrickItem';
 
 type Props = {
-  concept?: ConceptT,
-  show: boolean,
-  onClose: () => void,
+  concept: ConceptT | null;
+  show: boolean;
+  onClose: () => void;
 };
 function ConceptEditor(props: Props) {
   const { show, onClose } = props;
@@ -34,10 +34,10 @@ function ConceptEditor(props: Props) {
     );
   }
 
-  const onRemove = concept => {
-    setDeps(deps.filter(d => d !== concept));
+  const onRemove = (concept: ConceptT) => {
+    setDeps(deps.filter(dep => dep !== concept));
   };
-  const onAdd = (concept, nav) => {
+  const onAdd = (concept: ConceptT, nav: NavigationProp) => {
     setLocalShow(true);
     nav.pop();
     if (!deps.includes(concept)) setDeps([...deps, concept]);

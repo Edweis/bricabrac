@@ -9,16 +9,17 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
   },
-  accepted: { backgroundColor: colors.status.accepted },
-  refused: { backgroundColor: colors.status.refused },
-  none: { backgroundColor: colors.status.none },
+  [StatusT.accepted]: { backgroundColor: colors.status[StatusT.accepted] },
+  [StatusT.refused]: { backgroundColor: colors.status[StatusT.refused] },
+  [StatusT.none]: { backgroundColor: colors.status[StatusT.none] },
   marginRight: { marginRight: 10 },
 });
 
-type Props = { status: StatusT, marginRight?: boolean };
+type Props = { status: StatusT; marginRight?: boolean };
 function Status({ status, marginRight }: Props) {
-  const myStyles = [styles.dot, styles[status]];
+  const myStyles: Record<string, any>[] = [styles.dot, styles[status]];
   if (marginRight) myStyles.push(styles.marginRight);
+
   return <View style={myStyles} />;
 }
 Status.defaultProps = { marginRight: false };

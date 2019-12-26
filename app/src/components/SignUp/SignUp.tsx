@@ -18,8 +18,9 @@ const iconName = IS_DEV ? 'ios-bug' : 'ios-information-circle';
 export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const passwordInputRef = useRef(null);
-  const focusPassword = () => passwordInputRef.current.focus();
+  const passwordInputRef = useRef<Input>(null);
+  const focusPassword = () =>
+    passwordInputRef.current && passwordInputRef.current.focus();
   useLastEmail(lastEmail => {
     setEmail(lastEmail);
     focusPassword();

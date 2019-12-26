@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { ListItem } from 'react-native-elements';
-import { useNavigation } from '../../hooks/navigation';
+import { ListItem, ListItemProps } from 'react-native-elements';
+import { useNavigation, NavigationProp } from '../../hooks/navigation';
 import { useBricks } from '../../hooks/bricks';
 import { useConceptDeps } from '../../hooks/concepts';
 import { ConceptT } from '../../constants/types';
@@ -14,11 +14,11 @@ const styles = StyleSheet.create({
 });
 
 export type Props = {
-  concept: string,
-  onRemove: () => void,
-  onSelect?: (concept: ConceptT) => void,
-  onCreate?: (concept: ConceptT) => void,
-  asConcept?: boolean,
+  concept: string;
+  onRemove: (concept: ConceptT) => void;
+  onSelect: (concept: ConceptT, nav: NavigationProp) => void;
+  onCreate: (concept: ConceptT, nav: NavigationProp) => void;
+  asConcept: boolean;
 };
 
 function BrickItem(props: Props) {
@@ -28,6 +28,8 @@ function BrickItem(props: Props) {
   const featured = getFeaturedBrick(bricks);
   const conceptDeps = useConceptDeps(concept);
   const isEmpty = bricks.length === 0;
+
+  if (featured == null) return null;
 
   const getEmptyConceptItemProps = () => ({
     title: <BrickTitle concept={concept} asConcept={asConcept} />,
@@ -57,7 +59,7 @@ function BrickItem(props: Props) {
     rightIcon: { name: 'chevron-right', type: 'evilicon' },
   });
 
-  const data = isEmpty
+  const data: Partial<ListItemProps> = isEmpty
     ? getEmptyConceptItemProps()
     : getWithFeaturedConceptItempProps();
 
@@ -81,9 +83,9 @@ function BrickItem(props: Props) {
 }
 
 BrickItem.defaultProps = {
-  onSelect: (concept, navigation) =>
+  onSelect: (concept: ConceptT, navigation: NavigationProp) =>
     navigation.push('ConceptBrickList', { concept }),
-  onCreate: (concept, navigation) =>
+  onCreate: (concept: ConceptT, navigation: NavigationProp) =>
     navigation.push('BrickMaker', { brick: { parentConcept: concept } }),
   asConcept: false,
 };

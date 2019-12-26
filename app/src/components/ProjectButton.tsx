@@ -23,7 +23,7 @@ export default function ProjectButton() {
     <HeaderIconButton
       name="ios-book"
       onPress={onPress}
-      color={isProjectOn ? colors.orange : null}
+      color={isProjectOn ? colors.orange : undefined}
     />
   );
 }

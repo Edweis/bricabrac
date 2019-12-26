@@ -25,6 +25,7 @@
     "@expo/samples": "~3.0.3",
     "@expo/vector-icons": "^10.0.0",
     "@react-navigation/web": ">=1.0.0-alpha.9",
+    "@types/react-native": "^0.60.26",
     "expo": "^35.0.0",
     "expo-app-auth": "^7.0.0",
     "expo-asset": "~7.0.0",

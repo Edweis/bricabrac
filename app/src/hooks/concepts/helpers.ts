@@ -1,11 +1,15 @@
 import _ from 'lodash';
-import { ConceptT, ConceptDepsT } from '../../constants/types';
+import {
+  ConceptT,
+  ConceptDepsT,
+  ConceptAnalysisT,
+} from '../../constants/types';
 
 export const getDeps = (
   allDeps: ConceptDepsT[],
   concept: ConceptT,
   occurendConcept: ConceptT[] = [],
-): { deps: string[]; isCyclical: boolean } => {
+): ConceptAnalysisT => {
   // edge case
   if (!concept) return { deps: [], isCyclical: false };
 

@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  source: SourceT[],
-  onChange: (value: SourceT[]) => void,
-  readOnly?: boolean,
+  source: SourceT;
+  onChange: (value: SourceT) => void;
+  readOnly?: boolean;
 };
 function SourcePicker(props: Props) {
   const navigation = useNavigation();
@@ -49,7 +49,7 @@ function SourcePicker(props: Props) {
       {!readOnly && (
         <Button
           title="Editer"
-          onPress={(): void => navigation.push('SourceList', { onSelect })}
+          onPress={() => navigation.push('SourceList', { onSelect })}
           type="outline"
         />
       )}

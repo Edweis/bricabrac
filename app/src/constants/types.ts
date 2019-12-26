@@ -3,11 +3,14 @@ import firebase from '../firebase';
 type Timestamp = firebase.firestore.Timestamp;
 
 export type ConceptT = string;
-export type ConceptDepsT = {
+export type ConceptDepSetT = {
   name: ConceptT;
   deps: ConceptT[];
-  datetime: Date;
+  id: string;
 };
+export type ConceptDepsT = {
+  datetime: Date;
+} & ConceptDepSetT;
 export enum CollectionE {
   CONCEPT_DEPS = 'conceptDeps',
   USERS = 'users',
@@ -78,3 +81,4 @@ export type ReadingTimeT = {
   source: SourceT;
   userId: string;
 };
+export type ConceptAnalysisT = { deps: ConceptT[]; isCyclical: boolean };

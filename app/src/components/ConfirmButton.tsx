@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Button } from 'react-native-elements';
 import ActionModal from './ActionModal';
 
-type ButtonProps = any;
+type ButtonProps = typeof Button;
 type Props = {
-  modalTitle: string,
-  onSubmit: () => void,
+  modalTitle: string;
+  onSubmit: () => void;
+  title: string;
 } & ButtonProps;
 export default function ConfirmButton(props: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);

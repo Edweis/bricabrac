@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
 import { Text, Input } from 'react-native-elements';
 import Modal from 'react-native-modal';
-import { useNavigation } from '../hooks/navigation';
+import { useNavigation, NavigationProp } from '../hooks/navigation';
 import { useFocusOnMount } from '../hooks/helpers';
 
 type Props = {
-  title: string,
-  submitText: string,
-  show: boolean,
-  onClose: () => void,
-  onSubmit: (value: string) => void,
-  multiline?: boolean,
-  noInput?: boolean,
-  children?: React.Node,
-  defaultValue?: string,
-  noCheck?: boolean,
+  title: string;
+  submitText: string;
+  show: boolean;
+  onClose: () => void;
+  onSubmit: (value: string, nav: NavigationProp) => void;
+  multiline?: boolean;
+  noInput?: boolean;
+  children?: JSX.Element | JSX.Element[];
+  defaultValue: string;
+  noCheck?: boolean;
 };
 
 const styles = StyleSheet.create({

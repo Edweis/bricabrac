@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { EMAIL_KEY, fetch } from '../../storage';
+import { StorageKey, fetch } from '../../storage';
 
-export const useLastEmail = callback =>
+export const useLastEmail = (callback: (email: string) => void) =>
   useEffect(() => {
     const setLastEmail = async () => {
-      const lastEmail = await fetch(EMAIL_KEY);
+      const lastEmail = await fetch(StorageKey.EMAIL);
       if (lastEmail != null) callback(lastEmail);
     };
     setLastEmail();

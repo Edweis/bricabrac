@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { ConceptDepsT } from '../../constants/types';
+import { ConceptAnalysisT } from '../../constants/types';
 import { formatContent, formatTags } from './helpers';
 
 function BrickContent({
@@ -8,9 +8,9 @@ function BrickContent({
   conceptDeps,
   asConcept,
 }: {
-  content?: string,
-  conceptDeps: ConceptDepsT,
-  asConcept: boolean,
+  content?: string;
+  conceptDeps: ConceptAnalysisT;
+  asConcept: boolean;
 }) {
   const displayedContent = formatContent(content, asConcept);
   const hasDeps = !!conceptDeps.deps.length;

@@ -41,7 +41,7 @@ export class Observable<T> {
   }
 }
 
-export function useObservable<T extends object>(observable: Observable<T>): T {
+export function useObservable<T>(observable: Observable<T>): T {
   const [val, setVal] = useState(observable.get());
 
   useEffect(() => {

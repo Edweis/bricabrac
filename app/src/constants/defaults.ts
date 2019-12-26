@@ -1,7 +1,7 @@
 import { Timestamp } from '../firebase';
 import { BrickT, ReadingTimeT, StatusT } from './types';
 
-export const DEFAULT_BRICK: BrickT = {
+export const DEFAULT_BRICK: Partial<BrickT> = {
   id: 'idBrick1',
   childrenConcepts: [],
   content: 'loading content ...',

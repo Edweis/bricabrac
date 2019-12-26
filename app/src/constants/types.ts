@@ -40,6 +40,7 @@ export type BrickRawT = {
   parentConcept: ConceptT;
   source: string;
   isDefinition: boolean;
+  author: string;
 };
 /**
  * Brick used in the app.

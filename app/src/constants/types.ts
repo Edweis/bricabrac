@@ -56,11 +56,13 @@ export type CommentT = {
   text: string;
   datetime: Timestamp;
 };
-export type AcceptationT = {
-  id: string;
+export type AcceptationSetT = {
   brickId: string;
   userId: string;
   status: StatusT;
+};
+export type AcceptationT = AcceptationSetT & {
+  id: string;
   datetime: Timestamp;
 };
 export type ProjectSourceT = SourceT;

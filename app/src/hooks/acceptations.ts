@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { setFirestore } from './firestore';
-import { AcceptationT, StatusT } from '../constants/types';
+import { Timestamp } from '../firebase';
+import { AcceptationT, StatusT, AcceptationSetT } from '../constants/types';
 import { useObservable } from '../helpers/observable';
 import { acceptationService } from '../helpers/store';
 
@@ -28,12 +29,12 @@ export const useUserAcceptation = (
   );
 };
 
-export const setAcceptation = (acceptation: AcceptationT) => {
+export const setAcceptation = (acceptation: AcceptationSetT) => {
   const enrichedAcceptation = {
     ...acceptation,
-    datetime: new Date(),
+    datetime: Timestamp.now(),
     id: genAcceptationId(acceptation.brickId, acceptation.userId),
-  };
+  } as AcceptationT;
 
   setFirestore(ACCEPTATION_COLLECTION, enrichedAcceptation);
 };

@@ -1,5 +1,5 @@
 import firebase, { getCurrentUserId } from '../../firebase';
-import { BrickT } from '../../constants/types';
+import { BrickT, ConceptT, AcceptationSetT } from '../../constants/types';
 import { setAcceptation } from '../acceptations';
 import { useFilteredBricks, useBrickWithAcceptation } from './helpers';
 import { setFirestore } from '../firestore';
@@ -28,8 +28,8 @@ export const setBrick = (brick: BrickT) => {
   const { status } = enrichedBrick;
   delete enrichedBrick.status;
 
-  const setAcceptationFromBrick = brickWithId => {
-    const acceptation = {
+  const setAcceptationFromBrick = (brickWithId: BrickT) => {
+    const acceptation: AcceptationSetT = {
       userId,
       brickId: brickWithId.id,
       status,

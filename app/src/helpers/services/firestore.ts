@@ -33,11 +33,19 @@ export const subscribeFirestore = <T>(collection: CollectionE | string) =>
 export default class FirestoreService<T> {
   readonly value: Observable<T[]>;
 
-  readonly subscription: rxjs.Subscription;
+  readonly collection: CollectionE;
+
+  subscription: rxjs.Subscription | null = null;
 
   constructor(collection: CollectionE) {
-    this.value = new Observable<T[]>([]);
-    const firestoreObs = subscribeFirestore<T[]>(collection);
-    this.subscription = firestoreObs.subscribe(docs => this.value.set(docs));
+    this.value = new Observable<T[]>([], null, collection);
+    this.collection = collection;
+  }
+
+  sync() {
+    const firestoreObs = subscribeFirestore<T[]>(this.collection);
+    const subscription = firestoreObs.subscribe(docs => this.value.set(docs));
+    this.subscription = subscription;
+    return subscription;
   }
 }

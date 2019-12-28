@@ -5,7 +5,7 @@ import * as Sentry from 'sentry-expo';
 import Constants from 'expo-constants';
 import SignUp from './src/components/SignUp';
 import AppNavigator from './src/navigation/AppNavigator';
-import SplashLoading from './src/screens/Splash';
+import SplashLoading, { LoadStoreOnMount } from './src/screens/Splash';
 import { onAuthChange, isUserConnected } from './src/firebase';
 import { EMAIL_KEY, store } from './src/storage';
 
@@ -43,7 +43,9 @@ export default function App() {
 
   return (
     <SplashLoading onError={onError}>
-      <AppNavigator />
+      <LoadStoreOnMount>
+        <AppNavigator />
+      </LoadStoreOnMount>
     </SplashLoading>
   );
 }

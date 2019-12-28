@@ -27,9 +27,9 @@ export type LoadingT = {
 export type SourceT = string;
 export type ProjectT = SourceT | null;
 export enum StatusT {
-  'accepted',
-  'refused',
-  'none',
+  accepted = 'accepted',
+  refused = 'refused',
+  none = 'none',
 }
 /**
  * Represents bricks comming from the database.

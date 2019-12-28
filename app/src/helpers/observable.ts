@@ -7,11 +7,14 @@ type Unsubscriber = () => void;
 export class Observable<T> {
   private listeners: Listener<T>[];
 
+  readonly name: string;
+
   private omitFields: string[];
 
-  constructor(private val: T, omitField?: string) {
+  constructor(private val: T, omitField?: string | null, name = '(unamed)') {
     this.listeners = [];
     this.omitFields = omitField != null ? [omitField] : [];
+    this.name = name;
   }
 
   get(): T {

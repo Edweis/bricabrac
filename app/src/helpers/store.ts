@@ -26,3 +26,14 @@ export const readingTimesService = new FirestoreService<ReadingTimeT>(
 export const conceptDepsService = new FirestoreService<ConceptDepsT>(
   CollectionE.CONCEPT_DEPS,
 );
+
+export const firestoreSyncAllWithState = () => {
+  const subscriptions = [
+    acceptationService,
+    usersService,
+    bricksService,
+    readingTimesService,
+    conceptDepsService,
+  ].map(service => service.sync());
+  return () => subscriptions.map(subscription => subscription.unsubscribe());
+};

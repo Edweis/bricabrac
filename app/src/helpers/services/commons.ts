@@ -4,7 +4,7 @@ import {
   ProjectT,
   CollectionE,
   LoadingT,
-  BrickT,
+  BrickRawT,
   ComputedCollection,
   CommentT,
 } from '../../constants/types';
@@ -13,7 +13,7 @@ import FirestoreService, { subscribeFirestore } from './firestore';
 export const getCommentCollection = (brickId: string): ComputedCollection =>
   `${CollectionE.BRICKS}/${brickId}/${CollectionE.COMMENTS}`;
 
-export class BricksService extends FirestoreService<BrickT> {
+export class BricksService extends FirestoreService<BrickRawT> {
   readonly comments: { [brickId: string]: Observable<CommentT[]> } = {};
 
   constructor() {
@@ -28,7 +28,7 @@ export class BricksService extends FirestoreService<BrickT> {
       const subscription = firestoreObs.subscribe(docs =>
         this.comments[brickId].set(docs),
       );
-      this.subscription.add(subscription);
+      if (this.subscription != null) this.subscription.add(subscription);
     }
     return this.comments[brickId];
   }

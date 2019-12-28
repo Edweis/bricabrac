@@ -13,6 +13,11 @@ const displayFirestoreBill = (collection: string, count: number) => {
 
 export const subscribeFirestore = <T>(collection: CollectionE | string) =>
   new rxjs.Observable<T>(subscriber => {
+    // avoid circular imports
+    // eslint-disable-next-line
+    const { loadingService } = require('../store');
+
+    loadingService.set(collection, true);
     const unsubscribe = firebase
       .firestore()
       .collection(collection)
@@ -25,8 +30,8 @@ export const subscribeFirestore = <T>(collection: CollectionE | string) =>
         displayFirestoreBill(collection, newDocuments.length);
         const newDocumentsCasted = (newDocuments as unknown) as T;
         subscriber.next(newDocumentsCasted);
+        loadingService.set(collection, false);
       });
-
     return unsubscribe;
   });
 

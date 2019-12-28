@@ -1,4 +1,5 @@
 /* eslint-disable max-classes-per-file */
+import _ from 'lodash';
 import { Observable } from '../observable';
 import {
   ProjectT,
@@ -35,16 +36,20 @@ export class BricksService extends FirestoreService<BrickRawT> {
 }
 
 export class LoadingService {
-  readonly loadings = new Observable<LoadingT>({ shouldLoadAgain: false });
+  readonly loadings = new Observable<LoadingT>({ shouldLoadAgain: true });
 
   isLoading() {
     const { loadings } = this;
-    if (loadings.get().shouldLoadAgain) return false;
-    return false;
-    // const values = _.values(loadings);
-    // const isLoading = values.length === 0 || values.some(value => value);
-    // if (!isLoading) loadings.set({ ...loadings.get(), shouldLoadAgain: true });
-    // return isLoading;
+    const loadingObject = loadings.get();
+    if (!loadingObject.shouldLoadAgain) return false;
+    const values = _(loadingObject)
+      .omit('shouldLoadAgain')
+      .values()
+      .value();
+    const isLoading = values.length === 0 || values.some(value => value);
+    if (!isLoading) loadings.set({ ...loadingObject, shouldLoadAgain: false });
+
+    return isLoading;
   }
 
   set(collection: CollectionE | string, status: boolean) {

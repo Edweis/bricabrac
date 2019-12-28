@@ -5,7 +5,7 @@ import * as Sentry from 'sentry-expo';
 import Constants from 'expo-constants';
 import SignUp from './src/components/SignUp';
 import AppNavigator from './src/navigation/AppNavigator';
-import SplashLoading, { LoadStoreOnMount } from './src/screens/Splash';
+import SplashLoading from './src/screens/Splash';
 import { onAuthChange, isUserConnected } from './src/firebase';
 import { EMAIL_KEY, store } from './src/storage';
 
@@ -39,13 +39,10 @@ export default function App() {
     return subscriber; // unsubscribe on unmount
   }, []);
 
-  if (authLoading) return <SignUp />;
-
   return (
     <SplashLoading onError={onError}>
-      <LoadStoreOnMount>
-        <AppNavigator />
-      </LoadStoreOnMount>
+      {/* this conditional rendering should happend after loading the splash screen */}
+      {authLoading ? <SignUp /> : <AppNavigator />}
     </SplashLoading>
   );
 }

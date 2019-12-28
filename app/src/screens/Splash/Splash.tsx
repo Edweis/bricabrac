@@ -4,7 +4,7 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { loadingService } from '../../helpers/store';
+import { useFirestoreLoading } from './helpers';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
 });
 
-async function loadResourcesAsync(): Promise<string> {
+async function loadResourcesAsync(): Promise<void> {
   await Promise.all([
     Font.loadAsync({
       // This is the font that we are using for our tab bar
@@ -27,15 +27,15 @@ async function loadResourcesAsync(): Promise<string> {
 }
 
 type Props = {
-  children: React.Node,
-  onError: (error: string) => void,
+  children: JSX.Element;
+  onError: (error: Error) => void;
 };
 export default ({ children, onError }: Props) => {
   const [isAppLoading, setAppLoading] = useState(true);
-  const isStateLoading = loadingService.isLoading();
+  const isFirestoreLoading = useFirestoreLoading();
   const endAppLoading = useCallback(() => setAppLoading(false), []);
 
-  if (isAppLoading || isStateLoading) {
+  if (isAppLoading || isFirestoreLoading) {
     return (
       <AppLoading
         startAsync={loadResourcesAsync}
@@ -44,6 +44,7 @@ export default ({ children, onError }: Props) => {
       />
     );
   }
+
   return (
     <View style={styles.container}>
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}

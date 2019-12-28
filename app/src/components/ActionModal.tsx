@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
-import { Text, Input } from 'react-native-elements';
+import { Text, Input, InputProps } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { useNavigation, NavigationProp } from '../hooks/navigation';
 import { useFocusOnMount } from '../hooks/helpers';
@@ -16,6 +16,7 @@ type Props = {
   children?: JSX.Element | JSX.Element[];
   defaultValue: string;
   noCheck?: boolean;
+  inputProps: Partial<InputProps>;
 };
 
 const styles = StyleSheet.create({
@@ -63,6 +64,8 @@ function ActionModal(props: Props) {
             onChangeText={setValue}
             multiline={props.multiline}
             ref={focusOnMountRef}
+            // eslint-disable-next-line
+            {...props.inputProps}
           />
         )}
         <View style={styles.title}>
@@ -79,6 +82,7 @@ ActionModal.defaultProps = {
   children: null,
   defaultValue: '',
   noCheck: false,
+  inputProps: {},
 };
 
 export default ActionModal;

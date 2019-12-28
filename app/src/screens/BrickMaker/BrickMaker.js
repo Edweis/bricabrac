@@ -10,7 +10,7 @@ import CommentButton from './CommentButton';
 import IsDefinitionPicker from './IsDefinitionPicker';
 import Comments from './Comments';
 import { setBrick, deleteBrick, updateBrickComment } from '../../hooks/bricks';
-import { useUser } from '../../hooks/users';
+import { useUserEmail } from '../../hooks/users';
 import { useFocusOnMount } from '../../hooks/helpers';
 import { checkBrickError } from './helpers';
 import { EMPTY_BRICK } from '../../constants/defaults';
@@ -54,6 +54,7 @@ const useFilledBricked = (brick: BrickT): BrickT =>
   useMemo(
     () => ({
       ...EMPTY_BRICK,
+      author: getCurrentUserId(),
       ...brick,
     }),
     [brick],
@@ -97,7 +98,7 @@ function BrickMaker() {
     if (!isEditEnabled) setBrick(updatedBrick);
   };
 
-  const author = useUser(newBrick.author);
+  const email = useUserEmail(newBrick.author);
 
   return (
     <ScrollView
@@ -176,8 +177,8 @@ function BrickMaker() {
             containerStyle={styles.deleteContainer}
           />
         )}
-        {!isEditEnabled && (
-          <Text style={styles.authorText}>Brique de {author.email}</Text>
+        {!isEditEnabled && email != null && (
+          <Text style={styles.authorText}>Brique de {email}</Text>
         )}
       </View>
     </ScrollView>

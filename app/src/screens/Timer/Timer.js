@@ -77,6 +77,8 @@ const Timer = () => {
         value={startPage}
         disabled={isOn}
         onChangeText={setStartPage}
+        autoCompleteType="off"
+        keyboardType="decimal-pad"
       />
       {!isOn ? (
         <Button title="Start" onPress={startTimer} />
@@ -89,6 +91,8 @@ const Timer = () => {
         submitText="Envoyer"
         onClose={() => setIsEndPageModalShown(false)}
         onSubmit={submitReadingTime}
+        defaultValue={startPage}
+        inputProps={{ autoCompleteType: 'off', keyboardType: 'decimal-pad' }}
       />
       <TimerHistory />
     </View>

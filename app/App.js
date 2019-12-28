@@ -26,7 +26,7 @@ const onError = error => {
 };
 
 export default function App() {
-  const [authLoading, setAuthLoading] = useState(isUserConnected());
+  const [authLoading, setAuthLoading] = useState(!isUserConnected());
 
   useEffect(() => {
     bootstrap();

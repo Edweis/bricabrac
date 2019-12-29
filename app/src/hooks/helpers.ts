@@ -1,6 +1,5 @@
 // $Flow
 import _ from 'lodash';
-import { Input } from 'react-native-elements';
 import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 
 export const usePrevious = <T>(value: T): T | undefined => {
@@ -23,8 +22,10 @@ export const useSubscribedState = <T>(
   return [state, setState];
 };
 
-export const useFocusOnMount = (dep: boolean | string) => {
-  const ref = useRef<Input>(null);
+export const useFocusOnMount = <T extends { focus: () => void }>(
+  dep?: boolean | string,
+) => {
+  const ref = useRef<T>(null);
   useLayoutEffect(() => {
     if (ref.current) ref.current.focus();
   }, [ref.current, dep]);

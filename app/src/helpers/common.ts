@@ -1,4 +1,3 @@
-import { BrickT } from '../constants/types';
 import { EMPTY_SOURCE } from '../constants/defaults';
 
 export const normalize = (str: string | null): string => {
@@ -20,7 +19,11 @@ export const matchSearch = (
   return normalize(value).includes(normalize(search));
 };
 
-export const matchBrickSearch = (brick: BrickT, search: string): boolean => {
+type MatcheableObject = { parentConcept: string; content: string };
+export const matchBrickSearch = (
+  brick: MatcheableObject,
+  search: string,
+): boolean => {
   return (
     matchSearch(brick.parentConcept, search) ||
     matchSearch(brick.content, search)

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
 function ActionModal(props: Props) {
   const navigation = useNavigation();
-  const focusOnMountRef = useFocusOnMount(props.show);
+  const focusOnMountRef = useFocusOnMount<Input>(props.show);
   const { defaultValue, noInput, children, title, noCheck } = props;
   const [value, setValue] = useState(defaultValue);
   const onSubmit = () => {

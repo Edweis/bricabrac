@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.orange,
   },
 });
-
-const DefaultFab = (props: React.ComponentProps<typeof FAB>) => {
+type Props = { onPress: () => void; style?: ViewStyle };
+const DefaultFab = (props: Props) => {
   return (
     <FAB
       style={[styles.fab, props.style] as ViewStyle}

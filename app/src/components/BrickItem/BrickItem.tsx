@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 
 export type Props = {
   concept: string;
-  onRemove: (concept: ConceptT) => void;
+  onRemove?: (concept: ConceptT) => void;
   onSelect: (concept: ConceptT, nav: NavigationProp) => void;
   onCreate: (concept: ConceptT, nav: NavigationProp) => void;
   asConcept: boolean;
@@ -64,9 +64,10 @@ function BrickItem(props: Props) {
     : getWithFeaturedConceptItempProps();
 
   if (props.onRemove != null) {
+    const onPress = () => props.onRemove != null && props.onRemove(concept);
     data.rightIcon = {
       name: 'delete',
-      onPress: () => props.onRemove(concept),
+      onPress,
     };
   }
 

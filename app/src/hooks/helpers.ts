@@ -1,6 +1,6 @@
 // $Flow
 import _ from 'lodash';
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export const usePrevious = <T>(value: T): T | undefined => {
   const ref = useRef<T>();
@@ -26,7 +26,7 @@ export const useFocusOnMount = <T extends { focus: () => void }>(
   dep?: boolean | string,
 ) => {
   const ref = useRef<T>(null);
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (ref.current) ref.current.focus();
   }, [ref.current, dep]);
   return ref;

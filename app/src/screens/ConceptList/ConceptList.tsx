@@ -28,7 +28,7 @@ enum NavigationState {
 function ConceptList() {
   const searchState = useState('');
   const isSearchOpenState = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = isSearchOpenState;
+  const [, setIsSearchOpen] = isSearchOpenState;
   const [search, setSearch] = searchState;
 
   useNavigationEvent('willFocus', () => {
@@ -46,11 +46,6 @@ function ConceptList() {
     ConceptItem.defaultProps.onCreate,
   );
 
-  const focusOnSearch = () => {
-    if (isSearchOpen) {
-    } else setIsSearchOpen(true);
-  };
-
   // update title on search change
   useEffect(() => {
     navigation.setParams({ count: concepts.length });
@@ -61,7 +56,6 @@ function ConceptList() {
     navigation.setParams({ [NavigationState.isOpen]: isSearchOpenState });
   }, [search, isSearchOpenState[0]]);
 
-  // Use FlatList if ScrollView becomes too slow
   return (
     <>
       <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
@@ -78,7 +72,9 @@ function ConceptList() {
           )}
         />
       </ScrollView>
-      {hideFAB === false && <FAB onPress={focusOnSearch} />}
+      {hideFAB === false && search === '' && (
+        <FAB onPress={() => setIsSearchOpen(true)} />
+      )}
     </>
   );
 }

@@ -35,7 +35,6 @@ export const useDisplayedConcepts = (search: string) => {
 
     // Add the search as a concept we can add
     if (search.trim() !== '') sortedConcepts.unshift(search.trim());
-    console.debug('sortedConcepts', sortedConcepts);
     return sortedConcepts;
   }, [bricks, search]);
 };

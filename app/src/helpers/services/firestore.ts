@@ -6,7 +6,7 @@ import firebase, { IS_DEV } from '../../firebase';
 let firestoreCountRead = 0;
 const displayFirestoreBill = (collection: string, count: number) => {
   firestoreCountRead += count;
-  console.debug(
+  console.log(
     `Firestore read : ${count} at ${collection}. Total : ${firestoreCountRead}`,
   );
 };

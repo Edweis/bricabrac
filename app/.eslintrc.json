@@ -47,7 +47,8 @@
       "curly": ["error", "multi-or-nest"],
       "import/prefer-default-export": "off",
       "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }]
+      "@typescript-eslint/no-empty-function": ["error", { "allow": ["arrowFunctions"] }],
+      "react/jsx-wrap-multilines": "off"
     },
     "settings": {
   		"import/resolver": {

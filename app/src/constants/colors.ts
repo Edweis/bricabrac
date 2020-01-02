@@ -20,4 +20,5 @@ export default {
   },
   orange: '#f4511e',
   black: '#000',
+  white: '#FFF',
 };

@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { ConceptAnalysisT } from '../../constants/types';
 import { formatContent, formatTags } from './helpers';
 
-function BrickContent({
+function ConceptContent({
   content,
   conceptDeps,
   asConcept,
@@ -22,6 +22,6 @@ function BrickContent({
     </View>
   );
 }
-BrickContent.defaultProps = { content: null };
+ConceptContent.defaultProps = { content: null };
 
-export default BrickContent;
+export default ConceptContent;

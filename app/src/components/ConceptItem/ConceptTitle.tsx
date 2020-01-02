@@ -4,7 +4,7 @@ import { ConceptT, StatusT } from '../../constants/types';
 import { formatConceptTitle } from './helpers';
 import Status from '../Status';
 
-function BrickTitle({
+function ConceptTitle({
   status,
   concept,
   asConcept,
@@ -28,6 +28,6 @@ function BrickTitle({
     </View>
   );
 }
-BrickTitle.defaultProps = { status: null };
+ConceptTitle.defaultProps = { status: null };
 
-export default BrickTitle;
+export default ConceptTitle;

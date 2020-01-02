@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { BrickT, ConceptAnalysisT } from '../../constants/types';
 
 export const getFeaturedBrick = (bricks: BrickT[]): BrickT | null => {
-  if (!bricks.length) return null;
+  if (bricks.length === 0) return null;
   const grouped = _(bricks)
     .groupBy('status')
     .mapValues(bs => _.sortBy(bs, b => b.submitTime.toDate().getTime()))

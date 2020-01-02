@@ -5,7 +5,7 @@ import { ListItem } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
 import Status from '../../components/Status';
 import FAB from '../../components/FAB';
-import BrickItem from '../../components/BrickItem';
+import ConceptItem from '../../components/ConceptItem';
 import { useBricks } from '../../hooks';
 import { useConceptDeps } from '../../hooks/concepts';
 import EditConceptButton from './EditConceptButton';
@@ -24,7 +24,7 @@ function ConceptBrickList() {
     <>
       <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
         {conceptDeps.deps.map(concept => (
-          <BrickItem key={concept} concept={concept} asConcept />
+          <ConceptItem key={concept} concept={concept} asConcept />
         ))}
         {bricks.length ? (
           bricks.map(brick => (

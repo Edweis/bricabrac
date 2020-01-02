@@ -18,7 +18,7 @@ const DefaultFab = (props: Props) => {
   return (
     <FAB
       style={[styles.fab, props.style] as ViewStyle}
-      color={colors.orange}
+      color={colors.white}
       icon="plus"
       /* eslint-disable-next-line react/jsx-props-no-spreading */
       {...props}

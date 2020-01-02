@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, FlatList } from 'react-native';
 import SearchBarHeader from './SearchBarHeader';
 import { useNavigation, NavigationProp } from '../../hooks/navigation';
 import { useDisplayedConcepts, useNavigationEvent } from './hooks';
-import BrickItem from '../../components/BrickItem';
+import ConceptItem from '../../components/ConceptItem';
 import FAB from '../../components/FAB';
 
 const styles = StyleSheet.create({
@@ -28,7 +28,7 @@ enum NavigationState {
 function ConceptList() {
   const searchState = useState('');
   const isSearchOpenState = useState(false);
-  const [, setIsSearchOpen] = isSearchOpenState;
+  const [isSearchOpen, setIsSearchOpen] = isSearchOpenState;
   const [search, setSearch] = searchState;
 
   useNavigationEvent('willFocus', () => {
@@ -43,8 +43,13 @@ function ConceptList() {
   const onSelect = navigation.getParam('onSelect');
   const onCreate = navigation.getParam(
     'onCreate',
-    BrickItem.defaultProps.onCreate,
+    ConceptItem.defaultProps.onCreate,
   );
+
+  const focusOnSearch = () => {
+    if (isSearchOpen) {
+    } else setIsSearchOpen(true);
+  };
 
   // update title on search change
   useEffect(() => {
@@ -64,7 +69,7 @@ function ConceptList() {
           data={concepts}
           keyExtractor={parentConcept => parentConcept}
           renderItem={({ item }) => (
-            <BrickItem
+            <ConceptItem
               key={item}
               concept={item}
               onSelect={onSelect}
@@ -73,7 +78,7 @@ function ConceptList() {
           )}
         />
       </ScrollView>
-      {hideFAB === false && <FAB onPress={() => setIsSearchOpen(true)} />}
+      {hideFAB === false && <FAB onPress={focusOnSearch} />}
     </>
   );
 }

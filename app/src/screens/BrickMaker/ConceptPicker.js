@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useNavigation } from '../../hooks/navigation';
 import { ConceptT } from '../../constants/types';
-import BrickItem from '../../components/BrickItem';
+import ConceptItem from '../../components/ConceptItem';
 
 const styles = StyleSheet.create({
   badges: { display: 'flex', flexDirection: 'row' },
@@ -33,7 +33,7 @@ function ConceptPicker(props: Props) {
       <View>
         {concepts.length > 0 ? (
           concepts.map(concept => (
-            <BrickItem
+            <ConceptItem
               key={concept}
               concept={concept}
               onRemove={!readOnly ? removeConcept : null}
@@ -41,7 +41,7 @@ function ConceptPicker(props: Props) {
             />
           ))
         ) : (
-          <BrickItem.Empty />
+          <ConceptItem.Empty />
         )}
       </View>
       {!readOnly && (

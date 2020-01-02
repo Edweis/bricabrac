@@ -5,7 +5,7 @@ import { useConceptTags, setConceptDeps } from '../hooks/concepts';
 import { useNavigation, NavigationProp } from '../hooks/navigation';
 import { useSubscribedState } from '../hooks/helpers';
 import ActionModal from './ActionModal';
-import BrickItem from './BrickItem';
+import ConceptItem from './ConceptItem';
 
 type Props = {
   concept: ConceptT | null;
@@ -25,7 +25,7 @@ function ConceptEditor(props: Props) {
       <ActionModal
         show={show && localShow}
         onSubmit={concept =>
-          BrickItem.defaultProps.onCreate(concept, navigation)
+          ConceptItem.defaultProps.onCreate(concept, navigation)
         }
         onClose={onClose}
         title="Nouveau concept"
@@ -66,7 +66,7 @@ function ConceptEditor(props: Props) {
     >
       <View>
         {deps.map(concept => (
-          <BrickItem
+          <ConceptItem
             key={concept}
             concept={concept}
             onRemove={onRemove}

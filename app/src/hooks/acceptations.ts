@@ -20,7 +20,6 @@ export const useUserAcceptation = (
       if (!userId) return StatusT.none;
       const accId = genAcceptationId(brickId, userId);
       const foundAcceptations = acceptations.filter(acc => acc.id === accId);
-      console.debug(foundAcceptations.length, accId);
       return foundAcceptations.length
         ? foundAcceptations[0].status
         : StatusT.none;

@@ -39,10 +39,14 @@ export const useDisplayedConcepts = (search: string) => {
   }, [bricks, search]);
 };
 
-export const useNavigationEvent = (event: string, cb: (value: any) => void) => {
+type NavEvents = 'willBlur' | 'willFocus' | 'didFocus' | 'didBlur';
+export const useNavigationEvent = (
+  event: NavEvents,
+  cb: (value: any) => void,
+) => {
   const navigation = useNavigation();
   useEffect(() => {
-    const subscription = navigation.addListener('willFocus', cb);
+    const subscription = navigation.addListener(event, cb);
     return () => subscription.remove();
   }, [navigation]);
 };

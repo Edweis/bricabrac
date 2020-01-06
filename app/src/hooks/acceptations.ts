@@ -18,9 +18,9 @@ export const useUserAcceptation = (
   return useCallback(
     brickId => {
       if (!userId) return StatusT.none;
-      const foundAcceptations = acceptations.filter(
-        a => a.id === genAcceptationId(brickId, userId),
-      );
+      const accId = genAcceptationId(brickId, userId);
+      const foundAcceptations = acceptations.filter(acc => acc.id === accId);
+      console.debug(foundAcceptations.length, accId);
       return foundAcceptations.length
         ? foundAcceptations[0].status
         : StatusT.none;

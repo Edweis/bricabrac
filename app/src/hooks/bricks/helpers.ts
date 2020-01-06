@@ -40,7 +40,7 @@ export const useBrickWithAcceptation = (bricks: BrickRawT[]): BrickT[] => {
     if (didChange) {
       const updatedBricks = bricks.map(brick => ({
         ...brick,
-        status: getUserAcceptation(brick.author),
+        status: getUserAcceptation(brick.id),
       }));
       setBricksWithAcceptation(updatedBricks);
     }

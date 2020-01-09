@@ -1,5 +1,5 @@
 import { Timestamp } from '../firebase';
-import { BrickT, ReadingTimeT, StatusT } from './types';
+import { BrickT, ReadingTimeSetT, StatusT } from './types';
 
 export const EMPTY_BRICK: Partial<BrickT> = {
   childrenConcepts: [],
@@ -12,7 +12,7 @@ export const EMPTY_BRICK: Partial<BrickT> = {
 
 export const EMPTY_SOURCE = 'Aucune source';
 
-export const DEFAULT_READING_TIME: Partial<ReadingTimeT> = {
+export const DEFAULT_READING_TIME: Partial<ReadingTimeSetT> = {
   startTime: Timestamp.now(),
   endTime: null,
   startPage: 0,

@@ -1,4 +1,4 @@
-import { ReadingTimeT } from '../../constants/types';
+import { ReadingTimeSetT } from '../../constants/types';
 
 export const pad = (n: number) => {
   return `0${n}`.slice(-2);
@@ -12,8 +12,9 @@ export const formatTimer = (timer: number) => {
   return `${fornatedHours}:${formatedMinutes}:${formatedSeconds}`;
 };
 
-export const getReadingInsight = (readingTime: ReadingTimeT): string => {
+export const getReadingInsight = (readingTime: ReadingTimeSetT): string => {
   const { endTime, startTime, startPage, endPage } = readingTime;
+  if (endTime == null) return '∞';
   const durationTime = endTime.toMillis() - startTime.toMillis();
   const duration = formatTimer(durationTime / 1000);
   const speed = (durationTime / ((endPage - startPage) * 60 * 1000)).toFixed(2);

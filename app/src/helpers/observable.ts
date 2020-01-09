@@ -21,18 +21,18 @@ export class Observable<T> {
     return this.val;
   }
 
-  set(val: T) {
+  set(newValue: Partial<T>) {
     const valToCompare =
-      val instanceof Object
-        ? _.omit((val as unknown) as object, this.omitFields)
-        : val;
+      newValue instanceof Object
+        ? _.omit((newValue as unknown) as object, this.omitFields)
+        : newValue;
     if (!_.isEqual(this.val, valToCompare)) {
-      this.val = val;
+      this.val = { ...this.val, newValue };
       if (!this.listeners) {
         console.warn('no listeners ! skipped.');
         return;
       }
-      this.listeners.forEach(listener => listener(val));
+      this.listeners.forEach(listener => listener(this.val));
     }
   }
 

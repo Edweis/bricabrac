@@ -73,12 +73,15 @@ export type ProjectSetterT = [
   ProjectSourceT,
   (project: ProjectSourceT) => void,
 ];
-export type ReadingTimeT = {
+export type ReadingTimeSetT = {
   startTime: Timestamp;
   endTime: Timestamp | null;
   startPage: number;
   endPage: number;
   source: SourceT;
+};
+export type ReadingTimeT = ReadingTimeSetT & {
   userId: string;
+  id: string;
 };
 export type ConceptAnalysisT = { deps: ConceptT[]; isCyclical: boolean };

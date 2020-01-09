@@ -14,9 +14,11 @@ const styles = StyleSheet.create({
 export default () => {
   const userId = getCurrentUserId();
   const readingTimes = useUserReadingTimes(userId);
-  const sortedReadingTimes = _.sortBy(readingTimes, readingTime =>
-    readingTime.endTime.toMillis(),
-  ).reverse();
+  const sortedReadingTimes = _(readingTimes)
+    .sortBy(readingTime =>
+      readingTime.endTime == null ? 0 : readingTime.endTime.toMillis(),
+    )
+    .reverse();
   return (
     <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
       {sortedReadingTimes.map(readingTime => {

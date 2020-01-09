@@ -11,10 +11,10 @@ const styles = StyleSheet.create({
 });
 
 type Props = { timer: number };
-export default (props: Props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{formatTimer(props.timer)}</Text>
-    </View>
-  );
-};
+const TimerDisplay = (props: Props) => (
+  <View style={styles.container}>
+    <Text style={styles.text}>{formatTimer(props.timer)}</Text>
+  </View>
+);
+
+export default TimerDisplay;

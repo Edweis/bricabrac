@@ -3,6 +3,7 @@ import {
   FirestoreService,
   LoadingService,
   BricksService,
+  TimerService,
 } from './services';
 
 import {
@@ -17,6 +18,7 @@ export const loadingService = new LoadingService();
 export const projectService = new ProjectService();
 export const usersService = new FirestoreService<UserT>(CollectionE.USERS);
 export const bricksService = new BricksService();
+export const timerService = new TimerService();
 export const acceptationService = new FirestoreService<AcceptationT>(
   CollectionE.ACCEPTATIONS,
 );

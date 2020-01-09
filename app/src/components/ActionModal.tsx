@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import { View, Button, StyleSheet } from 'react-native';
-import { Text, Input, InputProps } from 'react-native-elements';
+import { Text, InputProps } from 'react-native-elements';
 import Modal from 'react-native-modal';
+import _ from 'lodash';
 import { useNavigation, NavigationProp } from '../hooks/navigation';
-import { useFocusOnMount } from '../hooks/helpers';
+import InputValidated, { ValidationStrategy } from './InputValidated';
 
-type Props = {
+type Props<T> = {
   title: string;
   submitText: string;
   show: boolean;
   onClose: () => void;
-  onSubmit: (value: string, nav: NavigationProp) => void;
+  onSubmit: (value: T, nav: NavigationProp) => void;
   multiline?: boolean;
   noInput?: boolean;
-  children?: JSX.Element | JSX.Element[];
-  defaultValue: string;
+  children?: JSX.Element | JSX.Element[] | null;
+  defaultValue: T;
   noCheck?: boolean;
   inputProps: Partial<InputProps>;
+  validator: ValidationStrategy<T>;
 };
 
 const styles = StyleSheet.create({
@@ -35,11 +37,10 @@ const styles = StyleSheet.create({
   },
 });
 
-function ActionModal(props: Props) {
+function ActionModal<T>(props: Props<T>) {
   const navigation = useNavigation();
-  const focusOnMountRef = useFocusOnMount<Input>(props.show);
-  const { defaultValue, noInput, children, title, noCheck } = props;
-  const [value, setValue] = useState(defaultValue);
+  const { defaultValue, noInput, children, title, noCheck, validator } = props;
+  const [value, setValue] = useState<T>(defaultValue);
   const onSubmit = () => {
     if (noInput || noCheck || value !== defaultValue) {
       props.onClose();
@@ -59,13 +60,14 @@ function ActionModal(props: Props) {
         </View>
         {children && <View>{children}</View>}
         {!noInput && (
-          <Input
-            value={value}
-            onChangeText={setValue}
-            multiline={props.multiline}
-            ref={focusOnMountRef}
+          <InputValidated
             // eslint-disable-next-line
             {...props.inputProps}
+            value={_.toString(value)}
+            validator={validator}
+            multiline={props.multiline}
+            onChangeText={(text: T) => setValue(text)}
+            focusOnMount
           />
         )}
         <View style={styles.title}>
@@ -83,6 +85,7 @@ ActionModal.defaultProps = {
   defaultValue: '',
   noCheck: false,
   inputProps: {},
-};
+  validator: (text: string) => text,
+} as Partial<Props<string>>;
 
 export default ActionModal;

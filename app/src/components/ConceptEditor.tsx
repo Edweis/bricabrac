@@ -24,7 +24,7 @@ function ConceptEditor(props: Props) {
     return (
       <ActionModal
         show={show && localShow}
-        onSubmit={concept =>
+        onSubmit={(concept: ConceptT) =>
           ConceptItem.defaultProps.onCreate(concept, navigation)
         }
         onClose={onClose}

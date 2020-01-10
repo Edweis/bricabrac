@@ -4,6 +4,10 @@ import _ from 'lodash';
 type Listener<T> = (val: T) => void;
 type Unsubscriber = () => void;
 
+const checkListeners = <T>(listeners: Listener<T>[]) => {
+  if (!listeners) console.warn('No listeners ! skipped.');
+};
+
 export class Observable<T> {
   private listeners: Listener<T>[];
 
@@ -21,19 +25,30 @@ export class Observable<T> {
     return this.val;
   }
 
-  set(newValue: Partial<T>) {
-    const valToCompare =
-      newValue instanceof Object
-        ? _.omit((newValue as unknown) as object, this.omitFields)
-        : newValue;
-    if (!_.isEqual(this.val, valToCompare)) {
-      this.val = { ...this.val, newValue };
-      if (!this.listeners) {
-        console.warn('no listeners ! skipped.');
-        return;
+  update(newObject: Partial<T>) {
+    // console.debug({ newObject, here: this.val });
+    if (this.val instanceof Object) {
+      const valToCompare = _.omit(
+        (newObject as unknown) as object,
+        this.omitFields,
+      );
+      if (!_.isEqual(this.val, valToCompare)) {
+        this.val = { ...this.val, ...newObject };
+        this.notifyAll();
       }
-      this.listeners.forEach(listener => listener(this.val));
     }
+  }
+
+  set(newValue: T) {
+    if (!_.isEqual(this.val, newValue)) {
+      this.val = newValue;
+      this.notifyAll();
+    }
+  }
+
+  private notifyAll() {
+    checkListeners(this.listeners);
+    this.listeners.forEach(listener => listener(this.val));
   }
 
   subscribe(listener: Listener<T>): Unsubscriber {
@@ -48,7 +63,8 @@ export function useObservable<T>(observable: Observable<T>): T {
   const [val, setVal] = useState(observable.get());
 
   useEffect(() => {
-    return observable.subscribe(setVal);
+    const unsubscribe = observable.subscribe(setVal);
+    return unsubscribe;
   }, [observable]);
 
   return val;

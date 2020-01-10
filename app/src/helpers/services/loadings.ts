@@ -15,13 +15,12 @@ export class LoadingService {
       .values()
       .value();
     const isLoading = values.length === 0 || values.some(value => value);
-    if (!isLoading) loadings.set({ ...loadingObject, shouldLoadAgain: false });
-
+    if (!isLoading) loadings.update({ shouldLoadAgain: false });
     return isLoading;
   }
 
   set(collection: CollectionE | string, status: boolean) {
     const { loadings } = this;
-    loadings.set({ ...loadings.get(), [collection]: status });
+    loadings.update({ [collection]: status });
   }
 }

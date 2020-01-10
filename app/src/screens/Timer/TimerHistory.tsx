@@ -18,7 +18,8 @@ export default () => {
     .sortBy(readingTime =>
       readingTime.endTime == null ? 0 : readingTime.endTime.toMillis(),
     )
-    .reverse();
+    .reverse()
+    .value();
   return (
     <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
       {sortedReadingTimes.map(readingTime => {

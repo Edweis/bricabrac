@@ -23,8 +23,8 @@ const DEFAULT_READING_TIME: TimerT = {
 export class TimerService {
   readonly timer = new Observable<TimerT>(DEFAULT_READING_TIME);
 
-  set(partialTimer: Partial<TimerT>) {
-    this.timer.set(partialTimer);
+  update(partialTimer: Partial<TimerT>) {
+    this.timer.update(partialTimer);
   }
 
   toReadingTime(endPage: number) {

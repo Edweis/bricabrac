@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 const Timer = () => {
+  console.debug('renderTimer');
   const timer = useTimer();
   const [displayedTimer, setDisplayedTimer] = useState(0);
   // const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -32,12 +33,12 @@ const Timer = () => {
   const lastReadSource = useLastReadSource();
   // const [source, setSource] = useState(lastReadSource);
   useEffect(() => {
-    timerService.set({ source: lastReadSource });
+    timerService.update({ source: lastReadSource });
   }, [lastReadSource]);
 
   const lastReadPage = useLastReadPage(timer.source);
   useEffect(() => {
-    timerService.set({ startPage: lastReadPage });
+    timerService.update({ startPage: lastReadPage });
   }, [lastReadPage]);
 
   // const [endTime, setEndTime] = useState(null);
@@ -45,15 +46,15 @@ const Timer = () => {
   const startTimer = () => {
     // if (_.isNaN(timer.startPage)) setErrorMessage("Ce n'est pas un nombre !");
     // else {
-    timerService.set({ isOn: true });
-    timerService.set({ startTime: new Date() });
+    timerService.update({ isOn: true });
+    timerService.update({ startTime: new Date() });
     // }
   };
 
   const stopTimer = () => {
-    timerService.set({ endTime: new Date() });
+    timerService.update({ endTime: new Date() });
     setIsEndPageModalShown(true);
-    timerService.set({ isOn: false });
+    timerService.update({ isOn: false });
     setDisplayedTimer(0);
   };
 
@@ -77,14 +78,14 @@ const Timer = () => {
 
       <SourcePicker
         source={timer.source}
-        onChange={source => timerService.set({ source })}
+        onChange={source => timerService.update({ source })}
         readOnly={timer.isOn}
       />
       <InputValidated<number>
         label="Page de début de lecture"
         value={timer.startPage.toString()}
         validator={(text: string): number => _.toNumber(text)}
-        onChangeText={(startPage: number) => timerService.set({ startPage })}
+        onChangeText={(startPage: number) => timerService.update({ startPage })}
         autoCompleteType="off"
         keyboardType="decimal-pad"
         disabled={timer.isOn}

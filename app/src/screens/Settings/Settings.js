@@ -2,7 +2,9 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { Linking } from 'expo';
+import * as WebBrowser from 'expo-web-browser';
 import firebase, { IS_DEV, getCurrentUser } from '../../firebase';
+import colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +29,13 @@ const GITHUB_LINK = 'https://github.com/Edweis/bricabrac/issues';
 const Settings = () => {
   const user = getCurrentUser();
   const loginInfo = `${user.email} - ${user.uid.substring(0, 7)}`;
+  const openInWebBrowser = async url => {
+    const result = await WebBrowser.openBrowserAsync(url, {
+      toolbarColor: colors.orange,
+      controlsColor: colors.white,
+    });
+    console.debug({ result });
+  };
   return (
     <View style={styles.container}>
       <View>
@@ -41,7 +50,7 @@ const Settings = () => {
           leftIcon={{ name: 'logo-github', type: 'ionicon' }}
           title="Issues github"
           subtitle="Un problème ? une suggestion ? clique ici !"
-          onPress={() => Linking.openURL(GITHUB_LINK)}
+          onPress={() => openInWebBrowser(GITHUB_LINK)}
           bottomDivider
         />
         <ListItem

@@ -19,6 +19,6 @@ export default {
     [StatusT.none]: '#ffc107',
   },
   orange: '#f4511e',
-  black: '#000',
-  white: '#FFF',
+  black: '#000000',
+  white: '#FFFFFF',
 };

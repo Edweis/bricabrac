@@ -12,6 +12,7 @@ app/web-report/
 app/.idea/*
 
 app/src/firestoreCredential*
+cli/migrations/credentials
 cli/keys
 
 app/build/*

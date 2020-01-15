@@ -4,7 +4,7 @@ from firebase_admin import firestore
 from pprint import pprint
 
 # Use a service account
-cred = credentials.Certificate('./serviceAccount.json')
+cred = credentials.Certificate('./credentials/firestoreCredentialsDev.json')
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()

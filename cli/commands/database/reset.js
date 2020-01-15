@@ -6,7 +6,6 @@ const prodServiceAccount = require('../../keys/prod-firestore');
 const devServiceAccount = require('../../keys/dev-firestore');
 
 if (devServiceAccount.project_id !== 'bricabrac-dev') {
-  console.debug({ devServiceAccount });
   console.error('devServiceAccount is NOT bricabrac-dev');
   process.exit(1);
 }

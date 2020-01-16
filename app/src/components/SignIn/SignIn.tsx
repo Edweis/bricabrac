@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 
 const iconName = IS_DEV ? 'ios-bug' : 'ios-information-circle';
 
-export default function SignUp() {
+export default function SignIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const passwordInputRef = useRef<Input>(null);

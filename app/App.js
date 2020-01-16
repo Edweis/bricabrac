@@ -3,7 +3,7 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import * as Sentry from 'sentry-expo';
 import Constants from 'expo-constants';
-import SignUp from './src/components/SignUp';
+import SignIn from './src/components/SignIn';
 import AppNavigator from './src/navigation/AppNavigator';
 import SplashLoading from './src/screens/Splash';
 import { onAuthChange, isUserConnected } from './src/firebase';
@@ -32,7 +32,7 @@ export default function App() {
     bootstrap();
     const subscriber = onAuthChange(newUser => {
       setAuthLoading(newUser == null);
-      // storing last connected user should happen in SignUp component
+      // storing last connected user should happen in SignIn component
       // however setting auth loading unmounts it before it can store it.
       if (newUser != null) store(EMAIL_KEY, newUser.email);
     });
@@ -42,7 +42,7 @@ export default function App() {
   return (
     <SplashLoading onError={onError}>
       {/* this conditional rendering should happend after loading the splash screen */}
-      {authLoading ? <SignUp /> : <AppNavigator />}
+      {authLoading ? <SignIn /> : <AppNavigator />}
     </SplashLoading>
   );
 }

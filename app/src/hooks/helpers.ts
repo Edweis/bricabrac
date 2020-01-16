@@ -22,12 +22,19 @@ export const useSubscribedState = <T>(
   return [state, setState];
 };
 
-export const useFocusOnMount = <T extends { focus: () => void }>(
+interface FocusableT {
+  focus: () => void;
+  props?: { disabled?: boolean } | {};
+}
+export const useFocusOnMount = <T extends FocusableT>(
   dep?: boolean | string,
 ) => {
   const ref = useRef<T>(null);
+  // On Android, focus on a disabled Input keep bluring. We need to track if the disabled prop changed
+  // Moreover, we need to fetch again the disbled props inside the useEffect, thius we use a function to fetch it.
+  const isDisabled = () => _.get(ref.current, 'props.disabled', false);
   useEffect(() => {
-    if (ref.current) ref.current.focus();
-  }, [ref.current, dep]);
+    if (ref.current != null && !isDisabled()) ref.current.focus();
+  }, [ref.current == null, isDisabled(), dep]);
   return ref;
 };

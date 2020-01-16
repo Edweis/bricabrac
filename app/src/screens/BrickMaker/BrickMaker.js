@@ -97,9 +97,7 @@ function BrickMaker() {
     // only for status, we save and push on readOnly
     if (!isEditEnabled) setBrick(updatedBrick);
   };
-
   const email = useUserEmail(newBrick.author);
-
   return (
     <ScrollView
       contentContainerStyle={styles.main}

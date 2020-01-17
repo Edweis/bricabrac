@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
-import { useNavigation } from '../../hooks/navigation';
+import { useNavigation, NavigationProp } from '../../hooks/navigation';
 import { ConceptT } from '../../constants/types';
 import ConceptItem from '../../components/ConceptItem';
 
@@ -13,14 +13,14 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  concepts: ConceptT[],
-  onChange: (concepts: ConceptT[]) => void,
-  readOnly?: boolean,
+  concepts: ConceptT[];
+  onChange: (concepts: ConceptT[]) => void;
+  readOnly?: boolean;
 };
 function ConceptPicker(props: Props) {
   const navigation = useNavigation();
   const { concepts, readOnly } = props;
-  const addConcept = (concept: ConceptT, nav: any) => {
+  const addConcept = (concept: ConceptT, nav: NavigationProp) => {
     if (!concepts.includes(concept)) props.onChange([...concepts, concept]);
     nav.pop();
   };
@@ -36,7 +36,7 @@ function ConceptPicker(props: Props) {
             <ConceptItem
               key={concept}
               concept={concept}
-              onRemove={!readOnly ? removeConcept : null}
+              onRemove={!readOnly ? removeConcept : undefined}
               asConcept
             />
           ))

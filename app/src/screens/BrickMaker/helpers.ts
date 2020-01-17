@@ -5,7 +5,11 @@ const getBrickError = (brick: BrickT): string | null => {
   return null;
 };
 
-export const checkBrickError = (brick, onSuccess, onError = () => {}) => {
+export const checkBrickError = (
+  brick: BrickT,
+  onSuccess: () => void,
+  onError: (error: string) => void = () => {},
+) => {
   const error = getBrickError(brick);
   if (error != null) return onError(error);
   return onSuccess();

@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Button } from 'react-native-elements';
+import { ButtonProps, Button } from 'react-native-elements';
 import ActionModal from './ActionModal';
 
-type ButtonProps = typeof Button;
 type Props = {
   modalTitle: string;
   onSubmit: () => void;

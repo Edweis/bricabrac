@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import _ from 'lodash';
 import { StyleSheet, ScrollView } from 'react-native';
 import { SearchBar, ListItem } from 'react-native-elements';
-import { useNavigation } from '../../hooks/navigation';
+import { useNavigation, NavigationOptionsProps } from '../../hooks/navigation';
 import { useBricks, useFocusOnMount } from '../../hooks';
 import { EMPTY_SOURCE } from '../../constants/defaults';
 
@@ -49,7 +49,7 @@ function SourceList() {
   const navigation = useNavigation();
   const onSelect = navigation.getParam('onSelect');
 
-  const focusOnMountRef = useFocusOnMount();
+  const focusOnMountRef = useFocusOnMount<SearchBar>();
   const [search, setSearch] = useState('');
   const sourceData = useDisplayedSources(search);
 
@@ -78,8 +78,8 @@ function SourceList() {
   );
 }
 
-SourceList.navigationOptions = ({ navigation }) => ({
-  title: navigation.getParam('title', 'Sources'),
+SourceList.navigationOptions = (props: NavigationOptionsProps) => ({
+  title: props.navigation.getParam('title', 'Sources'),
 });
 
 export default SourceList;

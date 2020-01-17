@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Button } from 'react-native-elements';
-import { CommentT } from '../../constants/types';
 import ActionModal from '../../components/ActionModal';
 
 function CommentButton(props: {
-  onSubmit: (comment: CommentT) => void,
-  style?: {},
+  onSubmit: (comment: string) => void;
+  style?: {};
 }) {
   const [displayInput, setDisplayInput] = useState(false);
 

@@ -15,14 +15,14 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  status: StatusT,
-  setStatus: (status: StatusT) => void,
+  status: StatusT;
+  setStatus: (status: StatusT) => void;
 };
 
 export default function StatusPicker(props: Props) {
   return (
     <View style={styles.container}>
-      {['accepted', 'none', 'refused'].map(value => (
+      {[StatusT.accepted, StatusT.none, StatusT.refused].map(value => (
         <Button
           key={value}
           onPress={() => props.setStatus(value)}
@@ -32,7 +32,7 @@ export default function StatusPicker(props: Props) {
             backgroundColor:
               props.status === value
                 ? colors.status[value]
-                : colors.status.neutral,
+                : colors.status.none,
           }}
           containerStyle={styles.item}
         />

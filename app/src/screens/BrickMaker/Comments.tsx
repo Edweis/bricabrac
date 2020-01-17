@@ -4,7 +4,7 @@ import { Text } from 'react-native-elements';
 import moment from 'moment';
 
 import { useBrickComments } from '../../hooks/bricks';
-import { useUser } from '../../hooks/users';
+import { useUserEmail } from '../../hooks/users';
 import { CommentT } from '../../constants/types';
 
 const styles = StyleSheet.create({
@@ -24,12 +24,12 @@ const isTextLinkImage = (text: string) =>
 
 const Comment = (props: { comment: CommentT }) => {
   const { comment } = props;
-  const user = useUser(comment.author);
+  const email = useUserEmail(comment.author);
   const isImage = isTextLinkImage(comment.text); // url.match(/\.(jpeg|jpg|gif|png)$/) != null
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.author}>{user.email}</Text>
+        <Text style={styles.author}>{email}</Text>
         <Text>{moment(comment.datetime.toDate()).fromNow()}</Text>
       </View>
       {isImage ? (

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Input, Divider, Button } from 'react-native-elements';
-import { useNavigation } from '../../hooks/navigation';
+import { useNavigation, NavigationOptionsProps } from '../../hooks/navigation';
 import { getCurrentUserId } from '../../firebase';
 import ConceptPicker from './ConceptPicker';
 import StatusPicker from './StatusPicker';
@@ -72,7 +72,7 @@ function BrickMaker() {
   const [displayedError, setDisplayedError] = useState('');
   const [isEditEnabled, setIsEditEnable] = useState(!isReadOnly);
 
-  const focusOnMountRef = useFocusOnMount(isReadOnly);
+  const focusOnMountRef = useFocusOnMount<Input>(isReadOnly);
 
   const submit = useCallback(() => {
     checkBrickError(
@@ -91,7 +91,7 @@ function BrickMaker() {
     if (isEditEnabled) navigation.setParams({ [SAVE_ACTION_PROPS]: submit });
   }, [isEditEnabled, newBrick]);
 
-  const updateBrick = (data: $Shape<BrickT>): BrickT => {
+  const updateBrick = (data: Partial<BrickT>) => {
     const updatedBrick = { ...newBrick, ...data };
     setNewBrick(updatedBrick);
     // only for status, we save and push on readOnly
@@ -103,10 +103,7 @@ function BrickMaker() {
       contentContainerStyle={styles.main}
       keyboardShouldPersistTaps="handled"
     >
-      <ScrollView
-        contentContainerStyle={styles.form}
-        keyboardShouldPersistTaps="handled"
-      >
+      <ScrollView keyboardShouldPersistTaps="handled">
         <Input
           label="Description"
           placeholder="description de la brique..."
@@ -175,15 +172,14 @@ function BrickMaker() {
             containerStyle={styles.deleteContainer}
           />
         )}
-        {!isEditEnabled && email != null && (
-          <Text style={styles.authorText}>Brique de {email}</Text>
-        )}
+        {!isEditEnabled && email != null && <Text>Brique de {email}</Text>}
       </View>
     </ScrollView>
   );
 }
 
-BrickMaker.navigationOptions = ({ navigation }) => {
+BrickMaker.navigationOptions = (props: NavigationOptionsProps) => {
+  const { navigation } = props;
   const { parentConcept } = navigation.getParam('brick', {
     parentConcept: '...',
   });

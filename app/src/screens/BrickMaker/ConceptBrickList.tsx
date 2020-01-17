@@ -1,18 +1,14 @@
 import React from 'react';
 import moment from 'moment';
-import { StyleSheet, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { useNavigation } from '../../hooks/navigation';
+import { useNavigation, NavigationOptionsProps } from '../../hooks/navigation';
 import Status from '../../components/Status';
 import FAB from '../../components/FAB';
 import ConceptItem from '../../components/ConceptItem';
 import { useBricks } from '../../hooks';
 import { useConceptDeps } from '../../hooks/concepts';
 import EditConceptButton from './EditConceptButton';
-
-const styles = StyleSheet.create({
-  main: {},
-});
 
 function ConceptBrickList() {
   const navigation = useNavigation();
@@ -22,7 +18,7 @@ function ConceptBrickList() {
 
   return (
     <>
-      <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView keyboardShouldPersistTaps="handled">
         {conceptDeps.deps.map(concept => (
           <ConceptItem key={concept} concept={concept} asConcept />
         ))}
@@ -31,7 +27,7 @@ function ConceptBrickList() {
             <ListItem
               key={brick.id}
               title={brick.content}
-              subtitle={brick.childrenConcepts.join(', ') || null}
+              subtitle={brick.childrenConcepts.join(', ') || undefined}
               onPress={() =>
                 navigation.push('BrickMaker', { brick, readOnly: true })
               }
@@ -55,8 +51,8 @@ function ConceptBrickList() {
   );
 }
 
-ConceptBrickList.navigationOptions = ({ navigation }) => {
-  const concept = navigation.getParam('concept');
+ConceptBrickList.navigationOptions = (props: NavigationOptionsProps) => {
+  const concept = props.navigation.getParam('concept');
   const headerRight = <EditConceptButton concept={concept} />;
   return { title: concept, headerRight };
 };

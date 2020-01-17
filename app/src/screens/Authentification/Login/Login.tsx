@@ -1,7 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
-import { facebookLogin, emailLogin, googleLogin, IS_DEV } from '../../firebase';
+import {
+  facebookLogin,
+  emailLogin,
+  googleLogin,
+  IS_DEV,
+} from '../../../firebase';
 import { useLastEmail } from './hooks';
 
 const styles = StyleSheet.create({

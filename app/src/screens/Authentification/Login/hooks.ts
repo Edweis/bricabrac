@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { StorageKey, fetch } from '../../storage';
+import { StorageKey, fetch } from '../../../storage';
 
 export const useLastEmail = (callback: (email: string) => void) =>
   useEffect(() => {

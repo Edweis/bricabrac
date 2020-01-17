@@ -1,9 +1,5 @@
 import { useContext } from 'react';
-import {
-  NavigationContext,
-  NavigationScreenProp,
-  NavigationRoute,
-} from 'react-navigation';
+import { NavigationContext } from 'react-navigation';
 
+export { NavigationProp } from '../constants/types';
 export const useNavigation = () => useContext(NavigationContext);
-export type NavigationProp = NavigationScreenProp<NavigationRoute>;

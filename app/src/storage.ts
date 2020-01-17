@@ -3,7 +3,6 @@ import { AsyncStorage } from 'react-native';
 export enum StorageKey {
   EMAIL = 'lastEmail',
 }
-export const EMAIL_KEY = 'lastEmail';
 export const store = async (key: StorageKey, value: string) => {
   try {
     await AsyncStorage.setItem(key, value);

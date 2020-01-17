@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { Linking } from 'expo';
 import * as WebBrowser from 'expo-web-browser';
-import firebase, { IS_DEV, getCurrentUser } from '../../firebase';
+import firebase, { IS_DEV, getCurrentUser, logout } from '../../firebase';
 import colors from '../../constants/colors';
+import { useNavigation } from '../../hooks/navigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,13 +28,15 @@ const release = IS_DEV
 const GITHUB_LINK = 'https://github.com/Edweis/bricabrac/issues';
 const Settings = () => {
   const user = getCurrentUser();
-  const loginInfo = `${user.email} - ${user.uid.substring(0, 7)}`;
-  const openInWebBrowser = async url => {
-    const result = await WebBrowser.openBrowserAsync(url, {
+  const navigation = useNavigation();
+  const loginInfo = user
+    ? `${user.email} - ${user.uid.substring(0, 7)}`
+    : 'null';
+  const openInWebBrowser = async (url: string) => {
+    await WebBrowser.openBrowserAsync(url, {
       toolbarColor: colors.orange,
       controlsColor: colors.white,
     });
-    console.debug({ result });
   };
   return (
     <View style={styles.container}>
@@ -43,7 +45,7 @@ const Settings = () => {
           leftIcon={{ name: release.icon, type: 'ionicon' }}
           title={release.name}
           subtitle={release.description}
-          onPress={() => firebase.auth().signOut()}
+          onPress={() => logout(navigation)}
           bottomDivider
         />
         <ListItem

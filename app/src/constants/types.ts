@@ -1,7 +1,8 @@
+import { NavigationScreenProp, NavigationRoute } from 'react-navigation';
 import firebase from '../firebase';
 
 type Timestamp = firebase.firestore.Timestamp;
-
+export type NavigationProp = NavigationScreenProp<NavigationRoute>;
 export type ConceptT = string;
 export type ConceptDepSetT = {
   name: ConceptT;

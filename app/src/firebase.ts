@@ -6,6 +6,7 @@ import 'firebase/database';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 import Constants from 'expo-constants';
+import { NavigationProp } from './constants/types';
 
 let firestoreCredentials;
 export const IS_DEV = Constants.manifest.releaseChannel == null;
@@ -65,6 +66,11 @@ export const getCurrentUserId = () => {
   const user = getCurrentUser();
   if (user != null) return user.uid;
   throw Error('User is not registered.');
+};
+
+export const logout = (navigation: NavigationProp) => {
+  firebase.auth().signOut();
+  navigation.popToTop();
 };
 
 export const { Timestamp } = firebase.firestore;

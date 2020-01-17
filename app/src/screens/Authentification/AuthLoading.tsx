@@ -11,7 +11,6 @@ const Rooter = () => {
   useEffect(() => {
     const subscriber = onAuthChange(newUser => {
       if (newUser && newUser.email) store(StorageKey.EMAIL, newUser.email);
-      console.debug('onAuthChange', newUser);
       navigation.navigate(newUser == null ? AuthNavigation.LOGIN : 'Main');
     });
     return subscriber; // unsubscribe on unmount

@@ -21,17 +21,11 @@ const styles = StyleSheet.create({
   },
 });
 const Timer = () => {
-  console.debug('renderTimer');
   const timer = useTimer();
   const [displayedTimer, setDisplayedTimer] = useState(0);
-  // const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isEndPageModalShown, setIsEndPageModalShown] = useState(false);
-  // const [isOn, setIsOn] = useState(false);
-  // const [timer, setTimer] = useState(0);
-  // const [startTime, setStartTime] = useState(null);
 
   const lastReadSource = useLastReadSource();
-  // const [source, setSource] = useState(lastReadSource);
   useEffect(() => {
     timerService.update({ source: lastReadSource });
   }, [lastReadSource]);
@@ -41,14 +35,8 @@ const Timer = () => {
     timerService.update({ startPage: lastReadPage });
   }, [lastReadPage]);
 
-  // const [endTime, setEndTime] = useState(null);
-
   const startTimer = () => {
-    // if (_.isNaN(timer.startPage)) setErrorMessage("Ce n'est pas un nombre !");
-    // else {
-    timerService.update({ isOn: true });
-    timerService.update({ startTime: new Date() });
-    // }
+    timerService.update({ isOn: true, startTime: new Date() });
   };
 
   const stopTimer = () => {

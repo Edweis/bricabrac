@@ -27,6 +27,8 @@ export default function App() {
     bootstrap();
   }, []);
 
+  console.debug('rendering App');
+
   return (
     <SplashLoading onError={onError}>
       <AppNavigator />

@@ -1,10 +1,5 @@
 import React, { useState, useRef } from 'react';
-import {
-  View,
-  StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import {
   facebookLogin,
@@ -12,6 +7,8 @@ import {
   googleLogin,
   IS_DEV,
 } from '../../../firebase';
+import { useNavigation } from '../../../hooks/navigation';
+
 import { useLastEmail } from './hooks';
 
 const styles = StyleSheet.create({
@@ -30,6 +27,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const passwordInputRef = useRef<Input>(null);
+  const navigation = useNavigation();
   const focusPassword = () =>
     passwordInputRef.current && passwordInputRef.current.focus();
   useLastEmail(lastEmail => {
@@ -66,6 +64,11 @@ function Login() {
           containerStyle={styles.button}
           title="Se connecter"
           onPress={() => emailLogin(email, password)}
+        />
+        <Button
+          containerStyle={styles.button}
+          title="Créer compte"
+          onPress={() => navigation.navigate('Registration')}
         />
         <Button
           containerStyle={styles.button}

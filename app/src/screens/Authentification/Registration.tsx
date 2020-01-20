@@ -1,4 +1,23 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 
-export default () => <Text>Registration Component</Text>;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+const Registration = () => (
+  <View style={styles.container}>
+    <Text>Registration Component</Text>
+  </View>
+);
+
+Registration.navigationOptions = () => {
+  return {
+    title: 'Créer un compte',
+  };
+};
+export default Registration;

@@ -15,9 +15,7 @@ const Registration = () => (
   </View>
 );
 
-Registration.navigationOptions = () => {
-  return {
-    title: 'Créer un compte',
-  };
-};
+Registration.navigationOptions = () => ({
+  title: 'Créer un compte',
+});
 export default Registration;

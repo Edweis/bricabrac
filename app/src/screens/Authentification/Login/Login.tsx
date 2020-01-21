@@ -2,12 +2,7 @@ import React, { useState, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import ElasticView from '../ElasticView';
-import {
-  facebookLogin,
-  emailLogin,
-  googleLogin,
-  IS_DEV,
-} from '../../../firebase';
+import { emailLogin, IS_DEV } from '../../../firebase';
 import { useNavigation } from '../../../hooks/navigation';
 
 import { useLastEmail } from './hooks';
@@ -65,21 +60,13 @@ function Login() {
         containerStyle={styles.button}
         title="Se connecter"
         onPress={() => emailLogin(email, password)}
+        type="clear"
       />
       <Button
         containerStyle={styles.button}
         title="Créer compte"
         onPress={() => navigation.navigate('Registration', { email })}
-      />
-      <Button
-        containerStyle={styles.button}
-        title="Facebook Login"
-        onPress={() => facebookLogin()}
-      />
-      <Button
-        containerStyle={styles.button}
-        title="Google Login"
-        onPress={() => googleLogin()}
+        type="clear"
       />
       <Icon name={iconName} type="ionicon" />
     </ElasticView>

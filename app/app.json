@@ -27,7 +27,8 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.bricabrac.app"
+      "package": "com.bricabrac.app",
+      "versionCode": 4
     },
     "hooks": {
       "postPublish": [
@@ -41,8 +42,5 @@
         }
       ]
     }
-  },
-  "android": {
-    "versionCode": 2
   }
 }

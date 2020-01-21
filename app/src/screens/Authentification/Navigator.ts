@@ -1,4 +1,4 @@
-import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import Registration from './Registration';
 import Login from './Login';
 import { AuthNavigation } from './constants';

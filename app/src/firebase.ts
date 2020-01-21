@@ -6,7 +6,7 @@ import 'firebase/database';
 import * as Facebook from 'expo-facebook';
 import * as Google from 'expo-google-app-auth';
 import Constants from 'expo-constants';
-import { NavigationProp } from './constants/types';
+import { NavigationProp, RegistrationT } from './constants/types';
 
 let firestoreCredentials;
 export const IS_DEV = false; // Constants.manifest.releaseChannel == null;
@@ -73,6 +73,10 @@ export const logout = (navigation: NavigationProp) => {
   navigation.popToTop();
 };
 
+export const register = (registration: RegistrationT) =>
+  firebase
+    .auth()
+    .createUserWithEmailAndPassword(registration.email, registration.password);
 export const { Timestamp } = firebase.firestore;
 
 export default firebase;

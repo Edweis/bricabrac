@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { StyleSheet, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
+import ElasticView from '../ElasticView';
 import {
   facebookLogin,
   emailLogin,
@@ -30,59 +31,58 @@ function Login() {
   const navigation = useNavigation();
   const focusPassword = () =>
     passwordInputRef.current && passwordInputRef.current.focus();
+
   useLastEmail(lastEmail => {
     setEmail(lastEmail);
     focusPassword();
   });
 
   return (
-    <KeyboardAvoidingView style={styles.scrollContainer} behavior="padding">
-      <ScrollView contentContainerStyle={styles.container}>
-        <Input
-          label="email"
-          value={email}
-          onChangeText={setEmail}
-          autoCompleteType="email"
-          keyboardType="email-address"
-          autoCorrect={false}
-          autoCapitalize="none"
-          returnKeyType="next"
-          onSubmitEditing={focusPassword}
-          selectTextOnFocus
-        />
-        <Input
-          label="password"
-          value={password}
-          onChangeText={setPassword}
-          autoCompleteType="password"
-          secureTextEntry
-          ref={passwordInputRef}
-          onSubmitEditing={() => emailLogin(email, password)}
-          selectTextOnFocus
-        />
-        <Button
-          containerStyle={styles.button}
-          title="Se connecter"
-          onPress={() => emailLogin(email, password)}
-        />
-        <Button
-          containerStyle={styles.button}
-          title="Créer compte"
-          onPress={() => navigation.navigate('Registration')}
-        />
-        <Button
-          containerStyle={styles.button}
-          title="Facebook Login"
-          onPress={() => facebookLogin()}
-        />
-        <Button
-          containerStyle={styles.button}
-          title="Google Login"
-          onPress={() => googleLogin()}
-        />
-        <Icon name={iconName} type="ionicon" />
-      </ScrollView>
-    </KeyboardAvoidingView>
+    <ElasticView contentContainerStyle={styles.container}>
+      <Input
+        label="email"
+        value={email}
+        onChangeText={setEmail}
+        autoCompleteType="email"
+        keyboardType="email-address"
+        autoCorrect={false}
+        autoCapitalize="none"
+        returnKeyType="next"
+        onSubmitEditing={focusPassword}
+        selectTextOnFocus
+      />
+      <Input
+        label="password"
+        value={password}
+        onChangeText={setPassword}
+        autoCompleteType="password"
+        secureTextEntry
+        ref={passwordInputRef}
+        onSubmitEditing={() => emailLogin(email, password)}
+        selectTextOnFocus
+      />
+      <Button
+        containerStyle={styles.button}
+        title="Se connecter"
+        onPress={() => emailLogin(email, password)}
+      />
+      <Button
+        containerStyle={styles.button}
+        title="Créer compte"
+        onPress={() => navigation.navigate('Registration', { email })}
+      />
+      <Button
+        containerStyle={styles.button}
+        title="Facebook Login"
+        onPress={() => facebookLogin()}
+      />
+      <Button
+        containerStyle={styles.button}
+        title="Google Login"
+        onPress={() => googleLogin()}
+      />
+      <Icon name={iconName} type="ionicon" />
+    </ElasticView>
   );
 }
 

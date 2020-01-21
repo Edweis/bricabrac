@@ -9,7 +9,7 @@ import Constants from 'expo-constants';
 import { NavigationProp, RegistrationT } from './constants/types';
 
 let firestoreCredentials;
-export const IS_DEV = false; // Constants.manifest.releaseChannel == null;
+export const IS_DEV = Constants.manifest.releaseChannel == null;
 if (IS_DEV) console.log('Welcome in DEV environment');
 else console.log('Welcome in PROD environment');
 if (IS_DEV) firestoreCredentials = require('./firestoreCredentialsDev.json');
@@ -73,10 +73,11 @@ export const logout = (navigation: NavigationProp) => {
   navigation.popToTop();
 };
 
-export const register = (registration: RegistrationT) =>
-  firebase
+export const register = async (registration: RegistrationT) => {
+  return firebase
     .auth()
     .createUserWithEmailAndPassword(registration.email, registration.password);
+};
 export const { Timestamp } = firebase.firestore;
 
 export default firebase;

@@ -21,7 +21,7 @@ const Registration = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
-  const submit = () => {
+  const submit = async () => {
     const registration: RegistrationT = {
       email,
       password,
@@ -29,8 +29,8 @@ const Registration = () => {
     };
     try {
       checkRegistration(registration);
-      register(registration);
       setErrorMessage(null);
+      await register(registration);
     } catch (err) {
       console.warn(err);
       setErrorMessage(err.message);

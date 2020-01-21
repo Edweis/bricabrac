@@ -5,7 +5,7 @@ const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))
 
 export const checkRegistration = (registration: RegistrationT) => {
   const areEmpty = _.values(registration).some(value => !value || value === '');
-  if (!areEmpty) throw Error('Some fields are empty');
+  if (areEmpty) throw Error('Some fields are empty');
   const isEmail = EMAIL_REGEX.test(String(registration.email).toLowerCase());
   if (!isEmail) throw Error('Invalid email');
 

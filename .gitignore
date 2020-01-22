@@ -18,4 +18,6 @@ cli/migrations/credentials
 cli/keys
 
 app/build/*
+back/build/*
+
 keys/

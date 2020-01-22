@@ -17,8 +17,7 @@
     "parser": "@typescript-eslint/parser",
     "globals": {
         "Atomics": "readonly",
-        "SharedArrayBuffer": "readonly",
-        "$Shape": null
+        "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
         "ecmaFeatures": {

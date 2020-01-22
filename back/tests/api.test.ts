@@ -1,11 +1,10 @@
 // const app = require('../server');
-const firebase = require('@firebase/testing');
-
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const { getFirestoreRules } = require('./helpers');
-const { checkHealth } = require('./testers');
-const { testLogin, testLogout } = require('./login/testers');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import firebase from '@firebase/testing';
+import { getFirestoreRules } from './helpers';
+import { checkHealth } from './testers';
+// import { testLogin, testLogout } from './login/testers';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -22,7 +21,7 @@ describe('Health', () => {
   // testLogin();
   it('should validate health check', async () => {
     expect(1).to.equals(1);
-    await checkHealth({ isConnected: false });
+    await checkHealth(false);
   });
 
   // it('should show if user is connected', async () => {

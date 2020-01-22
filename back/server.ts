@@ -1,7 +1,7 @@
-const express = require('express');
-const graphqlHTTP = require('express-graphql');
-const { buildSchema } = require('graphql');
-const { port } = require('./constants/appConfig');
+import express from 'express';
+import graphqlHTTP from 'express-graphql';
+import { buildSchema } from 'graphql';
+import { port } from './constants/appConfig';
 // Construct a schema, using GraphQL schema language
 const schema = buildSchema(`
   type Query {
@@ -35,4 +35,4 @@ app.listen(port, () => {
   console.log(`GraphQL running at http://localhost:${port}/graphql`);
 });
 
-module.exports = app;
+export default app;

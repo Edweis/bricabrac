@@ -86,3 +86,9 @@ export type ReadingTimeT = ReadingTimeSetT & {
   id: string;
 };
 export type ConceptAnalysisT = { deps: ConceptT[]; isCyclical: boolean };
+
+export type RegistrationT = {
+  email: string;
+  password: string;
+  passwordConfirmation: string;
+};

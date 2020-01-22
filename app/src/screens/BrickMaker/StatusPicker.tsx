@@ -30,9 +30,7 @@ export default function StatusPicker(props: Props) {
           type={props.status === value ? 'solid' : 'outline'}
           buttonStyle={{
             backgroundColor:
-              props.status === value
-                ? colors.status[value]
-                : colors.status.none,
+              props.status === value ? colors.status[value] : undefined,
           }}
           containerStyle={styles.item}
         />

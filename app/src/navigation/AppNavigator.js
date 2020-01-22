@@ -21,6 +21,7 @@ export default () => {
   useEffect(() => {
     if (navigatorRef) {
       const routeName = authUser == null ? 'AuthNavigator' : 'Main';
+      // Force redirection on auth change
       const action = NavigationActions.navigate({ routeName });
       navigatorRef.current.dispatch(action);
     }

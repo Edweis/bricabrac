@@ -1,26 +1,38 @@
-var express = require('express');
-var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
-
+const express = require('express');
+const graphqlHTTP = require('express-graphql');
+const { buildSchema } = require('graphql');
+const { port } = require('./constants/appConfig');
 // Construct a schema, using GraphQL schema language
-var schema = buildSchema(`
+const schema = buildSchema(`
   type Query {
     hello: String
   }
 `);
 
 // The root provides a resolver function for each API endpoint
-var root = {
+const root = {
   hello: () => {
     return 'Hello world!';
   },
 };
 
-var app = express();
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
-app.listen(4000);
-console.log('Running a GraphQL API server at http://localhost:4000/graphql');
+const app = express();
+app.use(
+  '/graphql',
+  graphqlHTTP({
+    schema,
+    rootValue: root,
+    graphiql: true,
+  }),
+);
+
+app.get('/health', (req, res) => {
+  res.json({ status: 'success', message: 'up', isConnected: req.user != null });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}/`);
+  console.log(`GraphQL running at http://localhost:${port}/graphql`);
+});
+
+module.exports = app;

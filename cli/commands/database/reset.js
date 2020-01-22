@@ -2,8 +2,8 @@ const ora = require('ora');
 const admin = require('firebase-admin');
 const _ = require('lodash');
 const prompts = require('prompts');
-const prodServiceAccount = require('../../keys/prod-firestore');
-const devServiceAccount = require('../../keys/dev-firestore');
+const prodServiceAccount = require('../../../keys/prod-firestore');
+const devServiceAccount = require('../../../keys/dev-firestore');
 
 if (devServiceAccount.project_id !== 'bricabrac-dev') {
   console.error('devServiceAccount is NOT bricabrac-dev');

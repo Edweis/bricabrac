@@ -1,6 +1,6 @@
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import app from '../server';
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const app = require('../server');
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -15,3 +15,5 @@ export const checkHealth = async (isConnected: boolean, header?: object) => {
   expect(res.body.message).to.equals('up');
   expect(res.body.isConnected).to.equals(isConnected);
 };
+
+module.exports = { checkHealth };

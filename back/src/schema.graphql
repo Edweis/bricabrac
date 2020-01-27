@@ -1,0 +1,61 @@
+type Query {
+  bricks: [Brick!]!
+}
+
+type Mutation {
+  #post(url: String!, description: String!): Link!
+  signup(email: String!, password: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+}
+
+# Authentification
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+
+  email: String!
+  password: String!
+}
+
+type Brick {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+
+  content: String!
+  author: User!
+  source: Source!
+  parentConcept: Concept!
+  childrenConcepts: [Concept!]!
+}
+
+type Review {
+  id: ID!
+  createdAt: String!
+
+  author: User!
+  content: String!
+}
+
+type Concept {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+
+  name: String!
+}
+
+type Source {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+
+  name: String!
+}

@@ -1,0 +1,44 @@
+type User {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+
+  email: String! @unique
+  password: String!
+}
+
+type Brick {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+
+  content: String!
+  author: User!
+  source: Source!
+  parentConcept: Concept! @relation(name: "ParentConcept")
+  childrenConcepts: [Concept!]! @relation(name: "ChildConcept")
+}
+
+type Review {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+
+  author: User!
+  content: String!
+}
+
+type Concept {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+
+  name: String!
+}
+
+type Source {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+
+  name: String!
+}

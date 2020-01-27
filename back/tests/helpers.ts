@@ -1,7 +1,9 @@
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
 
-export const getFirestoreRules: object = () => {
+const getFirestoreRules = () => {
   const jsonPath = path.join(__dirname, '..', 'firebase', 'firestore.rules');
   return fs.readFileSync(jsonPath, 'utf8');
 };
+
+module.exports = { getFirestoreRules };

@@ -1,10 +1,10 @@
 // const app = require('../server');
-import chai from 'chai';
-import chaiHttp from 'chai-http';
-import firebase from '@firebase/testing';
-import { getFirestoreRules } from './helpers';
-import { checkHealth } from './testers';
-// import { testLogin, testLogout } from './login/testers';
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+const firebase = require('@firebase/testing')
+const { getFirestoreRules } = require('./helpers')
+const { checkHealth } = require('./testers')
+// const { testLogin, testLogout } = require('./login/testers')
 
 const { expect } = chai;
 chai.use(chaiHttp);

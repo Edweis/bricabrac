@@ -1,0 +1,35 @@
+type Brick {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+
+  content: String!
+  author: User!
+  source: Source!
+  parentConcept: Concept!
+  childrenConcepts: [Concept!]!
+}
+
+type Review {
+  id: ID!
+  createdAt: String!
+
+  author: User!
+  content: String!
+}
+
+type Concept {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+
+  name: String!
+}
+
+type Source {
+  id: ID!
+  createdAt: String!
+  updatedAt: String!
+
+  name: String!
+}

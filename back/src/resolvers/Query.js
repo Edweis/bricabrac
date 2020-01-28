@@ -1,5 +1,5 @@
-function bricks(parent, args, context, info) {
-  return context.prisma.bricks();
-}
+const Query = {
+  bricks: (parent, args, context) => context.prisma.bricks(),
+};
 
-module.exports = { bricks };
+module.exports = { Query };

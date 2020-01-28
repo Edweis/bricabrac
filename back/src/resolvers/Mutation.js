@@ -35,19 +35,13 @@ async function postBrick(parent, args, context) {
   const sourceId = await getSourceId(context, source);
   const parentConceptId = await getConceptId(context, parentConcept);
 
-  const brick = await context.prisma.createBrick({
+  return context.prisma.createBrick({
     content,
     source: { connect: { id: sourceId } },
     parentConcept: { connect: { id: parentConceptId } },
     author: { connect: { id: userId } },
   });
-
-  console.debug(brick, { sourceId, parentConceptId, userId });
-  return brick;
 }
 
-module.exports = {
-  signup,
-  login,
-  postBrick,
-};
+const Mutation = { signup, login, postBrick };
+module.exports = { Mutation };

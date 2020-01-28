@@ -1,6 +1,5 @@
-const Query = require('./Query');
-const Mutation = require('./Mutation');
-const User = require('./User');
-const Brick = require('./Brick');
+const path = require('path');
+const { fileLoader } = require('merge-graphql-schemas');
 
-module.exports = { Query, Mutation, User, Brick };
+const resolvers = fileLoader(path.join(__dirname, './'));
+module.exports = resolvers;

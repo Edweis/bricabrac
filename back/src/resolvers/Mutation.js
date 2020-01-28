@@ -1,8 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { APP_SECRET, getUserId } = require('../helpers');
+const {
+  APP_SECRET,
+  getUserId,
+  getSourceId,
+  getConceptId,
+} = require('../helpers');
 
-async function signup(parent, args, context, info) {
+async function signup(parent, args, context) {
   const password = await bcrypt.hash(args.password, 10);
   const { email } = args;
   const user = await context.prisma.createUser({ email, password });
@@ -12,7 +17,7 @@ async function signup(parent, args, context, info) {
   return { token, user };
 }
 
-async function login(parent, args, context, info) {
+async function login(parent, args, context) {
   const user = await context.prisma.user({ email: args.email });
   if (!user) throw new Error('No such user found');
 
@@ -24,16 +29,25 @@ async function login(parent, args, context, info) {
   return { token, user };
 }
 
-function post(parent, args, context, info) {
+async function postBrick(parent, args, context) {
   const userId = getUserId(context);
-  return context.prisma.createLink({
-    url: args.url,
-    description: args.description,
-    postedBy: { connect: { id: userId } },
+  const { content, source, parentConcept } = args;
+  const sourceId = await getSourceId(context, source);
+  const parentConceptId = await getConceptId(context, parentConcept);
+
+  const brick = await context.prisma.createBrick({
+    content,
+    source: { connect: { id: sourceId } },
+    parentConcept: { connect: { id: parentConceptId } },
+    author: { connect: { id: userId } },
   });
+
+  console.debug(brick, { sourceId, parentConceptId, userId });
+  return brick;
 }
 
 module.exports = {
   signup,
   login,
+  postBrick,
 };

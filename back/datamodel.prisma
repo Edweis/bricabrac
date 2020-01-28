@@ -32,7 +32,7 @@ type Concept {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 
-  name: String!
+  name: String! @unique
 }
 
 type Source {
@@ -40,5 +40,5 @@ type Source {
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 
-  name: String!
+  name: String! @unique
 }

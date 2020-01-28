@@ -3,13 +3,13 @@ type Query {
 }
 
 type Mutation {
-  #post(url: String!, description: String!): Link!
+  #postBrick(url: String!, description: String!): Link!
   signup(email: String!, password: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  postBrick(content: String!, source: String!, parentConcept: String!): Brick!
 }
 
 # Authentification
-
 type AuthPayload {
   token: String
   user: User

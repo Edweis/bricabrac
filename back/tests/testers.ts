@@ -5,7 +5,7 @@ const app = require('../server');
 const { expect } = chai;
 chai.use(chaiHttp);
 
-export const checkHealth = async (isConnected: boolean, header?: object) => {
+export const checkHealth = async (isConnected, header) => {
   const res = await chai
     .request(app)
     .get('/health')

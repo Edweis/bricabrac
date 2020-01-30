@@ -1,19 +1,14 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const app = require('../server');
 
-const { expect } = chai;
+// const { expect } = chai;
 chai.use(chaiHttp);
-
-export const checkHealth = async (isConnected, header) => {
+const graphReq = async (app, query) => {
   const res = await chai
     .request(app)
-    .get('/health')
-    .set(header || {});
-  expect(res).to.have.status(200);
-  expect(res.body.status).to.equals('success');
-  expect(res.body.message).to.equals('up');
-  expect(res.body.isConnected).to.equals(isConnected);
+    .post('/')
+    .send({ query });
+  return res;
 };
 
-module.exports = { checkHealth };
+module.exports = { graphReq };

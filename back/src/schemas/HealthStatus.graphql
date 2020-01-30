@@ -1,0 +1,6 @@
+type HealthStatus {
+  status: Status
+  isConnected: Boolean  
+}
+
+enum Status { up }

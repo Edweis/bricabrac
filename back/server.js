@@ -6,12 +6,7 @@ const typeDefs = require('./src/schemas');
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  context: request => {
-    return {
-      ...request,
-      prisma,
-    };
-  },
+  context: request => ({ ...request, prisma }),
 });
 
 const app = server.start(() =>

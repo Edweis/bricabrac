@@ -4,7 +4,9 @@ services:
     image: prismagraphql/prisma:1.34
     restart: always
     ports:
-    - "4466:4466"
+      - "4466:4466" # database playground
+    depends_on:
+      - database
     environment:
       PRISMA_CONFIG: |
         port: 4466
@@ -16,9 +18,18 @@ services:
             host: host.docker.internal
             database: bricabrac
             schema: public
-            user: francoisrulliere
-            password: ''
+            user: babadmin
+            password: XXX
             ssl: false
             rawAccess: true
             port: '5432'
             migrations: true
+
+  database:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: babadmin
+      POSTGRES_PASSWORD: XXX
+      POSTGRES_DB: bricabrac

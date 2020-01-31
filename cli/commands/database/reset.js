@@ -2,8 +2,9 @@ const ora = require('ora');
 const admin = require('firebase-admin');
 const _ = require('lodash');
 const prompts = require('prompts');
-const prodServiceAccount = require('../../keys/prod-firestore');
-const devServiceAccount = require('../../keys/dev-firestore');
+const fs = require('fs');
+const prodServiceAccount = require('../../../keys/prod-firestore');
+const devServiceAccount = require('../../../keys/dev-firestore');
 
 if (devServiceAccount.project_id !== 'bricabrac-dev') {
   console.error('devServiceAccount is NOT bricabrac-dev');
@@ -76,12 +77,7 @@ async function dumpDevDatabase() {
   });
 }
 
-// Use https://blog.cloudboost.io/copy-export-a-cloud-firestore-database-388cde99259b
-// for subcollections
-async function copyProdToDev() {
-  source = db.prod;
-  dest = db.dev;
-
+async function getDumpObject(source, dest) {
   const collections = await source.listCollections();
   const collectionIds = collections.map(c => c.id);
   const batchs = [];
@@ -98,6 +94,26 @@ async function copyProdToDev() {
       });
     }),
   );
+  return batchs;
+}
+
+function dumpDatabaseLocally(batchs) {
+  const filename = `${new Date().toISOString()}.prod.dump`;
+  const stringData = JSON.stringify(batchs, null, 4);
+  fs.writeFile(filename, stringData, err =>
+    console.debug('Dumping done.', { err }),
+  );
+}
+
+// Use https://blog.cloudboost.io/copy-export-a-cloud-firestore-database-388cde99259b
+// for subcollections
+async function copyProdToDev() {
+  const source = db.prod;
+  const dest = db.dev;
+  const batchs = await getDumpObject(source, dest);
+
+  const dataToDump = batchs.map(({ log, data }) => ({ log, data }));
+  dumpDatabaseLocally(dataToDump);
   await Promise.all(
     _.chunk(batchs, 500).map(async chunk => {
       const batch = dest.batch();

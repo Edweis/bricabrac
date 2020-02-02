@@ -10,7 +10,6 @@ import {
   ConceptDepsT,
   UserT,
   CollectionE,
-  AcceptationT,
   ReadingTimeT,
 } from '../constants/types';
 
@@ -19,9 +18,6 @@ export const projectService = new ProjectService();
 export const usersService = new FirestoreService<UserT>(CollectionE.USERS);
 export const bricksService = new BricksService();
 export const timerService = new TimerService();
-export const acceptationService = new FirestoreService<AcceptationT>(
-  CollectionE.ACCEPTATIONS,
-);
 export const readingTimesService = new FirestoreService<ReadingTimeT>(
   CollectionE.READING_TIMES,
 );
@@ -31,7 +27,6 @@ export const conceptDepsService = new FirestoreService<ConceptDepsT>(
 
 export const firestoreSyncAllWithState = () => {
   const subscriptions = [
-    acceptationService,
     usersService,
     bricksService,
     readingTimesService,

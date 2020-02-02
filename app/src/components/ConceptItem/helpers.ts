@@ -3,15 +3,7 @@ import { BrickT, ConceptAnalysisT } from '../../constants/types';
 
 export const getFeaturedBrick = (bricks: BrickT[]): BrickT | null => {
   if (bricks.length === 0) return null;
-  const grouped = _(bricks)
-    .groupBy('status')
-    .mapValues(bs => _.sortBy(bs, b => b.submitTime.toDate().getTime()))
-    .value();
-
-  if (!_.isEmpty(grouped.accepted)) return grouped.accepted[0];
-  if (!_.isEmpty(grouped.none)) return grouped.none[0];
-  if (!_.isEmpty(grouped.refused)) return grouped.refused[0];
-  throw Error('Error brick has no status');
+  return _.sortBy(bricks, b => b.submitTime.toDate().getTime())[0];
 };
 
 export const formatConceptTitle = (title: string, asConcept: boolean): string =>

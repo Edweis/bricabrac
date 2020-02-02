@@ -3,7 +3,6 @@ import moment from 'moment';
 import { ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import { useNavigation, NavigationOptionsProps } from '../../hooks/navigation';
-import Status from '../../components/Status';
 import FAB from '../../components/FAB';
 import ConceptItem from '../../components/ConceptItem';
 import { useBricks } from '../../hooks';
@@ -31,7 +30,6 @@ function ConceptBrickList() {
               onPress={() =>
                 navigation.push('BrickMaker', { brick, readOnly: true })
               }
-              rightIcon={<Status status={brick.status} />}
               rightSubtitle={moment(brick.submitTime.toDate()).fromNow()}
               bottomDivider
               chevron

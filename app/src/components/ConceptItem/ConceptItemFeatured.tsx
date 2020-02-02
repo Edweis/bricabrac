@@ -30,13 +30,7 @@ function ConceptItemFeatured(props: Props) {
     : { name: 'chevron-right', type: 'evilicon' };
   return (
     <ListItem
-      title={
-        <ConceptTitle
-          concept={concept}
-          status={featured.status}
-          asConcept={asConcept}
-        />
-      }
+      title={<ConceptTitle concept={concept} asConcept={asConcept} />}
       rightSubtitle={asConcept ? '' : bricks.length.toString()}
       subtitle={
         <ConceptContent

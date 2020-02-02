@@ -1,18 +1,13 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { ConceptT, StatusT } from '../../constants/types';
+import { ConceptT } from '../../constants/types';
 import { formatConceptTitle } from './helpers';
-import Status from '../Status';
 
-function ConceptTitle({
-  status,
-  concept,
-  asConcept,
-}: {
-  status?: StatusT;
+type Props = {
   concept: ConceptT;
   asConcept: boolean;
-}) {
+};
+function ConceptTitle({ concept, asConcept }: Props) {
   return (
     <View
       style={{
@@ -21,7 +16,6 @@ function ConceptTitle({
         alignItems: 'center',
       }}
     >
-      {status && <Status status={status} marginRight />}
       <View>
         <Text>{formatConceptTitle(concept, asConcept)}</Text>
       </View>

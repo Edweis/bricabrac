@@ -1,7 +1,6 @@
 import firebase, { getCurrentUserId } from '../../firebase';
-import { BrickT, ConceptT, AcceptationSetT } from '../../constants/types';
-import { setAcceptation } from '../acceptations';
-import { useFilteredBricks, useBrickWithAcceptation } from './helpers';
+import { BrickT, ConceptT } from '../../constants/types';
+import { useFilteredBricks } from './helpers';
 import { setFirestore } from '../firestore';
 import { BRICK_COLLECTION } from './constants';
 import { useObservable } from '../../helpers/observable';
@@ -10,8 +9,7 @@ import { bricksService } from '../../helpers/store';
 export const useBricks = (concept?: ConceptT) => {
   const bricks = useObservable(bricksService.value);
   const filteredBricks = useFilteredBricks(bricks, concept);
-  const bricksWithAcceptation = useBrickWithAcceptation(filteredBricks);
-  return bricksWithAcceptation;
+  return filteredBricks;
 };
 
 export const setBrick = (brick: BrickT) => {
@@ -24,20 +22,7 @@ export const setBrick = (brick: BrickT) => {
     author: userId,
   };
 
-  // Get the status and update it
-  const { status } = enrichedBrick;
-  delete enrichedBrick.status;
-
-  const setAcceptationFromBrick = (brickWithId: BrickT) => {
-    const acceptation: AcceptationSetT = {
-      userId,
-      brickId: brickWithId.id,
-      status,
-    };
-    setAcceptation(acceptation);
-  };
-
-  setFirestore(BRICK_COLLECTION, enrichedBrick, setAcceptationFromBrick);
+  setFirestore(BRICK_COLLECTION, enrichedBrick);
 };
 
 export const deleteBrick = (brickId: string) => {

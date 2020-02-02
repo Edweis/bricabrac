@@ -17,7 +17,6 @@ export enum CollectionE {
   USERS = 'users',
   BRICKS = 'bricks',
   COMMENTS = 'comments',
-  ACCEPTATIONS = 'acceptations',
   READING_TIMES = 'readingTimes',
 }
 export type ComputedCollection = string;
@@ -27,15 +26,11 @@ export type LoadingT = {
 };
 export type SourceT = string;
 export type ProjectT = SourceT | null;
-export enum StatusT {
-  accepted = 'accepted',
-  refused = 'refused',
-  none = 'none',
-}
+
 /**
  * Represents bricks comming from the database.
  */
-export type BrickRawT = {
+export type BrickT = {
   id: string;
   childrenConcepts: ConceptT[];
   content: string;
@@ -49,7 +44,6 @@ export type BrickRawT = {
 /**
  * Brick used in the app.
  */
-export type BrickT = BrickRawT & { status: StatusT };
 export type UserT = {
   id: string;
   email: string;
@@ -58,15 +52,6 @@ export type CommentT = {
   id: string;
   author: string;
   text: string;
-  datetime: Timestamp;
-};
-export type AcceptationSetT = {
-  brickId: string;
-  userId: string;
-  status: StatusT;
-};
-export type AcceptationT = AcceptationSetT & {
-  id: string;
   datetime: Timestamp;
 };
 export type ProjectSourceT = SourceT;

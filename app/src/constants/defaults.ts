@@ -1,5 +1,5 @@
 import { Timestamp } from '../firebase';
-import { BrickT, ReadingTimeSetT, StatusT } from './types';
+import { BrickT, ReadingTimeSetT } from './types';
 
 export const EMPTY_BRICK: Partial<BrickT> = {
   childrenConcepts: [],
@@ -7,7 +7,6 @@ export const EMPTY_BRICK: Partial<BrickT> = {
   datetime: Timestamp.now(),
   submitTime: Timestamp.now(),
   parentConcept: '',
-  status: StatusT.none,
 };
 
 export const EMPTY_SOURCE = 'Aucune source';

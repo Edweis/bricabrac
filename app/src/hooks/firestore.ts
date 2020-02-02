@@ -8,7 +8,6 @@ type FirestoreObject = Record<string, any> & { id?: string };
 export async function setFirestore<T extends FirestoreObject>(
   collection: string,
   _data: T,
-  effects: (cb: T) => void = () => {},
 ) {
   const data = _.omit(_data, 'id');
 
@@ -17,13 +16,9 @@ export async function setFirestore<T extends FirestoreObject>(
 
   const col = firebase.firestore().collection(collection);
   // if there is an Id, we edit the brick, otherwise we add it. Dirty.
-  if (id == null) {
-    const results = ((await col.add(data)) as unknown) as T;
-    effects(results);
-  } else {
-    await col.doc(id).set(data);
-    effects({ ...data, id } as T);
-  }
+  if (id == null) await col.add(data);
+  else await col.doc(id).set(data);
+
   console.log(
     id != null
       ? `${collection} Edited at id ${id}!`

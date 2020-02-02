@@ -4,7 +4,6 @@ import { Text, Input, Divider, Button } from 'react-native-elements';
 import { useNavigation, NavigationOptionsProps } from '../../hooks/navigation';
 import { getCurrentUserId } from '../../firebase';
 import ConceptPicker from './ConceptPicker';
-import StatusPicker from './StatusPicker';
 import SourcePicker from '../../components/SourcePicker';
 import CommentButton from './CommentButton';
 import IsDefinitionPicker from './IsDefinitionPicker';
@@ -134,10 +133,6 @@ function BrickMaker() {
           readOnly={!isEditEnabled}
         />
         <Divider style={styles.divider} />
-        <StatusPicker
-          status={newBrick.status}
-          setStatus={status => updateBrick({ status })}
-        />
         {displayedError !== '' && <Text>{displayedError}</Text>}
         {!isEditEnabled && <Comments brickId={newBrick.id} />}
       </ScrollView>

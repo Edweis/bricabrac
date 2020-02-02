@@ -14,6 +14,7 @@ if (IS_DEV) firestoreCredentials = require('./firestoreCredentialsDev.json');
 else firestoreCredentials = require('./firestoreCredentialsProd.json');
 
 firebase.initializeApp(firestoreCredentials);
+firebase.firestore().enablePersistence();
 
 export function emailLogin(email: string, password: string) {
   firebase.auth().signInWithEmailAndPassword(email, password);

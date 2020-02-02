@@ -1,8 +1,8 @@
-import firebase, { getCurrentUserId } from '../../firebase';
-import { BrickT, ConceptT } from '../../constants/types';
+import { getCurrentUserId } from '../../firebase';
+import { BrickT, ConceptT, CollectionE } from '../../constants/types';
 import { useFilteredBricks } from './helpers';
-import { setFirestore } from '../firestore';
-import { BRICK_COLLECTION } from './constants';
+import { setFirestore, deleteFirestore } from '../firestore';
+
 import { useObservable } from '../../helpers/observable';
 import { bricksService } from '../../helpers/store';
 
@@ -22,16 +22,9 @@ export const setBrick = (brick: BrickT) => {
     author: userId,
   };
 
-  setFirestore(BRICK_COLLECTION, enrichedBrick);
+  setFirestore(CollectionE.BRICKS, enrichedBrick);
 };
 
 export const deleteBrick = (brickId: string) => {
-  firebase
-    .firestore()
-    .collection(BRICK_COLLECTION)
-    .doc(brickId)
-    .delete()
-    .then(() => {
-      console.log('Brick deleted !');
-    });
+  deleteFirestore(CollectionE.BRICKS, brickId);
 };

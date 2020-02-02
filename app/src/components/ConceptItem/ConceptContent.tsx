@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { ConceptAnalysisT } from '../../constants/types';
 import { formatContent, formatTags } from './helpers';
+import colors from '../../constants/colors';
 
 function ConceptContent({
   content,
@@ -17,8 +18,10 @@ function ConceptContent({
   if (!hasDeps && !displayedContent) return null;
   return (
     <View>
-      {hasDeps && <Text>{formatTags(conceptDeps)}</Text>}
-      <Text>{displayedContent}</Text>
+      {hasDeps && (
+        <Text style={{ fontStyle: 'italic' }}>{formatTags(conceptDeps)}</Text>
+      )}
+      <Text style={{ color: colors.grey }}>{displayedContent}</Text>
     </View>
   );
 }

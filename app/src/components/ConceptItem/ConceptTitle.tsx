@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { ConceptT } from '../../constants/types';
 import { formatConceptTitle } from './helpers';
 
@@ -7,15 +7,13 @@ type Props = {
   concept: ConceptT;
   asConcept: boolean;
 };
+const styles = StyleSheet.create({
+  container: { display: 'flex', flexDirection: 'row', alignItems: 'center' },
+});
+
 function ConceptTitle({ concept, asConcept }: Props) {
   return (
-    <View
-      style={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}
-    >
+    <View style={styles.container}>
       <View>
         <Text>{formatConceptTitle(concept, asConcept)}</Text>
       </View>

@@ -14,4 +14,5 @@ export default {
   orange: '#f4511e',
   black: '#000000',
   white: '#FFFFFF',
+  grey: '#808080',
 };

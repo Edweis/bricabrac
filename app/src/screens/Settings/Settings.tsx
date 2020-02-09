@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import * as WebBrowser from 'expo-web-browser';
-import firebase, { IS_DEV, getCurrentUser, logout } from '../../firebase';
-import colors from '../../constants/colors';
+import firebase, { getCurrentUser, logout } from '../../firebase';
 import { useNavigation } from '../../hooks/navigation';
+import {
+  release,
+  emailToAuthor,
+  GITHUB_LINK,
+  openInWebBrowser,
+} from './helpers';
 
 const styles = StyleSheet.create({
   container: {
@@ -12,32 +16,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-const release = IS_DEV
-  ? {
-      icon: 'ios-bug',
-      name: 'Développement',
-      description:
-        'La base de developpement ne contient pas tous les éléments de la base de production',
-    }
-  : {
-      icon: 'ios-information-circle',
-      name: 'Production',
-      description: 'Les changements sont sauvegardés sur le serveur officiel.',
-    };
 
-const GITHUB_LINK = 'https://github.com/Edweis/bricabrac/issues';
 const Settings = () => {
   const user = getCurrentUser();
   const navigation = useNavigation();
   const loginInfo = user
     ? `${user.email} - ${user.uid.substring(0, 7)}`
     : 'null';
-  const openInWebBrowser = async (url: string) => {
-    await WebBrowser.openBrowserAsync(url, {
-      toolbarColor: colors.orange,
-      controlsColor: colors.white,
-    });
-  };
   return (
     <View style={styles.container}>
       <View>
@@ -53,6 +38,13 @@ const Settings = () => {
           title="Issues github"
           subtitle="Un problème ? une suggestion ? clique ici !"
           onPress={() => openInWebBrowser(GITHUB_LINK)}
+          bottomDivider
+        />
+        <ListItem
+          leftIcon={{ name: 'ios-mail', type: 'ionicon' }}
+          title="Contacter l'auteur de cette app"
+          subtitle="Feedback ? kapochamo@gmail.com"
+          onPress={emailToAuthor}
           bottomDivider
         />
         <ListItem

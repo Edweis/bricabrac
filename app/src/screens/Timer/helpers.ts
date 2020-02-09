@@ -1,4 +1,8 @@
+import { useMemo } from 'react';
+import _ from 'lodash';
 import { ReadingTimeSetT } from '../../constants/types';
+import { getCurrentUserId } from '../../firebase';
+import { useUserReadingTimes } from '../../hooks/readingTimes';
 
 export const pad = (n: number) => {
   return `0${n}`.slice(-2);
@@ -7,9 +11,9 @@ export const formatTimer = (timer: number) => {
   const safeTimer = Math.max(0, Math.round(timer));
   const minutes = Math.floor(safeTimer / 60);
   const formatedSeconds = pad(safeTimer % 60);
-  const fornatedHours = pad(Math.floor(minutes / 60));
+  const formatedHours = pad(Math.floor(minutes / 60));
   const formatedMinutes = pad(minutes % 60);
-  return `${fornatedHours}:${formatedMinutes}:${formatedSeconds}`;
+  return `${formatedHours}:${formatedMinutes}:${formatedSeconds}`;
 };
 
 export const getReadingInsight = (readingTime: ReadingTimeSetT): string => {
@@ -19,5 +23,20 @@ export const getReadingInsight = (readingTime: ReadingTimeSetT): string => {
   const duration = formatTimer(durationTime / 1000);
   const speed = (durationTime / ((endPage - startPage) * 60 * 1000)).toFixed(2);
 
-  return `${duration} (${speed}min/pages)`;
+  return `${duration} (${speed}min/page)`;
+};
+
+export const useCurrentUserReadingTimes = () => {
+  const userId = getCurrentUserId();
+  const readingTimes = useUserReadingTimes(userId);
+  return useMemo(
+    () =>
+      _(readingTimes)
+        .sortBy(readingTime =>
+          readingTime.endTime == null ? 0 : readingTime.endTime.toMillis(),
+        )
+        .reverse()
+        .value(),
+    [readingTimes],
+  );
 };

@@ -37,7 +37,7 @@ function Login() {
       <Input
         label="email"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={text => setEmail(text.trim())}
         autoCompleteType="email"
         keyboardType="email-address"
         autoCorrect={false}

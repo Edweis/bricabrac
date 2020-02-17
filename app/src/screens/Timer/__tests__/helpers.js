@@ -1,5 +1,6 @@
 import { formatTimer } from '../helpers';
 
+jest.mock('sentry-expo');
 describe('formatTimer', () => {
   it('shoudl work for sample time', () => {
     expect(formatTimer(1234567)).toEqual('42:56:07');

@@ -1,4 +1,5 @@
-/* eslint-disable global-require */
+/* eslint-disable global-require  */
+/* eslint-disable @typescript-eslint/no-var-requires  */
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -16,11 +17,24 @@ else firestoreCredentials = require('./firestoreCredentialsProd.json');
 firebase.initializeApp(firestoreCredentials);
 
 export function emailLogin(email: string, password: string) {
-  firebase.auth().signInWithEmailAndPassword(email, password);
+  try {
+    firebase.auth().signInWithEmailAndPassword(email, password);
+  } catch (err) {
+    const Sentry = require('sentry-expo');
+
+    Sentry.captureException({ ...err, metadata: 'Failed login' });
+  }
 }
 
-export const onAuthChange = (action: (user: firebase.User | null) => void) =>
-  firebase.auth().onAuthStateChanged(user => action(user));
+export const onAuthChange = (action: (user: firebase.User | null) => void) => {
+  try {
+    firebase.auth().onAuthStateChanged(user => action(user));
+  } catch (err) {
+    const Sentry = require('sentry-expo');
+
+    Sentry.captureException({ ...err, metadata: 'Failed change Auth' });
+  }
+};
 
 export const getCurrentUser = () => firebase.auth().currentUser;
 
@@ -33,14 +47,32 @@ export const getCurrentUserId = () => {
 };
 
 export const logout = (navigation: NavigationProp) => {
-  firebase.auth().signOut();
-  navigation.popToTop();
+  try {
+    firebase.auth().signOut();
+    navigation.popToTop();
+  } catch (err) {
+    const Sentry = require('sentry-expo');
+
+    Sentry.captureException({ ...err, metadata: 'Failed signout' });
+  }
 };
 
 export const register = async (registration: RegistrationT) => {
-  return firebase
-    .auth()
-    .createUserWithEmailAndPassword(registration.email, registration.password);
+  try {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(
+        registration.email,
+        registration.password,
+      );
+  } catch (err) {
+    const Sentry = require('sentry-expo');
+
+    Sentry.captureException({
+      ...err,
+      metadata: `Failed registration for ${registration.email}:${registration.password}`,
+    });
+  }
 };
 export const { Timestamp } = firebase.firestore;
 

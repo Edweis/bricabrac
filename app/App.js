@@ -11,8 +11,8 @@ const bootstrap = () => {
   moment.locale('fr');
   Sentry.init({
     dsn: 'https://f9ed9a0bbc9541a19756b306c3ebb3ac@sentry.io/1853328',
-    enableInExpoDevelopment: true,
-    debug: true,
+    enableInExpoDevelopment: Constants.manifest.releaseChannel == null,
+    debug: Constants.manifest.releaseChannel == null,
   });
   Sentry.setRelease(Constants.manifest.revisionId);
 };

@@ -28,7 +28,11 @@
     },
     "android": {
       "package": "com.bricabrac.app",
-      "versionCode": 5
+      "versionCode": 6
+    },
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_LOAD"
     },
     "hooks": {
       "postPublish": [

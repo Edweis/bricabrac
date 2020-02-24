@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import _ from 'lodash';
 import { ReadingTimeSetT } from '../../constants/types';
 import { getCurrentUserId } from '../../firebase';
@@ -28,15 +27,5 @@ export const getReadingInsight = (readingTime: ReadingTimeSetT): string => {
 
 export const useCurrentUserReadingTimes = () => {
   const userId = getCurrentUserId();
-  const readingTimes = useUserReadingTimes(userId);
-  return useMemo(
-    () =>
-      _(readingTimes)
-        .sortBy(readingTime =>
-          readingTime.endTime == null ? 0 : readingTime.endTime.toMillis(),
-        )
-        .reverse()
-        .value(),
-    [readingTimes],
-  );
+  return useUserReadingTimes(userId);
 };

@@ -12,13 +12,18 @@ export const useTimer = () => useObservable(timerService.timer);
 
 export const useUserReadingTimes = (userId?: string, source?: SourceT) => {
   const readingTimes = useObservable(readingTimesService.value);
-  const filteredReadingTimes = useMemo(
-    () =>
-      readingTimes
-        .filter(rt => userId == null || rt.userId === userId)
-        .filter(rt => source == null || rt.source === source),
-    [readingTimes, source, userId],
-  );
+  const filteredReadingTimes = useMemo(() => {
+    const filtered = readingTimes
+      .filter(rt => userId == null || rt.userId === userId)
+      .filter(rt => source == null || rt.source === source);
+
+    const sorted = _(filtered)
+      .sortBy(readingTime =>
+        readingTime.endTime == null ? 0 : readingTime.endTime.toMillis(),
+      )
+      .value();
+    return sorted;
+  }, [readingTimes, source, userId]);
   return filteredReadingTimes;
 };
 

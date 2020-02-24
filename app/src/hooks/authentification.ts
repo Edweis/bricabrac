@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Sentry from 'sentry-expo';
+import * as Sentry from 'sentry-expo';
 import { onAuthChange } from '../firebase';
 import { StorageKey, store } from '../storage';
 

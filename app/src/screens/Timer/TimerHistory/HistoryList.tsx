@@ -5,8 +5,8 @@ import { getDisplayedSource } from '../../../helpers';
 import EmptyHistory from './EmptyHistory';
 import { ReadingTimeT } from '../../../constants/types';
 
-type Props = { readingTimes: ReadingTimeT[] };
-export default (props: Props) => {
+type Props = { readingTimes: ReadingTimeT[]; showEmail?: boolean };
+const HistoryList = (props: Props) => {
   if (props.readingTimes.length === 0) return <EmptyHistory />;
   return (
     <>
@@ -28,3 +28,6 @@ export default (props: Props) => {
     </>
   );
 };
+
+HistoryList.defaultProps = { showEmail: false };
+export default HistoryList;

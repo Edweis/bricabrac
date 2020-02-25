@@ -7,7 +7,10 @@ import AppNavigator from './src/navigation/AppNavigator';
 import SplashLoading from './src/screens/Splash';
 
 const bootstrap = () => {
-  console.ignoredYellowBox = ['Setting a timer'];
+  console.ignoredYellowBox = [
+    'Setting a timer',
+    'VirtualizedLists should never',
+  ];
   moment.locale('fr');
   Sentry.init({
     dsn: 'https://f9ed9a0bbc9541a19756b306c3ebb3ac@sentry.io/1853328',

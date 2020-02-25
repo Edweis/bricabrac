@@ -11,6 +11,11 @@ export const formatConceptTitle = (title: string, asConcept: boolean): string =>
 
 export const formatContent = (content?: string, asConcept?: boolean) => {
   const text = content || 'Pas encore de brique !';
+  if (text == null) {
+    throw Error(
+      'Known Sentry issue tracking https://sentry.io/organizations/kapochamo/issues/1405344098/?project=1853328&query=is%3Aunresolved',
+    );
+  }
   return asConcept ? null : text.split('\n')[0].substring(0, 57);
 };
 

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import * as Sentry from 'sentry-expo';
-import { onAuthChange } from '../firebase';
+import firebase, { onAuthChange } from '../firebase';
 import { StorageKey, store } from '../storage';
 
 export const useFirestoreAuth = () => {
-  const [authUser, setAuthUser] = useState();
+  const [authUser, setAuthUser] = useState<firebase.User | null>();
   useEffect(() => {
     const subscriber = onAuthChange(newUser => {
       if (newUser && newUser.email) store(StorageKey.EMAIL, newUser.email);

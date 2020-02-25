@@ -32,7 +32,7 @@ const HistoryContainer = () => {
     [userReadingTimes],
   );
   const allTab = useCallback(
-    () => <HistoryList readingTimes={allReadingTimes} />,
+    () => <HistoryList readingTimes={allReadingTimes} showEmail />,
     [userReadingTimes],
   );
 

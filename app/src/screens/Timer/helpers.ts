@@ -1,7 +1,7 @@
-import _ from 'lodash';
+import { useMemo } from 'react';
 import { ReadingTimeSetT } from '../../constants/types';
 import { getCurrentUserId } from '../../firebase';
-import { useUserReadingTimes } from '../../hooks/readingTimes';
+import { useUserReadingTimes, useReadingTimes } from '../../hooks/readingTimes';
 
 export const pad = (n: number) => {
   return `0${n}`.slice(-2);
@@ -28,4 +28,13 @@ export const getReadingInsight = (readingTime: ReadingTimeSetT): string => {
 export const useCurrentUserReadingTimes = () => {
   const userId = getCurrentUserId();
   return useUserReadingTimes(userId);
+};
+
+export const useOtherUserReadingTimes = () => {
+  const userId = getCurrentUserId();
+  const readingTimes = useReadingTimes();
+  return useMemo(
+    () => readingTimes.filter(readingTime => readingTime.userId !== userId),
+    [userId, readingTimes],
+  );
 };

@@ -3,14 +3,15 @@ import moment from 'moment';
 import 'moment/locale/fr';
 import * as Sentry from 'sentry-expo';
 import Constants from 'expo-constants';
+import { YellowBox } from 'react-native';
 import AppNavigator from './src/navigation/AppNavigator';
 import SplashLoading from './src/screens/Splash';
 
 const bootstrap = () => {
-  console.ignoredYellowBox = [
+  YellowBox.ignoreWarnings([
     'Setting a timer',
-    'VirtualizedLists should never',
-  ];
+    'VirtualizedLists should never be nested',
+  ]);
   moment.locale('fr');
   Sentry.init({
     dsn: 'https://f9ed9a0bbc9541a19756b306c3ebb3ac@sentry.io/1853328',

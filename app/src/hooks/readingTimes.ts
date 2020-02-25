@@ -9,9 +9,10 @@ import { readingTimesService, timerService } from '../helpers/store';
 
 export const READING_TIME_COLLECTION = 'readingTimes';
 export const useTimer = () => useObservable(timerService.timer);
+export const useReadingTimes = () => useObservable(readingTimesService.value);
 
 export const useUserReadingTimes = (userId?: string, source?: SourceT) => {
-  const readingTimes = useObservable(readingTimesService.value);
+  const readingTimes = useReadingTimes();
   const filteredReadingTimes = useMemo(() => {
     const filtered = readingTimes
       .filter(rt => userId == null || rt.userId === userId)
@@ -21,6 +22,7 @@ export const useUserReadingTimes = (userId?: string, source?: SourceT) => {
       .sortBy(readingTime =>
         readingTime.endTime == null ? 0 : readingTime.endTime.toMillis(),
       )
+      .reverse()
       .value();
     return sorted;
   }, [readingTimes, source, userId]);

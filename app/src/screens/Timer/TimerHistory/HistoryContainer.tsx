@@ -25,24 +25,24 @@ function CustomTabBar(props: any) {
 
 const HistoryContainer = () => {
   const userReadingTimes = useCurrentUserReadingTimes();
-  const allReadingTimes = useUserReadingTimes();
+  const otherUsersReadingTimes = useUserReadingTimes();
 
   const userTab = useCallback(
     () => <HistoryList readingTimes={userReadingTimes} />,
     [userReadingTimes],
   );
-  const allTab = useCallback(
-    () => <HistoryList readingTimes={allReadingTimes} showEmail />,
+  const otherTab = useCallback(
+    () => <HistoryList readingTimes={otherUsersReadingTimes} showEmail />,
     [userReadingTimes],
   );
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: 'user', title: 'Mes lectures' },
-    { key: 'all', title: 'Toutes' },
+    { key: 'other', title: 'Autres' },
   ]);
 
-  const renderScene = SceneMap({ user: userTab, all: allTab });
+  const renderScene = SceneMap({ user: userTab, other: otherTab });
 
   return (
     <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">

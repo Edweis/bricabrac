@@ -6,6 +6,7 @@ import Constants from 'expo-constants';
 import { YellowBox } from 'react-native';
 import AppNavigator from './src/navigation/AppNavigator';
 import SplashLoading from './src/screens/Splash';
+import ErrorBoundary from './src/screens/Error/ErrorBoundary';
 
 const bootstrap = () => {
   YellowBox.ignoreWarnings([
@@ -34,8 +35,10 @@ export default function App() {
   console.debug('rendering App');
 
   return (
-    <SplashLoading onError={onError}>
-      <AppNavigator />
-    </SplashLoading>
+    <ErrorBoundary>
+      <SplashLoading onError={onError}>
+        <AppNavigator />
+      </SplashLoading>
+    </ErrorBoundary>
   );
 }

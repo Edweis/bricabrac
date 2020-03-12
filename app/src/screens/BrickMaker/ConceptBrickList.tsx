@@ -14,7 +14,6 @@ function ConceptBrickList() {
   const parentConcept = navigation.getParam('concept');
   const bricks = useBricks(parentConcept);
   const conceptDeps = useConceptDeps(parentConcept);
-
   return (
     <>
       <ScrollView keyboardShouldPersistTaps="handled">

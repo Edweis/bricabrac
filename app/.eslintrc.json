@@ -55,7 +55,7 @@
   		"import/resolver": {
   			"node": {
   				"paths": ["src"],
-          "extensions": [".js", ".jsx", ".ts", ".tsx"],
+          "extensions": [".js", ".jsx", ".ts", ".tsx", ".png"],
   				"alias": { "_assets":"./src/assets", "_components":"./src/components", "_constants":"./src/constants", "_hooks":"./src/hooks" } }
   		}
   	}

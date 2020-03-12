@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import firebase, { getCurrentUser, logout } from '../../firebase';
+import firebase, { getCurrentUser, logout, IS_DEV } from '../../firebase';
 import { useNavigation } from '../../hooks/navigation';
 import {
   release,
@@ -20,9 +20,8 @@ const styles = StyleSheet.create({
 const Settings = () => {
   const user = getCurrentUser();
   const navigation = useNavigation();
-  const loginInfo = user
-    ? `${user.email} - ${user.uid.substring(0, 7)}`
-    : 'null';
+  const loginInfo =
+    user != null ? `${user.email} - ${user.uid.substring(0, 7)}` : 'null';
   return (
     <View style={styles.container}>
       <View>
@@ -53,6 +52,15 @@ const Settings = () => {
           subtitle={loginInfo}
           onPress={() => firebase.auth().signOut()}
         />
+        {IS_DEV && (
+          <ListItem
+            leftIcon={{ name: 'ion-ios-close-circle', type: 'ionicon' }}
+            title="Générer une erreur"
+            onPress={() => {
+              throw Error('Fake Error');
+            }}
+          />
+        )}
       </View>
     </View>
   );

@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 export const usePrevious = <T>(value: T): T | undefined => {
   const ref = useRef<T>();
   useEffect(() => {
-    if (ref && ref.current) ref.current = value;
+    if (ref) ref.current = value;
   }, [value]);
   return ref.current;
 };

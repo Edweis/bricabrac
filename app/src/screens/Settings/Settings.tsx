@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import firebase, { getCurrentUser, logout, IS_DEV } from '../../firebase';
@@ -17,9 +17,15 @@ const styles = StyleSheet.create({
   },
 });
 
+const useCrasher = () => {
+  const [shouldCrash, setShouldCrash] = useState(false);
+  if (shouldCrash) throw Error('Fake error, everything is fine :)');
+  return () => setShouldCrash(true);
+};
 const Settings = () => {
   const user = getCurrentUser();
   const navigation = useNavigation();
+  const crasher = useCrasher();
   const loginInfo =
     user != null ? `${user.email} - ${user.uid.substring(0, 7)}` : 'null';
   return (
@@ -54,11 +60,9 @@ const Settings = () => {
         />
         {IS_DEV && (
           <ListItem
-            leftIcon={{ name: 'ion-ios-close-circle', type: 'ionicon' }}
+            leftIcon={{ name: 'ios-close-circle', type: 'ionicon' }}
             title="Générer une erreur"
-            onPress={() => {
-              throw Error('Fake Error');
-            }}
+            onPress={crasher}
           />
         )}
       </View>

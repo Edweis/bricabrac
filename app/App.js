@@ -7,6 +7,7 @@ import { YellowBox } from 'react-native';
 import AppNavigator from './src/navigation/AppNavigator';
 import SplashLoading from './src/screens/Splash';
 import ErrorBoundary from './src/screens/Error/ErrorBoundary';
+import { IS_DEV } from './src/firebase';
 
 const bootstrap = () => {
   YellowBox.ignoreWarnings([
@@ -17,7 +18,8 @@ const bootstrap = () => {
   Sentry.init({
     dsn: 'https://f9ed9a0bbc9541a19756b306c3ebb3ac@sentry.io/1853328',
     enableInExpoDevelopment: Constants.manifest.releaseChannel == null,
-    debug: Constants.manifest.releaseChannel == null,
+    debug: IS_DEV,
+    environment: IS_DEV ? 'development' : 'prod',
   });
   Sentry.setRelease(Constants.manifest.revisionId);
 };

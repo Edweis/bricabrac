@@ -1,11 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { StyleSheet, Text } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import ElasticView from '../ElasticView';
 import { emailLogin, IS_DEV } from '../../../firebase';
 import { useNavigation } from '../../../hooks/navigation';
-
-import { useLastEmail } from './hooks';
+import colors from '../../../constants/colors';
+import { useLastEmail, useErrorHandler } from './hooks';
 
 const styles = StyleSheet.create({
   container: {
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
   },
   button: { marginTop: 16, width: '50%' },
   scrollContainer: { flex: 1 },
+  error: { color: colors.errorText, marginTop: 10 },
 });
 
 const iconName = IS_DEV ? 'ios-bug' : 'ios-information-circle';
@@ -22,6 +23,7 @@ const iconName = IS_DEV ? 'ios-bug' : 'ios-information-circle';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, catchError] = useErrorHandler([password, email]);
   const passwordInputRef = useRef<Input>(null);
   const navigation = useNavigation();
   const focusPassword = () =>
@@ -53,13 +55,14 @@ function Login() {
         autoCompleteType="password"
         secureTextEntry
         ref={passwordInputRef}
-        onSubmitEditing={() => emailLogin(email, password)}
+        onSubmitEditing={() => emailLogin(email, password).catch(catchError)}
         selectTextOnFocus
       />
+      <Text style={styles.error}>{error}</Text>
       <Button
         containerStyle={styles.button}
         title="Se connecter"
-        onPress={() => emailLogin(email, password)}
+        onPress={() => emailLogin(email, password).catch(catchError)}
         type="clear"
       />
       <Button

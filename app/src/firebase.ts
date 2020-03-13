@@ -16,13 +16,15 @@ else firestoreCredentials = require('./firestoreCredentialsProd.json');
 
 firebase.initializeApp(firestoreCredentials);
 
-export function emailLogin(email: string, password: string) {
+export async function emailLogin(email: string, password: string) {
   try {
-    firebase.auth().signInWithEmailAndPassword(email, password);
+    await firebase.auth().signInWithEmailAndPassword(email, password);
   } catch (err) {
+    if (err.code === 'auth/wrong-password')
+      throw Error('Nom de compte ou mot de passe incorrect');
     const Sentry = require('sentry-expo');
-
-    Sentry.captureException({ ...err, metadata: 'Failed login' });
+    Sentry.captureException(err.message);
+    throw err;
   }
 }
 

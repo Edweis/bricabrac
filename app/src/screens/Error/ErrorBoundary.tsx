@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Sentry from 'sentry-expo';
-import { View, StyleSheet, Text, Image, Dimensions } from 'react-native';
+import { ScrollView, StyleSheet, Text, Image, Dimensions } from 'react-native';
 import { IS_DEV } from '../../firebase';
 import genericErrorImage from '../../assets/images/error.png';
 
@@ -14,9 +14,7 @@ const styles = StyleSheet.create({
   main: {
     display: 'flex',
     padding: 10,
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
 });
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -38,11 +36,11 @@ class ErrorBoundary extends React.Component<Props, State> {
     if (this.state.hasError) {
       // You can render any custom fallback UI
       return (
-        <View style={styles.main}>
+        <ScrollView contentContainerStyle={styles.main}>
           <Image style={errorImageDims} source={genericErrorImage} />
           <Text>{this.state.error && this.state.error.message}</Text>
           <Text>{this.state.errorInfo}</Text>
-        </View>
+        </ScrollView>
       );
     }
 

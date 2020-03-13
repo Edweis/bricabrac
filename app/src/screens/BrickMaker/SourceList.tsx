@@ -1,20 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import _ from 'lodash';
-import { StyleSheet, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { SearchBar, ListItem } from 'react-native-elements';
 import { useNavigation, NavigationOptionsProps } from '../../hooks/navigation';
 import { useBricks, useFocusOnMount } from '../../hooks';
 import { EMPTY_SOURCE } from '../../constants/defaults';
-
-const styles = StyleSheet.create({
-  content: {},
-  fab: {
-    position: 'absolute',
-    margin: 34,
-    right: 0,
-    bottom: 50,
-  },
-});
 
 const useDisplayedSources = (search: string) => {
   const bricks = useBricks();
@@ -62,7 +52,7 @@ function SourceList() {
         value={search}
         ref={focusOnMountRef}
       />
-      <ScrollView style={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView keyboardShouldPersistTaps="handled">
         {sourceData.map(sourceDatum => (
           <ListItem
             key={sourceDatum.source}

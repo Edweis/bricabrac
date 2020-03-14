@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     padding: 10,
     justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 });
 const screenWidth = Math.round(Dimensions.get('window').width);

@@ -22,6 +22,7 @@ const useCrasher = () => {
   if (shouldCrash) throw Error('Fake error, everything is fine :)');
   return () => setShouldCrash(true);
 };
+
 const Settings = () => {
   const user = getCurrentUser();
   const navigation = useNavigation();

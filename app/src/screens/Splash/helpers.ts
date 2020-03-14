@@ -16,3 +16,5 @@ export const useFirestoreLoading = () => {
   }, []);
   return isStateLoading;
 };
+
+export const useLoadings = () => useObservable(loadingService.loadings);

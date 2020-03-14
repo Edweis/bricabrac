@@ -5,6 +5,7 @@ import * as Font from 'expo-font';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useFirestoreLoading } from './helpers';
+import SplashLoading from './SplashLoading';
 
 const styles = StyleSheet.create({
   container: {
@@ -35,7 +36,7 @@ export default ({ children, onError }: Props) => {
   const isFirestoreLoading = useFirestoreLoading();
   const endAppLoading = useCallback(() => setAppLoading(false), []);
 
-  if (isAppLoading || isFirestoreLoading) {
+  if (isAppLoading) {
     return (
       <AppLoading
         startAsync={loadResourcesAsync}
@@ -44,6 +45,8 @@ export default ({ children, onError }: Props) => {
       />
     );
   }
+
+  if (isFirestoreLoading) return <SplashLoading />;
 
   return (
     <View style={styles.container}>

@@ -28,7 +28,12 @@ class ErrorBoundary extends React.Component<Props, State> {
 
   static getDerivedStateFromError(error: Error, errorInfo: React.ErrorInfo) {
     // Update state so the next render will show the fallback UI.
-    if (!IS_DEV) Sentry.captureMessage(`Error caught : ${error}`);
+    if (!IS_DEV) {
+      Sentry.withScope(scope => {
+        scope.setExtras(errorInfo);
+        Sentry.captureException(error);
+      });
+    }
     return { hasError: true, error, errorInfo };
   }
 

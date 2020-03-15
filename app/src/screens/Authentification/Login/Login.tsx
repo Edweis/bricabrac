@@ -49,7 +49,7 @@ function Login() {
         selectTextOnFocus
       />
       <Input
-        label="password"
+        label="mot de passe"
         value={password}
         onChangeText={setPassword}
         autoCompleteType="password"

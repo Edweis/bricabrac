@@ -9,12 +9,8 @@ import AuthNavigator from '../screens/Authentification';
 import { useFirestoreAuth } from '../hooks/authentification';
 
 const AppNavigator = createAppContainer(
-  createSwitchNavigator(
-    { Main, AuthNavigator },
-    { initialRouteName: 'AuthNavigator' },
-  ),
+  createSwitchNavigator({ Main, AuthNavigator }, { initialRouteName: 'Main' }),
 );
-
 export default () => {
   const navigatorRef = useRef(null);
   const authUser = useFirestoreAuth();

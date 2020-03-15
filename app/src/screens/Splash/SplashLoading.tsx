@@ -1,5 +1,4 @@
 import React from 'react';
-import 'moment/locale/fr';
 import {
   StyleSheet,
   View,
@@ -7,7 +6,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import splashBackground from '../../assets/images/splash.png';
-import colors from '../../constants/colors';
 
 const styles = StyleSheet.create({
   container: {

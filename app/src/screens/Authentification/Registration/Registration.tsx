@@ -61,7 +61,7 @@ const Registration = () => {
         selectTextOnFocus
       />
       <Input
-        label="password"
+        label="mot de passe"
         value={password}
         onChangeText={setPassword}
         autoCompleteType="password"
@@ -72,7 +72,7 @@ const Registration = () => {
         returnKeyType="next"
       />
       <Input
-        label="password confirmation"
+        label="confirmation du mot de passe"
         value={passwordConfirmation}
         onChangeText={setPasswordConfirmation}
         autoCompleteType="password"

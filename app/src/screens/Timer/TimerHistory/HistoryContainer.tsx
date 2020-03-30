@@ -1,8 +1,10 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
-import { useCurrentUserReadingTimes } from '../helpers';
-import { useUserReadingTimes } from '../../../hooks/readingTimes';
+import {
+  useCurrentUserReadingTimes,
+  useOtherUserReadingTimes,
+} from '../helpers';
 import HistoryList from './HistoryList';
 import colors from '../../../constants/colors';
 
@@ -25,7 +27,7 @@ function CustomTabBar(props: any) {
 
 const HistoryContainer = () => {
   const userReadingTimes = useCurrentUserReadingTimes();
-  const otherUsersReadingTimes = useUserReadingTimes();
+  const otherUsersReadingTimes = useOtherUserReadingTimes();
 
   const userTab = useCallback(
     () => <HistoryList readingTimes={userReadingTimes} />,

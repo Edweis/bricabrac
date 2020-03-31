@@ -14,7 +14,7 @@ else console.log('Welcome in PROD environment');
 if (IS_DEV) firestoreCredentials = require('./firestoreCredentialsDev.json');
 else firestoreCredentials = require('./firestoreCredentialsProd.json');
 
-firebase.initializeApp(firestoreCredentials);
+firebase.initializeApp(firestoreCredentials, IS_DEV ? 'dev' : 'prod');
 
 export async function emailLogin(email: string, password: string) {
   try {

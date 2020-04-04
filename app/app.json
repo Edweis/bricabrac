@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "com.bricabrac.app",
-      "versionCode": 8
+      "versionCode": 9
     },
     "hooks": {
       "postPublish": [

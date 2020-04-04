@@ -1,8 +1,6 @@
 import { Observable } from '../observable';
 import { SourceT, ReadingTimeSetT } from '../../constants/types';
-import firebase from '../../firebase';
-
-const { Timestamp } = firebase.firestore;
+import { Timestamp } from '../../firebase';
 
 type TimerT = {
   isOn: boolean;

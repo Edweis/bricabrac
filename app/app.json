@@ -3,7 +3,6 @@
     "name": "Bric-à-Brac",
     "slug": "bricabrac",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",

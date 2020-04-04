@@ -1,6 +1,6 @@
 /* eslint-disable global-require  */
 /* eslint-disable @typescript-eslint/no-var-requires  */
-import firebase from 'firebase/app';
+import firebaseApp from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/database';
@@ -14,7 +14,10 @@ else console.log('Welcome in PROD environment');
 if (IS_DEV) firestoreCredentials = require('./firestoreCredentialsDev.json');
 else firestoreCredentials = require('./firestoreCredentialsProd.json');
 
-firebase.initializeApp(firestoreCredentials, IS_DEV ? 'dev' : 'prod');
+const firebase = firebaseApp.initializeApp(
+  firestoreCredentials,
+  IS_DEV ? 'dev' : 'prod',
+);
 
 export async function emailLogin(email: string, password: string) {
   try {
@@ -76,6 +79,6 @@ export const register = async (registration: RegistrationT) => {
     });
   }
 };
-export const { Timestamp } = firebase.firestore;
+export const { Timestamp } = firebaseApp.firestore;
 
 export default firebase;

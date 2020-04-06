@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {
   useCurrentUserReadingTimes,
@@ -9,7 +9,7 @@ import HistoryList from './HistoryList';
 import colors from '../../../constants/colors';
 
 const styles = StyleSheet.create({
-  container: { width: '100%' },
+  container: { height: '100%', width: '100%' },
 });
 
 function CustomTabBar(props: any) {
@@ -47,14 +47,14 @@ const HistoryContainer = () => {
   const renderScene = SceneMap({ user: userTab, other: otherTab });
 
   return (
-    <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
+    <View style={styles.container}>
       <TabView
         renderTabBar={CustomTabBar}
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
       />
-    </ScrollView>
+    </View>
   );
 };
 
